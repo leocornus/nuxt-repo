@@ -11,6 +11,9 @@ v-container(grid-list-md text-xs-center)
 
 <script>
 export default {
+  // set the layout, the file name in layouts folder.
+  layout: 'vuetify',
+
   name: 'VuetifyScratchPad',
 
   data () {
