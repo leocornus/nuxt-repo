@@ -1,18 +1,39 @@
 <template lang="pug">
 v-container( grid-list-xs )
-  v-row
-    v-text-field( 
-      v-model='inputNumber' 
-      label="Give me a number:"
-      loading
-    )
-  v-layout
+  v-layout( row wrap )
+    // the prime number checker card
     v-flex( xs12 sm4 )
-      v-toolbar( color="indigo" dark dense light wihte--text )
-        v-toolbar-title Prime Number
+      v-toolbar( color="indigo" dark dense light )
+        v-toolbar-title Prime Number Checker
       v-card
-        v-card-title( primary-title ) get ready
+        v-card-title( primary-title )
+          v-row
+            v-text-field( 
+              id='input-number'
+              v-model='inputNumber' 
+              label="Give me a number:"
+              :loading='loading'
+            )
+        v-card-text
+          |{{ resultMessage }}
 
+    // The card for prime number list.
+    v-flex( xs12 sm4 )
+      v-toolbar( color="indigo" dark dense light )
+        v-toolbar-title Prime Numbers List
+      v-card
+        v-card-text
+          v-layout( row wrap text-center )
+            v-flex(
+              v-for="i in 100"
+              :key="`n${i}`"
+              xs1
+            )
+              v-card(
+                dark
+                :color='`${isPrime(i) ? "success" : "warning"}`'
+              )
+                v-card-text( class="px-0" ) {{ i }}
 </template>
 
 <script>
@@ -23,11 +44,46 @@ export default {
 
     data () {
         return {
-            inputNumber: '',
+
+            inputNumber: null,
+
+            loading: false,
+
+            primeNumbers: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37,
+                41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+
         };
     },
 
+    computed: {
+        resultMessage: function() {
+
+            if(this.inputNumber === null) {
+                return "Waiting for the number...";
+            } else {
+                this.checkPrimeNumber(this.inputNumber);
+                return "Checking ...";
+            }
+        }
+    },
+
     methods: {
+        checkPrimeNumber: function(theNumber) {
+
+            console.log(theNumber);
+        },
+
+        /**
+         * return true if the given number is a prime number.
+         */
+        isPrime: function(n) {
+
+            if(this.primeNumbers.includes(n)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     },
 }
 </script>
