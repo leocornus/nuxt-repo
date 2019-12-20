@@ -31,9 +31,9 @@ v-container( grid-list-xs )
             )
               v-card(
                 dark
-                :color='`${isPrime(i) ? "success" : "warning"}`'
+                :color='`${isPrime(i) ? "danger" : "success"}`'
               )
-                v-card-text( class="px-0" ) {{ i }}
+                v-card-text( class="px-0 py-1") {{ i }}
 </template>
 
 <script>
