@@ -18,7 +18,7 @@ v-container( grid-list-xs )
           |{{ resultMessage }}
 
     // The card for prime number list.
-    card-pns/
+    card-pns(:upToNumber="500")/
 </template>
 
 <script>
