@@ -27,4 +27,6 @@ let pn = {
 // this export is for statement 
 //  - import PrimeNumber from '@/libs/PrimeNumber'
 export default pn;
-//module.exports=pn;
+
+// this format doesn't work for browser!
+//module.exports = pn;
