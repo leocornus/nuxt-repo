@@ -26,7 +26,10 @@ export default {
     name: "card-pns",
 
     props: {
-        'upToNumber': Number
+        'upToNumber': {
+            type: Number,
+            default: 100
+        }
     },
 
     data () {
