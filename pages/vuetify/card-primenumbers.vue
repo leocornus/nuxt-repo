@@ -7,7 +7,7 @@ v-flex( xs12 sm8 )
     v-card-text
       v-layout( row wrap text-center )
         v-flex(
-          v-for="i in 200"
+          v-for="i in upToNumber"
           :key="`n${i}`"
           xs1
         )
@@ -17,6 +17,7 @@ v-flex( xs12 sm8 )
           )
             v-card-text( class="px-0 py-1") {{ i }}
 </template>
+
 <script>
 
 import PrimeNumber from '@/libs/PrimeNumber';
@@ -24,7 +25,9 @@ import PrimeNumber from '@/libs/PrimeNumber';
 export default {
     name: "card-pns",
 
-    props: [],
+    props: {
+        'upToNumber': Number
+    },
 
     data () {
         return {
