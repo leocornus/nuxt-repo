@@ -15,7 +15,7 @@ v-flex( xs12 sm8 )
             dark
             :color='`${isPrime(i) ? "danger" : "success"}`'
           )
-            v-card-text( class="px-0 py-1") {{ i }}
+            v-card-text( class="px-0 py-1" ) {{ i }}
 </template>
 
 <script>
