@@ -15,7 +15,10 @@ v-flex( xs12 sm8 )
             dark
             :color='`${isPrime(i) ? "danger" : "success"}`'
           )
-            v-card-text( class="px-0 py-1" ) {{ i }}
+            // we could define a variable for a list of classname in
+            // an array
+            - var textClasses = ["px-0", "py-1"]
+            v-card-text( class=textClasses ) {{ i }}
 </template>
 
 <script>
