@@ -2,7 +2,7 @@
 // The card for prime number list.
 v-flex( xs12 sm8 )
   v-toolbar( color="indigo" dark dense light )
-    v-toolbar-title Prime Numbers List
+    v-toolbar-title Prime Numbers up to {{ upToNumber }}
   v-card
     v-card-text
       v-layout( row wrap text-center )
