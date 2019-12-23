@@ -18,6 +18,9 @@ v-container( grid-list-xs )
         v-card-text
           strong( :class="msgColor" )
             |{{ resultMessage }}
+          div( :class="factorDisplay" )
+            p
+              h3 Integer Factorization for {{ inputNumber }}:
 
     // The card for prime number list.
     card-pns(:upToNumber="200")/
@@ -45,7 +48,9 @@ export default {
             loading: false,
 
             // the color style class from Vuetify
-            msgColor: "primary--text"
+            msgColor: "primary--text",
+            // the display class for factorization section.
+            factorDisplay: "d-none"
         };
     },
 
@@ -55,6 +60,7 @@ export default {
 
             if(this.inputNumber === null || this.inputNumber === "") {
                 this.msgColor = "primary--text";
+                this.factorDisplay = "d-none";
                 return "Waiting for the number...";
             } else {
                 if (this.checkPrimeNumber(this.inputNumber)) {
@@ -83,6 +89,7 @@ export default {
         primeNumberMessage: function(theNumber) {
 
             this.msgColor = "red--text";
+            this.factorDisplay = "d-none";
             return theNumber + " is a prime number";
         },
 
@@ -92,6 +99,7 @@ export default {
         nonePrimeNumberMessage: function(theNumber) {
 
             this.msgColor = "green--text";
+            this.factorDisplay = "";
             return theNumber + " is NOT a prime number";
         }
     },
