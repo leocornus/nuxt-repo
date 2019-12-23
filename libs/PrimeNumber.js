@@ -44,6 +44,40 @@ let pn = {
         //} else {
         //    return false;
         //}
+    },
+
+    /**
+     * implement the trial division algorithm to find ou the integer factorization
+     * for a none prime number.
+     * - https://en.wikipedia.org/wiki/Trial_division
+     */
+    trialDivision: function(aNumber) {
+
+        let factors = [];
+
+        // check the 2 first.
+        while( aNumber % 2 === 0 ) {
+
+            factors.push( 2 );
+            aNumber = aNumber / 2;
+        }
+
+        let f = 3;
+        while( f * f <= aNumber ) {
+
+            if( aNumber % f === 0 ) {
+                factors.push( f );
+                aNumber = aNumber / f;
+            } else {
+                f = f + 2;
+            }
+        }
+
+        if( aNumber != 1 ) {
+            factors.push( aNumber );
+        }
+
+        return factors;
     }
 };
 
