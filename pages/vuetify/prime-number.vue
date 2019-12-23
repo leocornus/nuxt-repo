@@ -105,8 +105,9 @@ export default {
             // set the text color.
             this.msgColor = "green--text";
 
-            // TODO: get ready the integer factorization.
-            this.factorizationMsg = 'comming soon...';
+            // get ready the integer factorization.
+            let factors = PrimeNumber.trialDivision(theNumber);
+            this.factorizationMsg = JSON.stringify(factors);
             // show the message.
             this.factorDisplay = "";
 
