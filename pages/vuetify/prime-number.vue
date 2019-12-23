@@ -10,12 +10,14 @@ v-container( grid-list-xs )
           v-row
             v-text-field( 
               id='input-number'
+              autocomplete="off"
               v-model='inputNumber' 
               label="Give me a number:"
               :loading='loading'
             )
         v-card-text
-          |<strong>{{ resultMessage }}</strong>
+          strong( :class="msgColor" )
+            |{{ resultMessage }}
 
     // The card for prime number list.
     card-pns(:upToNumber="200")/
@@ -40,7 +42,10 @@ export default {
 
             inputNumber: null,
 
-            loading: false
+            loading: false,
+
+            // the color style class from Vuetify
+            msgColor: "primary--text"
         };
     },
 
@@ -48,7 +53,8 @@ export default {
 
         resultMessage: function() {
 
-            if(this.inputNumber === null) {
+            if(this.inputNumber === null || this.inputNumber === "") {
+                this.msgColor = "primary--text";
                 return "Waiting for the number...";
             } else {
                 if (this.checkPrimeNumber(this.inputNumber)) {
@@ -76,6 +82,7 @@ export default {
          */
         primeNumberMessage: function(theNumber) {
 
+            this.msgColor = "red--text";
             return theNumber + " is a prime number";
         },
 
@@ -84,6 +91,7 @@ export default {
          */
         nonePrimeNumberMessage: function(theNumber) {
 
+            this.msgColor = "green--text";
             return theNumber + " is NOT a prime number";
         }
     },
