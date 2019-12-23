@@ -7,8 +7,13 @@ v-app
     v-spacer
     v-btn(icon)
       v-icon mdi-magnify
-    v-btn(icon)
-      v-icon mdi-dots-vertical
+    v-menu( left bottom )
+      template( v-slot:activator="{ on }" )
+        v-btn( icon v-on="on" )
+          v-icon mdi-dots-vertical
+      v-list
+        v-list-item( v-for="n in 5" :key="n" @click="() => {}" )
+          v-list-item-title Option {{ n }}
 
   v-content
     Nuxt/
