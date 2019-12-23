@@ -21,7 +21,7 @@ v-container( grid-list-xs )
           div( :class="factorDisplay" )
             p
               h3 Integer Factorization for {{ inputNumber }}:
-              p {{ factorizationMsg }}
+              h3( class="primary--text" ) {{ factorizationMsg }}
 
     // The card for prime number list.
     card-pns(:upToNumber="200")/
@@ -63,13 +63,17 @@ export default {
         resultMessage: function() {
 
             if(this.inputNumber === null || this.inputNumber === "") {
+
                 this.msgColor = "primary--text";
                 this.factorDisplay = "d-none";
                 return "Waiting for the number...";
             } else {
+
                 if (this.checkPrimeNumber(this.inputNumber)) {
+
                     return this.primeNumberMessage(this.inputNumber);
                 } else {
+
                     return this.nonePrimeNumberMessage(this.inputNumber);
                 }
             }
@@ -113,6 +117,6 @@ export default {
 
             return theNumber + " is NOT a prime number";
         }
-    },
+    }
 }
 </script>
