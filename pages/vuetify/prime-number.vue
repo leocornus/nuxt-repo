@@ -15,14 +15,16 @@ v-container( grid-list-xs )
               :loading='loading'
             )
         v-card-text
-          |{{ resultMessage }}
+          |<strong>{{ resultMessage }}</strong>
 
     // The card for prime number list.
-    card-pns(:upToNumber="500")/
+    card-pns(:upToNumber="200")/
 </template>
 
 <script>
-import CardPrimeNumbers from '@/pages/vuetify/card-primenumbers.vue'
+import PrimeNumber from '@/libs/PrimeNumber';
+
+import CardPrimeNumbers from '@/pages/vuetify/card-primenumbers.vue';
 
 export default {
     components: {
@@ -43,21 +45,46 @@ export default {
     },
 
     computed: {
+
         resultMessage: function() {
 
             if(this.inputNumber === null) {
                 return "Waiting for the number...";
             } else {
-                this.checkPrimeNumber(this.inputNumber);
-                return "Checking ...";
+                if (this.checkPrimeNumber(this.inputNumber)) {
+                    return this.primeNumberMessage(this.inputNumber);
+                } else {
+                    return this.nonePrimeNumberMessage(this.inputNumber);
+                }
             }
         }
     },
 
     methods: {
+
+        /**
+         * utility function to check if the given number is a prime number.
+         */
         checkPrimeNumber: function(theNumber) {
 
             console.log(theNumber);
+            return PrimeNumber.isPrimeNumber(theNumber);
+        },
+
+        /**
+         * the message for prime number.
+         */
+        primeNumberMessage: function(theNumber) {
+
+            return theNumber + " is a prime number";
+        },
+
+        /**
+         * the message for none prime number.
+         */
+        nonePrimeNumberMessage: function(theNumber) {
+
+            return theNumber + " is NOT a prime number";
         }
     },
 }
