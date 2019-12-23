@@ -21,6 +21,7 @@ v-container( grid-list-xs )
           div( :class="factorDisplay" )
             p
               h3 Integer Factorization for {{ inputNumber }}:
+              p {{ factorizationMsg }}
 
     // The card for prime number list.
     card-pns(:upToNumber="200")/
@@ -49,8 +50,11 @@ export default {
 
             // the color style class from Vuetify
             msgColor: "primary--text",
+
             // the display class for factorization section.
-            factorDisplay: "d-none"
+            factorDisplay: "d-none",
+            // the message for integer factorization:
+            factorizationMsg: ""
         };
     },
 
@@ -98,8 +102,14 @@ export default {
          */
         nonePrimeNumberMessage: function(theNumber) {
 
+            // set the text color.
             this.msgColor = "green--text";
+
+            // TODO: get ready the integer factorization.
+            this.factorizationMsg = 'comming soon...';
+            // show the message.
             this.factorDisplay = "";
+
             return theNumber + " is NOT a prime number";
         }
     },
