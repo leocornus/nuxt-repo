@@ -1,7 +1,8 @@
 {
   "name": "nuxt-repo",
   "scripts": {
-    "dev": "nuxt"
+    "dev": "nuxt",
+    "build": "nuxt build"
   },
   "dependencies": {
     "nuxt": "^2.10.2"
