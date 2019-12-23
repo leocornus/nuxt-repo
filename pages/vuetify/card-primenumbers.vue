@@ -13,7 +13,7 @@ v-flex( xs12 sm8 )
         )
           v-card(
             dark
-            :color='`${isPrime(i) ? "danger" : "success"}`'
+            :color='`${isPrime(i) ? "danger" : "warning"}`'
           )
             // we could define a variable for a list of classname in
             // an array
