@@ -7,7 +7,7 @@ v-app
     v-spacer
     v-btn(icon)
       v-icon mdi-magnify
-    v-menu( left bottom )
+    v-menu( left bottom offset-y transition="scale-transition" )
       template( v-slot:activator="{ on }" )
         v-btn( icon v-on="on" )
           v-icon mdi-dots-vertical
