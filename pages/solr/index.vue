@@ -25,24 +25,30 @@ v-container( grid-list-xs )
       color="success"
       dark icon
       class="pa-2"
+      @click.stop="settingsDialog = true"
     )
       v-icon mdi-settings
       | settings
 
+  v-dialog( v-model="settingsDialog" )
+    card-settings(
+      :cancelSettings="settingsCancel",
+      :saveSettings="settingsSave"
+    )
+
   // search result list with facet filters on the left side.
   v-layout( row wrap )
-    // The card for prime number list.
-    card-pns(:upToNumber="300")/
+     // the search result list.
 </template>
 
 <script>
 import PrimeNumber from '@/libs/PrimeNumber';
 
-import CardPrimeNumbers from '@/pages/vuetify/card-primenumbers.vue';
+import SettingsCard from '@/pages/solr/card-settings.vue';
 
 export default {
     components: {
-        'card-pns': CardPrimeNumbers
+        'card-settings': SettingsCard
     },
 
     layout: 'vuetify',
@@ -54,6 +60,8 @@ export default {
         return {
 
             inputNumber: null,
+            // the switch to show or hide the settings dialog.
+            settingsDialog: false,
 
             loading: false,
 
@@ -90,6 +98,20 @@ export default {
     },
 
     methods: {
+
+        /**
+         */
+        settingsCancel: function() {
+
+            this.settingsDialog = false;
+        },
+
+        /**
+         */
+        settingsSave: function() {
+
+            this.settingsDialog = false;
+        },
 
         /**
          * utility function to check if the given number is a prime number.
