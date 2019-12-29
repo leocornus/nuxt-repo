@@ -1,7 +1,9 @@
 <template lang="pug">
 v-container( grid-list-xs )
-  // the prime number checker card
+
+  // the search row, with text field and buttons.
   v-card( class="d-flex flex-row" flat tile )
+    // need use dense to align the size with buttons.
     v-text-field( 
       dense
       id='input-number'
