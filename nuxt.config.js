@@ -15,7 +15,7 @@ export default {
     router: {
         // tweak the base, if we plan to deploy on a subfolder
         // /demo/nuxt
-        base: process.env.NODE_ENV === 'dev' ? '/' : '/demo/nuxt/'
+        base: process.env.NODE_ENV === 'DEV' ? '/' : '/nuxt-repo/'
     },
 
     /**
