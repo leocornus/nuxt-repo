@@ -24,7 +24,7 @@ v-container( grid-list-xs )
               h3( class="primary--text" ) {{ factorizationMsg }}
 
     // The card for prime number list.
-    card-pns(:upToNumber="200")/
+    card-pns(:upToNumber="300")/
 </template>
 
 <script>
