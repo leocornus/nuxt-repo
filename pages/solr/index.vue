@@ -9,16 +9,18 @@ v-container( grid-list-xs )
       id='input-number'
       autocomplete="off"
       v-model='inputNumber' 
-      label="Query string here"
+      label="Type your query here"
       :loading='loading'
     )
+    // search button
     v-btn( 
-      color="primary" 
+      color="warning" 
       dark icon
       class="pa-2"
     )
       v-icon mdi-magnify
       | search
+    // setting button
     v-btn(
       color="success"
       dark icon
@@ -27,6 +29,7 @@ v-container( grid-list-xs )
       v-icon mdi-settings
       | settings
 
+  // search result list with facet filters on the left side.
   v-layout( row wrap )
     // The card for prime number list.
     card-pns(:upToNumber="300")/
