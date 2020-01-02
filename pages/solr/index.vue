@@ -22,7 +22,7 @@ v-container( grid-list-xs )
       | search
     // setting button
     v-btn(
-      color="success"
+      color="success darken-1"
       dark icon
       class="pa-2"
       @click.stop="settingsDialog = true"
@@ -30,7 +30,7 @@ v-container( grid-list-xs )
       v-icon mdi-settings
       | settings
 
-  v-dialog( v-model="settingsDialog" )
+  v-dialog( v-model="settingsDialog" max-width="680px" persistent )
     card-settings(
       :cancelSettings="settingsCancel",
       :saveSettings="settingsSave"
@@ -42,8 +42,7 @@ v-container( grid-list-xs )
 </template>
 
 <script>
-import PrimeNumber from '@/libs/PrimeNumber';
-
+// import other vue component
 import SettingsCard from '@/pages/solr/card-settings.vue';
 
 export default {
@@ -59,42 +58,13 @@ export default {
 
         return {
 
-            inputNumber: null,
             // the switch to show or hide the settings dialog.
             settingsDialog: false,
-
-            loading: false,
-
-            // the color style class from Vuetify
-            msgColor: "primary--text",
-
-            // the display class for factorization section.
-            factorDisplay: "d-none",
-            // the message for integer factorization:
-            factorizationMsg: ""
         };
     },
 
     computed: {
 
-        resultMessage: function() {
-
-            if(this.inputNumber === null || this.inputNumber === "") {
-
-                this.msgColor = "primary--text";
-                this.factorDisplay = "d-none";
-                return "Waiting for the number...";
-            } else {
-
-                if (this.checkPrimeNumber(this.inputNumber)) {
-
-                    return this.primeNumberMessage(this.inputNumber);
-                } else {
-
-                    return this.nonePrimeNumberMessage(this.inputNumber);
-                }
-            }
-        }
     },
 
     methods: {
@@ -111,42 +81,6 @@ export default {
         settingsSave: function() {
 
             this.settingsDialog = false;
-        },
-
-        /**
-         * utility function to check if the given number is a prime number.
-         */
-        checkPrimeNumber: function(theNumber) {
-
-            console.log(theNumber);
-            return PrimeNumber.isPrimeNumber(theNumber);
-        },
-
-        /**
-         * the message for prime number.
-         */
-        primeNumberMessage: function(theNumber) {
-
-            this.msgColor = "red--text";
-            this.factorDisplay = "d-none";
-            return theNumber + " is a prime number";
-        },
-
-        /**
-         * the message for none prime number.
-         */
-        nonePrimeNumberMessage: function(theNumber) {
-
-            // set the text color.
-            this.msgColor = "green--text";
-
-            // get ready the integer factorization.
-            let factors = PrimeNumber.trialDivision(theNumber);
-            this.factorizationMsg = JSON.stringify(factors);
-            // show the message.
-            this.factorDisplay = "";
-
-            return theNumber + " is NOT a prime number";
         }
     }
 }
