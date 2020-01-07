@@ -8,9 +8,8 @@ v-container( grid-list-xs )
       dense
       id='input-number'
       autocomplete="off"
-      v-model='inputNumber' 
+      v-model='query' 
       label="Type your query here"
-      :loading='loading'
     )
     // search button
     v-btn( 
@@ -58,6 +57,7 @@ export default {
 
         return {
 
+            query: '*:*',
             // the switch to show or hide the settings dialog.
             settingsDialog: false,
         };
