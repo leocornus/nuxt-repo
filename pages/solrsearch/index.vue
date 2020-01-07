@@ -16,6 +16,7 @@ v-container( grid-list-xs )
       color="warning" 
       dark icon
       class="pa-2"
+      @click="simpleSearch"
     )
       v-icon mdi-magnify
       | search
@@ -97,24 +98,35 @@ v-container( grid-list-xs )
           @click="settingsCancel"
         ) cancel
         v-btn( color="green darken-1" text
-          @click="SettingsSave"
+          @click="settingsSave"
         ) save
 
   // the carousel dialog.
 
   // search result list with facet filters on the left side.
   v-layout( row wrap )
-     // the search result list.
+    h3 {{resultSummary}}
+    // the search result list.
+    listing-preview(
+      v-for="(doc, index) in results"
+      :doc="doc" :key="doc.id"
+      :index="index" :idFieldName="idField"
+    )
 </template>
 
 <script>
+
+import axios from 'axios'
+
 // import other vue component
 //import SettingsCard from '@/pages/solr/card-settings.vue';
+import ListingPreviewCard from '@/pages/solr/card-listing-preview.vue';
 
 export default {
 
     components: {
     //    'card-settings': SettingsCard
+        'listing-preview': ListingPreviewCard
     },
 
     layout: 'vuetify',
@@ -137,7 +149,6 @@ export default {
             collections: [],
             collectionLabel: "Collection: ",
 
-            query: '*:*',
             // default facet field is empty.
             facetFields: "",
 
@@ -160,6 +171,7 @@ export default {
             facets: null,
             stats: null,
             results: null,
+            resultSummary: "",
 
             // debugQuery, default is false.
             // it is easier to treat it as String
@@ -179,6 +191,287 @@ export default {
     },
 
     methods: {
+
+        /**
+         * simple search function to demonstrate Solr search function.
+         */
+        simpleSearch() {
+
+            var self = this;
+            //console.log('I am in...');
+            //solr.config.baseUrl = self.restBaseUrl;
+            //solr.ping();
+
+            self.resultSummary = "Searching ...";
+            // set the results to null for hiding the whole section.
+            self.results = null;
+            self.facets = null;
+            self.stats = null;
+
+            // check the query, 
+            if(!self.query) {
+                // reset the query to search everything!
+                self.query="*:*";
+            }
+
+            // this will show how to use query parameters in a JSON request.
+            var postParams = self.buildQuery();
+            // set to query params modal.
+            if(self.jeQueryParams) {
+
+                // swith back and force to refresh the view.
+                self.jeQueryParams.setMode("view");
+                self.jeQueryParams.set(postParams);
+                self.jeQueryParams.expandAll();
+                //self.jeQueryParams.setTextSelection(0,1);
+                self.jeQueryParams.setMode("code");
+            } 
+
+            var endPoint = self.collectionUrl + "select";
+            // track the post parameters.
+            // the Object assign will merge / copy source object to target
+            // object.
+            //var trackPayload = Object.assign({"end_point" : endPoint},
+            //                                 postParams);
+            //solr.track(trackPayload);
+            // the query url should be some thing like this: 
+            // - 'https://one.sites.leocorn.com/rest/searchApi/search',
+            // it is seems easier to use query parameters in a JSON request.
+            axios.post(endPoint, postParams)
+            .then(function(response) {
+
+                //console.log(response.data);
+                self.totalHits = response.data.response.numFound;
+
+                // TODO: add explain for each doc if debug query is on.
+                self.results = response.data.response.docs;
+                if( response.data.hasOwnProperty('debug') ) {
+                    self.debugExplain = response.data.debug;
+                    //self.fieldList = self.fieldList + ',ex';
+                    //self.results = response.data.response.docs.map( doc => {
+                    //    // add the explain or scoring
+                    //    doc['ex'] = response.data.debug.explain[doc[self.idField]];
+                    //    //console.log(doc['ex']);
+                    //    return doc;
+                    //});
+                }
+                //console.log(self.results);
+
+                // check if we have facets in response.
+                // Object hasOwnProperty is like hasKey but more complex.
+                if(response.data.hasOwnProperty('facet_counts')) {
+                //self.facets = response.data.facets;
+                    //self.facets = self.getReadyFacets(response.data.facet_counts.facet_fields);
+                }
+                //self.stats = self.facets[self.facets.length - 1].statistics;
+                //console.log("statistics: " + self.stats);
+                //self.resultSummary = "Found " + self.totalHits + " docs in total!"
+                var startRow = postParams.params.start;
+                self.resultSummary =
+                    "Showing " + (startRow + 1) + " - " +
+                    Math.min(startRow + self.perPage, self.totalHits) + " of " +
+                    self.totalHits + " Items";
+                if(self.totalHits > 0) {
+                    console.log('total hits: ' + self.totalHits);
+                    //console.log(JSON.stringify(self.facets));
+                    //console.log(JSON.stringify(response.data.documents[0]));
+                    //console.log(response.data.documents[0].fields['title']);
+                }
+            })
+            .catch(function(error) {
+                self.resultSummary = "Query Error!";
+                console.log(error);
+            });
+        },
+
+        /**
+         * create a facility function to get ready post query.
+         */
+        buildQuery() {
+
+            let thisVm = this;
+
+            // calculate the start row.
+            var startRow = (thisVm.currentPage - 1) * thisVm.perPage;
+
+            // the parameters for query.
+            // we will use Object assign to merge them all together.
+            var params = Object.assign({
+              rows: thisVm.perPage,
+              defType: "edismax",
+              start: startRow,
+              sort: thisVm.sort,
+              debugQuery: thisVm.debugQuery
+            }, thisVm.getFacetFields(), thisVm.getFieldList(),
+               thisVm.getFilterQuery(), thisVm.getBoostQuery(),
+               thisVm.getBoostFunction(), thisVm.getQueryFields());
+
+            // this will show how to use query parameters in a JSON request.
+            var postParams = {
+                query: thisVm.query,
+                // we could mix parameters and JSON request.
+                params: params
+            }
+
+            return postParams;
+        },
+
+        /**
+         * this will return the facet fields query parameters.
+         */
+        getFacetFields() {
+
+            if(this.facetFields === "") {
+                // return an empty object.
+                return {};
+            } else {
+                return {
+                  facet: "on",
+                  // set to negative number to return unlimit facets
+                  "facet.limit": -1,
+                  // using array for multiple values
+                  // in association with multiple values in HTTP parameters.
+                  // ?facet_field=project_id&facet_field=customer_id
+                  //"facet.field":["project_id", "customer_id"]
+                  // here is for single value
+                  //"facet.field":"customer_id"
+                  "facet.field": this.facetFields.split(",")
+                };
+            }
+        },
+
+        /**
+         * get field list.
+         * the return value will be the object like this:
+         * - fl: ["id","project_id"],
+         */
+        getFieldList() {
+
+            if(this.fieldList === "") {
+                // not fieldList specified, return an enpty object.
+                return {};
+            } else {
+                // always add the id field to the field list..
+                let fields = this.fieldList.split(",");
+                if(!fields.includes(this.idField)) {
+                    fields.push(this.idField);
+                }
+                return {
+                  // field list, control what fields to return in response.
+                  fl: fields
+                };
+            }
+        },
+
+        /**
+         * return the boost function.
+         */
+        getBoostFunction() {
+
+            if(this.boostFunction === "") {
+                return {};
+            } else {
+                return {
+                    "bf": this.boostFunction
+                }
+            }
+        },
+
+        /**
+         * return the boost query.
+         */
+        getBoostQuery() {
+
+            if(this.boostQuery === "") {
+                return {};
+            } else {
+                return {
+                    "bq": this.boostQuery
+                }
+            }
+        },
+
+        /**
+         * return the boost query.
+         */
+        getQueryFields() {
+
+            if(this.queryFields === "") {
+                return {};
+            } else {
+                return {
+                    "qf": this.queryFields
+                }
+            }
+        },
+
+        /**
+         * prepare the filter query for search.
+         */
+        getFilterQuery() {
+
+            if(this.filterQuery === "") {
+                return {};
+            } else {
+                return {
+                  // filter query list.
+                  //fq: ["c4c_type:project"],
+                  fq: this.filterQuery.split(",")
+                }
+            }
+        },
+
+        /**
+         * process the facet_fields response to different format.
+         *
+         *  [
+         *    { label:"field name",
+         *      buckets: [
+         *        {value: "field value one",
+         *         count: 120},
+         *        {value: "field value two",
+         *         count: 20},
+         *      ]
+         *    }
+         *  ]
+         */
+        getReadyFacets(facetFields) {
+
+            // we will return the facets as array.
+            var retFacets = [];
+            // key is the field name.
+            Object.keys(facetFields).forEach(function(fieldName) {
+
+                var buckets = facetFields[fieldName];
+                // get ready the buckets for each field.
+                var facetBuckets = [];
+                for(var i=0; i < buckets.length; i = i+2) {
+
+                    if (buckets[i + 1] < 1) {
+
+                       continue;
+                    }
+
+                    facetBuckets.push(
+                      {
+                        value: buckets[i],
+                        count: buckets[i + 1]
+                      }
+                    );
+                }
+
+                // get ready the facet object.
+                var facetItem = {
+                  label: fieldName,
+                  name: fieldName,
+                  buckets: facetBuckets
+                };
+
+                retFacets.push(facetItem);
+            });
+
+            return retFacets;
+        },
 
         /**
          */
