@@ -5,6 +5,7 @@ v-card
 
   v-card-text
     v-form( v-model="valid" )
+      // the collection row.
       v-row
         v-col( cols="12" md="10" )
           v-text-field( v-model="collectionUrl" 
@@ -16,6 +17,7 @@ v-card
             label="Debug"
             dense
           )
+      // basic fields.
       v-row
         v-col( cols="12" md="2" )
           v-text-field( v-model="idField"
@@ -32,6 +34,30 @@ v-card
             label="Sort:"
             dense
           )
+      // filter query
+      v-row
+        v-col( cols="12" md="12" )
+          v-text-field( v-model="filterQuery" 
+            label="Filter Query:"
+            dense
+          )
+      // field list 
+      v-row
+        v-col( cols="12" md="12" )
+          v-text-field( v-model="fieldList" 
+            label="Field List:"
+            dense
+          )
+      // facets
+      v-row
+        v-col( cols="12" md="12" )
+          v-text-field( v-model="facets" 
+            label="Facets:"
+            dense
+          )
+      // queryFields qf
+      // boostFunction bf
+      // boostQuery bq
 
   v-card-actions
     v-spacer
