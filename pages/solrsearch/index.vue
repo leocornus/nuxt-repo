@@ -216,8 +216,8 @@ export default {
             perPage: 15,
 
             // the URL to profile repository
-            profileRepo: '',
-            profileName: ''
+            profileRepo: '/nuxt-repo/',
+            profileName: 'local.json'
         };
     },
 
