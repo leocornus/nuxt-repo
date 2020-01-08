@@ -1,11 +1,19 @@
 <template lang="pug">
+// the preview card.
 v-card
   div( class="d-flex flex-no-wrap justify-space-between" )
     v-avatar( size="120" tile )
-      v-img( :src="doc['img.uri.thumbnail'][0]" )
+      v-img( :src="doc['img.uri.thumbnail'][0]" 
+        max-width="120"
+        @click.stop="showCarousels = true"
+      )
     div
       v-card-title {{previewTitle}}
       v-card-text {{previewDesc}}
+
+  // the carousels dialog.
+  v-dialog( v-model="showCarousels" )
+    v-img( :src="doc['img.uri.preview'][0]" )
 
 </template>
 
@@ -33,7 +41,7 @@ export default {
          */
         previewTitle() {
 
-            console.log(this.doc);
+            //console.log(this.doc);
             return this.doc.title;
         },
 
@@ -47,7 +55,16 @@ export default {
     },
 
     data() {
-        return {};
+        return {
+            showCarousels: false
+        };
+    },
+
+    methods: {
+        showSlides: function() {
+
+            console.log(this.doc);
+        }
     }
 }
 </script>
