@@ -137,9 +137,10 @@ export default {
 
         return {
 
-            query: '*:*',
             // the switch to show or hide the settings dialog.
             settingsDialog: false,
+
+            query: '*:*',
 
             valid: false,
 
@@ -483,6 +484,22 @@ export default {
         /**
          */
         settingsSave: function() {
+
+            let self = this;
+
+            console.log(self._data);
+            let keys = Object.keys(self._data)
+                .filter( key =>  typeof(self._data[key]) !== 'function');
+            console.log(keys);
+
+            let profile = keys.reduce( function(obj, key) {
+                return {
+                    ...obj,
+                    [key]: self._data[key]
+                };
+            }, {});
+
+            console.log(profile);
 
             this.settingsDialog = false;
         }
