@@ -31,75 +31,105 @@ v-container( grid-list-xs )
       | settings
 
   // the settings dialog.
-  v-dialog( v-model="settingsDialog" max-width="680px" persistent )
+  v-dialog( v-model="settingsDialog" max-width="780px" persistent )
     v-card
-      v-card-title( class="headline" )
-        | Search settings
+      v-toolbar( flat color="primary" dark )
+        v-toolbar-title Search settings
 
-      v-card-text
-        v-form( v-model="valid" )
-          // the collection row.
-          v-row
-            v-col( cols="12" md="10" )
-              v-text-field( v-model="collectionUrl" 
-                label="Collection URL:"
-                dense
-              )
-            v-col( cols="12" md="2" )
-              v-checkbox( v-model="debugQuery"
-                label="Debug"
-                dense
-              )
-          // basic fields.
-          v-row
-            v-col( cols="12" md="2" )
-              v-text-field( v-model="idField"
-                label="ID field:"
-                dense
-              )
-            v-col( cols="12" md="3" )
-              v-text-field( v-model="perPage"
-                label="Items Per Page:"
-                dense
-              )
-            v-col( cols="12" md="7" )
-              v-text-field( v-model="sort"
-                label="Sort:"
-                dense
-              )
-          // filter query
-          v-row
-            v-col( cols="12" md="12" )
-              v-text-field( v-model="filterQuery" 
-                label="Filter Query:"
-                dense
-              )
-          // field list 
-          v-row
-            v-col( cols="12" md="12" )
-              v-text-field( v-model="fieldList" 
-                label="Field List:"
-                dense
-              )
-          // facets
-          v-row
-            v-col( cols="12" md="12" )
-              v-text-field( v-model="facets" 
-                label="Facets:"
-                dense
-              )
-          // queryFields qf
-          // boostFunction bf
-          // boostQuery bq
-    
+      v-tabs( vertical )
+        v-tab
+          v-icon( left ) mdi-settings
+        v-tab
+          v-icon( left ) mdi-account
+
+        v-tab-item
+          v-card( flat )
+            v-card-text
+              v-form( v-model="valid" )
+                // the collection row.
+                v-row
+                  v-col( cols="12" md="10" )
+                    v-text-field( v-model="collectionUrl" 
+                      label="Solr Collection URL:"
+                      dense
+                    )
+                  v-col( cols="12" md="2" )
+                    v-checkbox( v-model="debugQuery"
+                      label="Debug"
+                      dense
+                    )
+                // basic fields.
+                v-row
+                  v-col( cols="12" md="2" )
+                    v-text-field( v-model="idField"
+                      label="ID field:"
+                      dense
+                    )
+                  v-col( cols="12" md="3" )
+                    v-text-field( v-model="perPage"
+                      label="Items Per Page:"
+                      dense
+                    )
+                  v-col( cols="12" md="7" )
+                    v-text-field( v-model="sort"
+                      label="Sort:"
+                      dense
+                    )
+                // filter query
+                v-row
+                  v-col( cols="12" md="12" )
+                    v-text-field( v-model="filterQuery" 
+                      label="Filter Query:"
+                      dense
+                    )
+                // field list 
+                v-row
+                  v-col( cols="12" md="12" )
+                    v-text-field( v-model="fieldList" 
+                      label="Field List:"
+                      dense
+                    )
+                // facets
+                v-row
+                  v-col( cols="12" md="12" )
+                    v-text-field( v-model="facets" 
+                      label="Facets:"
+                      dense
+                    )
+                // queryFields qf
+                // boostFunction bf
+                // boostQuery bq
+
+        v-tab-item
+          v-card( flat )
+            v-card-text
+              v-form
+                v-row
+                  v-col( cols="12" md="12" )
+                    v-text-field( v-model="profileRepo" 
+                      label="Profile Repository URL:"
+                      dense
+                    )
+                v-row
+                  v-col( cols="12" md="9" )
+                    v-text-field( v-model="profileName" 
+                      label="Pick Profile:"
+                      dense
+                    )
+                  v-col( cols="12" md="3" )
+                    v-btn Load
+     
       v-card-actions
+        v-btn( color="green darken-1" text
+          @click="settingsSave"
+        ) save profile
         v-spacer
         v-btn( color="green darken-1" text
           @click="settingsCancel"
         ) cancel
         v-btn( color="green darken-1" text
-          @click="settingsSave"
-        ) save
+          @click="settingsCancel"
+        ) Ok
 
   // the carousel dialog.
 
