@@ -6,6 +6,11 @@ export default {
     // set to Single Page application mode.
     mode: 'spa',
 
+    server: {
+        // port: 3000, // default is 3000
+        host: '0.0.0.0' // default is localhost
+    },
+
     buildModules: [
         // load the nuxtjs vutify-module
         // https://github.com/nuxt-community/vuetify-module
