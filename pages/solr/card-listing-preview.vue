@@ -1,7 +1,11 @@
 <template lang="pug">
 v-card
-  v-card-title {{previewTitle}}
-  v-card-text {{previewDesc}}
+  div( class="d-flex flex-no-wrap justify-space-between" )
+    v-avatar( size="120" tile )
+      v-img( :src="doc['img.uri.thumbnail'][0]" )
+    div
+      v-card-title {{previewTitle}}
+      v-card-text {{previewDesc}}
 
 </template>
 
