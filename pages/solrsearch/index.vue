@@ -100,6 +100,18 @@ v-container( grid-list-xs )
                 // boostFunction bf
                 // boostQuery bq
 
+            v-card-actions
+              v-btn( color="green darken-1" text
+                @click="settingsSave"
+              ) save profile
+              v-spacer
+              v-btn( color="green darken-1" text
+                @click="settingsCancel"
+              ) cancel
+              v-btn( color="green darken-1" text
+                @click="settingsCancel"
+              ) Ok
+
         v-tab-item
           v-card( flat )
             v-card-text
@@ -117,19 +129,7 @@ v-container( grid-list-xs )
                       dense
                     )
                   v-col( cols="12" md="3" )
-                    v-btn Load
-     
-      v-card-actions
-        v-btn( color="green darken-1" text
-          @click="settingsSave"
-        ) save profile
-        v-spacer
-        v-btn( color="green darken-1" text
-          @click="settingsCancel"
-        ) cancel
-        v-btn( color="green darken-1" text
-          @click="settingsCancel"
-        ) Ok
+                    v-btn( @click="loadProfile" ) Load
 
   // the carousel dialog.
 
@@ -213,7 +213,11 @@ export default {
 
             // pagination properties.
             currentPage: 1,
-            perPage: 15
+            perPage: 15,
+
+            // the URL to profile repository
+            profileRepo: '',
+            profileName: ''
         };
     },
 
@@ -530,8 +534,28 @@ export default {
             }, {});
 
             console.log(profile);
+            console.log(JSON.stringify(profile));
 
             this.settingsDialog = false;
+        },
+
+        /**
+         * function to load profile.
+         */
+        loadProfile: function() {
+
+            let self = this;
+
+            const theProfile = self.profileRepo + self.profileName;
+            axios.get(theProfile).
+                then(function(response) {
+                    console.log(response.data);
+                    //console.log(JSON.parse(response.data));
+                    Object.keys(response.data).forEach( function(key) {
+
+                        self[key] = response.data[key];
+                    });
+                });
         }
     }
 }
