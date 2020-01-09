@@ -21,8 +21,6 @@ v-card
         :key="i"
         :src="item"
         max-width="780px"
-        reverse-transition="fade-transition"
-        transition="fade-transition"
       )
 
 </template>
