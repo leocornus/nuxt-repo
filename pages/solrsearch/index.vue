@@ -143,11 +143,7 @@ v-container( grid-list-xs )
     v-row
       v-col( cols="12" md="3" )
         h3 Facets
-        v-expansion-panels
-          facet-buckets( v-for="(facet, index) in facets"
-            :facet="facet" 
-            :key="'facet-' + index"
-          )
+        facet-buckets( :facets="facets" )
 
       v-col( cols="12" md="9" )
         h3 {{resultSummary}}
