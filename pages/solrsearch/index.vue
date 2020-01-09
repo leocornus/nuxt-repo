@@ -143,7 +143,9 @@ v-container( grid-list-xs )
     v-row
       v-col( cols="12" md="3" )
         h3 Facets
-        facet-buckets( :facets="facets" )
+        facet-buckets( :facets="facets" 
+          v-on:bucket-select="handleBucketSelect"
+        )
 
       v-col( cols="12" md="9" )
         h3 {{resultSummary}}
@@ -520,6 +522,18 @@ export default {
             return retFacets;
         },
 
+
+        /**
+         * handle the bucket select event.
+         */
+        handleBucketSelect(fieldName, bucketValue) {
+
+            var fq = fieldName + ":" + bucketValue;
+            this.filterQuery = this.filterQuery === "" ? 
+                fq : this.filterQuery + "," + fq;
+            // load items to refresh the list.
+            this.simpleSearch();
+        },
         /**
          */
         settingsCancel: function() {
