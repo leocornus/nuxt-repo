@@ -12,13 +12,15 @@ v-card
       v-card-text {{previewDesc}}
 
   // the carousels dialog.
-  v-dialog( v-model="showCarousels" )
-    v-img( :src="doc['img.uri.preview'][0]" )
+  v-dialog( v-model="showCarousels" max-width="780px" )
+    //v-img( :src="doc['img.uri.preview'][0]" )
     v-carousel
+      // v-img will be used by default
       v-carousel-item(
         v-for="(item,i) in doc['img.uri.preview']"
         :key="i"
         :src="item"
+        max-width="780px"
         reverse-transition="fade-transition"
         transition="fade-transition"
       )
