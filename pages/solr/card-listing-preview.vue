@@ -3,7 +3,7 @@
 v-card
   div( class="d-flex flex-no-wrap justify-space-between" )
     v-avatar( size="120" tile )
-      v-img( :src="doc['img.uri.thumbnail'][0]" 
+      v-img( :src="previewThumbnail" 
         max-width="120"
         @click.stop="showCarousels = true"
       )
@@ -45,6 +45,18 @@ export default {
     },
 
     computed: {
+
+        /**
+         * preview thumbnail.
+         */
+        previewThumbnail() {
+
+            if(this.doc.hasOwnProperty('img.uri.thumbnail')) {
+                return this.doc['img.uri.thumbnail'][0];
+            } else {
+                return 'no image';
+            }
+        },
 
         /**
          * preview title for each doc.
