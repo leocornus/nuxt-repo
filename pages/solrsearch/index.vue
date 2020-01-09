@@ -143,6 +143,8 @@ v-container( grid-list-xs )
     v-row
       v-col( cols="12" md="3" )
         h3 Facets
+        // the filters card.
+        query-filters( :filters="filters" )
         facet-buckets( :facets="facets" 
           v-on:bucket-select="handleBucketSelect"
         )
@@ -164,13 +166,15 @@ import axios from 'axios'
 //import SettingsCard from '@/pages/solr/card-settings.vue';
 import ListingPreviewCard from '@/pages/solr/card-listing-preview.vue';
 import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
+import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 
 export default {
 
     components: {
     //    'card-settings': SettingsCard
         'listing-preview': ListingPreviewCard,
-        'facet-buckets': FacetBucketsCard
+        'facet-buckets': FacetBucketsCard,
+        'query-filters': QueryFiltersCard
     },
 
     layout: 'vuetify',
@@ -237,6 +241,17 @@ export default {
 
     computed: {
 
+        /**
+         * return the filter querys.
+         */
+        filters: function() {
+
+            if(this.filterQuery === "") {
+                return null;
+            } else {
+                return this.filterQuery.split(",");
+            }
+        }
     },
 
     methods: {
@@ -521,7 +536,6 @@ export default {
 
             return retFacets;
         },
-
 
         /**
          * handle the bucket select event.
