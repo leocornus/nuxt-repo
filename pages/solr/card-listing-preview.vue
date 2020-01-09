@@ -14,6 +14,14 @@ v-card
   // the carousels dialog.
   v-dialog( v-model="showCarousels" )
     v-img( :src="doc['img.uri.preview'][0]" )
+    v-carousel
+      v-carousel-item(
+        v-for="(item,i) in doc['img.uri.preview']"
+        :key="i"
+        :src="item"
+        reverse-transition="fade-transition"
+        transition="fade-transition"
+      )
 
 </template>
 
