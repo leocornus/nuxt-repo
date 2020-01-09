@@ -36,12 +36,14 @@ v-container( grid-list-xs )
       v-toolbar( flat color="primary" dark )
         v-toolbar-title Search settings
 
+      // the vertical tabs.
       v-tabs( vertical )
         v-tab
           v-icon( left ) mdi-settings
         v-tab
           v-icon( left ) mdi-account
 
+        // the settings tab.
         v-tab-item
           v-card( flat )
             v-card-text
@@ -92,7 +94,7 @@ v-container( grid-list-xs )
                 // facets
                 v-row
                   v-col( cols="12" md="12" )
-                    v-text-field( v-model="facets" 
+                    v-text-field( v-model="facetFields" 
                       label="Facets:"
                       dense
                     )
@@ -112,6 +114,7 @@ v-container( grid-list-xs )
                 @click="settingsCancel"
               ) Ok
 
+        // the account / profile tab.
         v-tab-item
           v-card( flat )
             v-card-text
@@ -136,13 +139,23 @@ v-container( grid-list-xs )
 
   // search result list with facet filters on the left side.
   v-layout( row wrap )
-    h3 {{resultSummary}}
     // the search result list.
-    listing-preview(
-      v-for="(doc, index) in results"
-      :doc="doc" :key="doc.id"
-      :index="index" :idFieldName="idField"
-    )
+    v-row
+      v-col( cols="12" md="3" )
+        h3 Facets
+        v-expansion-panels
+          facet-buckets( v-for="(facet, index) in facets"
+            :facet="facet" 
+            :key="'facet-' + index"
+          )
+
+      v-col( cols="12" md="9" )
+        h3 {{resultSummary}}
+        listing-preview(
+          v-for="(doc, index) in results"
+          :doc="doc" :key="doc.id"
+          :index="index" :idFieldName="idField"
+        )
 </template>
 
 <script>
@@ -152,12 +165,14 @@ import axios from 'axios'
 // import other vue component
 //import SettingsCard from '@/pages/solr/card-settings.vue';
 import ListingPreviewCard from '@/pages/solr/card-listing-preview.vue';
+import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
 
 export default {
 
     components: {
     //    'card-settings': SettingsCard
-        'listing-preview': ListingPreviewCard
+        'listing-preview': ListingPreviewCard,
+        'facet-buckets': FacetBucketsCard
     },
 
     layout: 'vuetify',
@@ -297,7 +312,7 @@ export default {
                 // Object hasOwnProperty is like hasKey but more complex.
                 if(response.data.hasOwnProperty('facet_counts')) {
                 //self.facets = response.data.facets;
-                    //self.facets = self.getReadyFacets(response.data.facet_counts.facet_fields);
+                    self.facets = self.getReadyFacets(response.data.facet_counts.facet_fields);
                 }
                 //self.stats = self.facets[self.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
