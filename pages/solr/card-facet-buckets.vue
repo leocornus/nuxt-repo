@@ -11,8 +11,9 @@ v-expansion-panels
       v-list
         v-list-item-group
           v-list-item(
-            v-for="(bucket, index) in facet.buckets"
-            :key="index"
+            v-for="(bucket, i) in facet.buckets"
+            :key="'bucket-' + i"
+            @click="$emit('bucket-select', facet.name, bucket.value)"
           )
             v-list-item-content {{bucket.value}}
             v-list-item-action
