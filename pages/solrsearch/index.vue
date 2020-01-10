@@ -107,12 +107,6 @@ v-container( grid-list-xs )
                 @click="settingsSave"
               ) save profile
               v-spacer
-              v-btn( color="green darken-1" text
-                @click="settingsCancel"
-              ) cancel
-              v-btn( color="green darken-1" text
-                @click="settingsCancel"
-              ) Ok
 
         // the account / profile tab.
         v-tab-item
@@ -134,6 +128,15 @@ v-container( grid-list-xs )
                     )
                   v-col( cols="12" md="3" )
                     v-btn( @click="loadProfile" ) Load
+
+      v-card-actions
+        v-spacer
+        v-btn( color="green darken-1" text
+          @click="settingsCancel"
+        ) cancel
+        v-btn( color="green darken-1" text
+          @click="settingsCancel"
+        ) Ok
 
   // the carousel dialog.
 
