@@ -1,7 +1,7 @@
 <template lang="pug">
 // the card to show all query filters.
 v-card( v-if="filters" class="mb-3")
-  v-list
+  v-list( color="indigo" class="lighten-4")
     v-subheader Filters
   
     v-list-item-group
@@ -9,6 +9,7 @@ v-card( v-if="filters" class="mb-3")
       v-list-item(
         v-for="(filter, i) in filters"
         :key="'filter-' + i"
+        @click = "$emit('filter-select', filter)"
       )
         v-list-item-content {{filter.replace(":", ": ")}}
         v-list-item-action
