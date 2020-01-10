@@ -1,7 +1,8 @@
 <template lang="pug">
 // the card to show all query filters.
 v-card( v-if="filters" class="mb-3")
-  v-list( color="indigo" class="lighten-4")
+  // NOTE: easy way to set class.
+  v-list.indigo.lighten-4
     v-subheader Filters
   
     v-list-item-group
