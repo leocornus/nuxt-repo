@@ -16,7 +16,7 @@ v-container( grid-list-xs )
       color="warning" 
       dark icon
       class="pa-2"
-      @click="simpleSearch"
+      @click="handleSearchButton"
     )
       v-icon mdi-magnify
       | search
@@ -231,7 +231,7 @@ export default {
 
             // debugQuery, default is false.
             // it is easier to treat it as String
-            debugQuery: "false",
+            debugQuery: false,
             // debug explain if debug query is on
             debugExplain: null,
             explainItem: null,
@@ -547,6 +547,14 @@ export default {
             return retFacets;
         },
 
+        handleSearchButton() {
+
+            // reset current page.
+            this.currentPage = 1;
+            // load items to refresh the list.
+            this.simpleSearch();
+        },
+
         /**
          * handle the bucket select event.
          */
@@ -555,6 +563,9 @@ export default {
             var fq = fieldName + ":" + bucketValue;
             this.filterQuery = this.filterQuery === "" ? 
                 fq : this.filterQuery + "," + fq;
+
+            // reset current page.
+            this.currentPage = 1;
             // load items to refresh the list.
             this.simpleSearch();
         },
@@ -569,6 +580,9 @@ export default {
             // join will use , as the default separator
             // reset the filterQuery.
             this.filterQuery = fqs.join();
+
+            // reset current page.
+            this.currentPage = 1;
             // load the resule set.
             this.simpleSearch();
 
