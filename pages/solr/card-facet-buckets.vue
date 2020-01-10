@@ -4,11 +4,14 @@ v-expansion-panels
   v-expansion-panel(
     v-for="(facet, index) in facets"
     :key="'facet-' + index"
+    :class="{'grey lighten-2': index % 2 === 0}"
   )
     v-expansion-panel-header {{facet.name}} - {{facet.buckets.length}}
   
     v-expansion-panel-content
-      v-list
+      v-list(
+        :class="{'grey lighten-2': index % 2 === 0}"
+      )
         v-list-item-group
           v-list-item(
             v-for="(bucket, i) in facet.buckets"
