@@ -153,6 +153,10 @@ v-container( grid-list-xs )
 
       v-col( cols="12" md="9" )
         h3 {{resultSummary}}
+        v-pagination( v-model="currentPage" :length="totalPages" total-visible="10"
+          v-if="results"
+          v-on:input="simpleSearch"
+        )
         listing-preview(
           v-for="(doc, index) in results"
           :doc="doc" :key="doc.id"
@@ -219,6 +223,7 @@ export default {
             queryFields: "",
 
             totalHits: 0,
+            totalPages: 0,
             facets: null,
             stats: null,
             results: null,
@@ -308,6 +313,9 @@ export default {
 
                 //console.log(response.data);
                 self.totalHits = response.data.response.numFound;
+
+                // calculate the total page numbers.
+                self.totalPages = Math.ceil(self.totalHits / self.perPage)
 
                 // TODO: add explain for each doc if debug query is on.
                 self.results = response.data.response.docs;
