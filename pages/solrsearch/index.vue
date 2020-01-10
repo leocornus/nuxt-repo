@@ -144,7 +144,9 @@ v-container( grid-list-xs )
       v-col( cols="12" md="3" )
         h3 Facets
         // the filters card.
-        query-filters( :filters="filters" )
+        query-filters( :filters="filters"
+          v-on:filter-select="removeFilter"
+        )
         facet-buckets( :facets="facets" 
           v-on:bucket-select="handleBucketSelect"
         )
@@ -548,6 +550,42 @@ export default {
             // load items to refresh the list.
             this.simpleSearch();
         },
+
+        /**
+         * handle remove filter.
+         */
+        removeFilter(filter) {
+
+            // remove the filter from the filterQuery.
+            var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
+            // join will use , as the default separator
+            // reset the filterQuery.
+            this.filterQuery = fqs.join();
+            // load the resule set.
+            this.simpleSearch();
+
+            // remove the fields from settings modal.
+            //let fieldName = filter.split(":")[0];
+            //switch(fieldName) {
+            //    case 'city':
+            //        this.city = "";
+            //        break;
+            //    case 'neighbourhoodname':
+            //        this.neighbourhood = "";
+            //        break;
+            //    case 'residencetype':
+            //        this.residenceType = "";
+            //        break;
+            //    case 'listvalue_i':
+            //        this.priceFrom = 0;
+            //        this.priceTo = 0;
+            //        break;
+            //    default:
+            //        // Do nothing here, just skip!
+            //        break;
+            //}
+        },
+
         /**
          */
         settingsCancel: function() {
