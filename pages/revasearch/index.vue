@@ -93,11 +93,19 @@ v-container( grid-list-xs )
 
                 // price range 
                 v-row
-                  v-col( cols="12" md="12" )
-                    v-text-field( v-model="priceRange" 
-                      label="Price Range:"
+                  v-col( cols="12" md="2" )
+                    span(class="") Price Range: 
+                  v-col( cols="12" md="10" )
+                    v-range-slider( v-model="priceRange" 
+                      max="5000000"
+                      min="10000"
+                      step="10000"
                       dense
                     )
+                      template( v-slot:prepend )
+                        span( v-text="priceRange[0]" )
+                      template( v-slot:append )
+                        span( v-text="priceRange[1]" )
 
                 // facets
                 v-row
@@ -232,6 +240,9 @@ export default {
             boostFunction: "",
             // query fields
             queryFields: "",
+
+            // price range for the v-range-slider
+            priceRange: [500000, 1000000],
 
             totalHits: 0,
             totalPages: 0,
