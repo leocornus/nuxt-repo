@@ -62,35 +62,43 @@ v-container( grid-list-xs )
                     )
                 // basic fields.
                 v-row
-                  v-col( cols="12" md="2" )
-                    v-text-field( v-model="idField"
-                      label="ID field:"
-                      dense
-                    )
                   v-col( cols="12" md="3" )
                     v-text-field( v-model="perPage"
                       label="Items Per Page:"
                       dense
                     )
-                  v-col( cols="12" md="7" )
+                  v-col( cols="12" md="9" )
                     v-text-field( v-model="sort"
                       label="Sort:"
                       dense
                     )
-                // filter query
+
+                // residence type, city, neighbourhood
                 v-row
-                  v-col( cols="12" md="12" )
-                    v-text-field( v-model="filterQuery" 
-                      label="Filter Query:"
+                  v-col( cols="12" md="4" )
+                    v-text-field( v-model="residenceType"
+                      label="Residence Type:"
                       dense
                     )
-                // field list 
-                v-row
-                  v-col( cols="12" md="12" )
-                    v-text-field( v-model="fieldList" 
-                      label="Field List:"
+                  v-col( cols="12" md="4" )
+                    v-text-field( v-model="city"
+                      label="City:"
                       dense
                     )
+                  v-col( cols="12" md="4" )
+                    v-text-field( v-model="neighbourhood"
+                      label="Neighbourhood:"
+                      dense
+                    )
+
+                // price range 
+                v-row
+                  v-col( cols="12" md="12" )
+                    v-text-field( v-model="priceRange" 
+                      label="Price Range:"
+                      dense
+                    )
+
                 // facets
                 v-row
                   v-col( cols="12" md="12" )
@@ -492,7 +500,7 @@ export default {
             } else {
                 return {
                   // filter query list.
-                  //fq: ["c4c_type:project"],
+                  //fq: ["category:project"],
                   fq: this.filterQuery.split(",")
                 }
             }
