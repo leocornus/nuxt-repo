@@ -94,16 +94,18 @@ v-container( grid-list-xs )
 
                 // price range 
                 v-row
-                  v-col( cols="12" md="2" )
+                  v-col( cols="12" md="3" )
                     v-checkbox( v-model="priceRangeOn"
                       label="Price Range"
                       dense
-                    )
-                  v-col( cols="12" md="10" )
+                    ).mt-0.pt-0
+                  v-col( cols="12" md="9" )
                     v-range-slider( v-model="priceRange" 
+                      :disabled="!priceRangeOn"
                       max="5000000"
                       min="10000"
                       step="10000"
+                      hide-details
                       dense
                     )
                       template( v-slot:prepend )
@@ -617,12 +619,7 @@ export default {
             var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
             // join will use , as the default separator
             // reset the filterQuery.
-            this.filterQuery = fqs.join();
-
-            // reset current page.
-            this.currentPage = 1;
-            // load the resule set.
-            this.simpleSearch();
+            this.filterQuery = fqs.join(",");
 
             // remove the fields from settings modal.
             let fieldName = filter.split(":")[0];
@@ -643,6 +640,12 @@ export default {
                     // Do nothing here, just skip!
                     break;
             }
+
+            // reset current page.
+            this.currentPage = 1;
+            // load the resule set.
+            this.simpleSearch();
+
         },
 
         /**
