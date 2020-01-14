@@ -515,13 +515,25 @@ export default {
          */
         getFilterQuery() {
 
+            let query = [];
+
+            if(this.filterQuery != "") {
+                query = this.filterQuery.split(",")
+                if(query.length > 0) {
+                    query = query.filter(item => !item.startsWith("listvalue_i"));
+                }
+                this.filterQuery = query.join(",");
+            }
+
             // add the priceRange as filter query.
             if(this.priceRangeOn) {
+
                 let range = "listvalue_i:[" + this.priceRange[0] +
                     " TO " + this.priceRange[1] + "]";
+                query.push(range);
+
                 // prepare the price range query.
-                this.filterQuery = this.filterQuery ==="" ? range : 
-                    this.filterQuery + "," + range;
+                this.filterQuery = query.join(",");
             }
 
             if(this.filterQuery === "") {
@@ -600,7 +612,7 @@ export default {
          */
         handleBucketSelect(fieldName, bucketValue) {
 
-            var fq = fieldName + ":" + bucketValue;
+            var fq = fieldName + ':"' + bucketValue + '"';
             this.filterQuery = this.filterQuery === "" ? 
                 fq : this.filterQuery + "," + fq;
 
