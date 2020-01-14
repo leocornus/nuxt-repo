@@ -95,7 +95,10 @@ v-container( grid-list-xs )
                 // price range 
                 v-row
                   v-col( cols="12" md="2" )
-                    span(class="") Price Range: 
+                    v-checkbox( v-model="priceRangeOn"
+                      label="Price Range"
+                      dense
+                    )
                   v-col( cols="12" md="10" )
                     v-range-slider( v-model="priceRange" 
                       max="5000000"
@@ -243,6 +246,8 @@ export default {
             queryFields: "",
 
             // price range for the v-range-slider
+            // default is not use price range.
+            priceRangeOn: false,
             priceRange: [500000, 1000000],
 
             totalHits: 0,
@@ -508,6 +513,15 @@ export default {
          */
         getFilterQuery() {
 
+            // add the priceRange as filter query.
+            if(this.priceRangeOn) {
+                let range = "listvalue_i:[" + this.priceRange[0] +
+                    " TO " + this.priceRange[1] + "]";
+                // prepare the price range query.
+                this.filterQuery = this.filterQuery ==="" ? range : 
+                    this.filterQuery + "," + range;
+            }
+
             if(this.filterQuery === "") {
                 return {};
             } else {
@@ -611,8 +625,8 @@ export default {
             this.simpleSearch();
 
             // remove the fields from settings modal.
-            //let fieldName = filter.split(":")[0];
-            //switch(fieldName) {
+            let fieldName = filter.split(":")[0];
+            switch(fieldName) {
             //    case 'city':
             //        this.city = "";
             //        break;
@@ -622,14 +636,13 @@ export default {
             //    case 'residencetype':
             //        this.residenceType = "";
             //        break;
-            //    case 'listvalue_i':
-            //        this.priceFrom = 0;
-            //        this.priceTo = 0;
-            //        break;
-            //    default:
-            //        // Do nothing here, just skip!
-            //        break;
-            //}
+                case 'listvalue_i':
+                    this.priceRangeOn = false;
+                    break;
+                default:
+                    // Do nothing here, just skip!
+                    break;
+            }
         },
 
         /**
