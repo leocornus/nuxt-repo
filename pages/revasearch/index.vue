@@ -187,6 +187,10 @@ v-container( grid-list-xs )
           :doc="doc" :key="doc.id"
           :index="index" :idFieldName="idField"
         )
+        v-pagination( v-model="currentPage" :length="totalPages" total-visible="10"
+          v-if="results"
+          v-on:input="simpleSearch"
+        )
 </template>
 
 <script>
