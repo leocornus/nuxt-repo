@@ -37,7 +37,8 @@ v-container( grid-list-xs )
         v-toolbar-title Search settings
 
       // the vertical tabs.
-      v-tabs( vertical )
+      //v-tabs( vertical )
+      v-tabs
         v-tab
           v-icon( left ) mdi-settings
         v-tab
@@ -151,7 +152,7 @@ v-container( grid-list-xs )
           @click="settingsCancel"
         ) cancel
         v-btn( color="green darken-1" text
-          @click="settingsCancel"
+          @click="settingsOk"
         ) Ok
 
   // the carousel dialog.
@@ -309,6 +310,7 @@ export default {
 
             // this will show how to use query parameters in a JSON request.
             var postParams = self.buildQuery();
+
             // set to query params modal.
             if(self.jeQueryParams) {
 
@@ -631,10 +633,20 @@ export default {
         },
 
         /**
+         * method to handle cancel button on Settings dialog.
          */
         settingsCancel: function() {
 
             this.settingsDialog = false;
+        },
+
+        /**
+         * method to handle ok button on settings dialog.
+         */
+        settingsOk: function() {
+
+            this.settingsDialog = false;
+            this.simpleSearch();
         },
 
         /**
