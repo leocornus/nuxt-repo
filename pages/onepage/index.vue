@@ -1,20 +1,17 @@
 <template lang="pug">
-div( class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" )
-  header( class="masthead mb-auto" )
-    div( class="inner" )
-      h3( class="masthead-brand" )
-      nav( class="nav nav-masthead justify-content-center" )
-        a( class="nav-link active" href="#" ) Home
+v-app( light )
+  v-parallax( height="800" src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg" )
+    v-layout( column align-center justify-center class="white--text")
+      h1( class="mb-10 display-1 text-center") Leocornus Ltd.
+      h3( class="mb-4 text-center" )
+        | Open Source Experts to bring <strong>Innovation</strong>,
+        | <strong>Intelligence</strong> and <strong>Efficiency</strong> on your day to day business!
+      h4 Contact: <strong>hello@leocorn.com</strong>
 
-  main( role="main" class="inner cover" )
-    h1 Leocornus Ltd.
-    h3( class="cover-heading mt-4 mb-5" )
-      | Open Source Experts to bring Innovation, Intelligence and Efficency on your day to day business!
-    h4 Contact: hello@leocorn.com
-
-  footer( class="mastfoot mt-auto" )
-    div( class="inner" )
-      p 2009 - 2020 Leocornus Ltd. All rights reserved.
+  v-footer.blue.lighten-1
+    v-layout( row wrap align-center justify-center )
+      div( class="white--text ml-4 text-center" )
+        p &copy; 2009 - 2020 Leocornus Ltd.
 </template>
 
 <script>
