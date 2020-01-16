@@ -4,9 +4,15 @@ v-app( light )
     v-layout( column align-center justify-center class="white--text")
       h1( class="mb-10 display-1 text-center") Leocornus Ltd.
       h3( class="mb-4 text-center" )
-        | Open Source Experts to bring <strong>Innovation</strong>,
-        | <strong>Intelligence</strong> and <strong>Efficiency</strong> on your day to day business!
-      h4 Contact: <strong>hello@leocorn.com</strong>
+        | Open Source Experts to bring
+        strong Innovation,
+        | ,
+        strong Intelligence
+        | and 
+        strong Efficiency
+        | on your day to day business!
+      h4 Contact:
+        strong hello@leocorn.com
 
   v-footer.blue.lighten-1
     v-layout( row wrap align-center justify-center )
