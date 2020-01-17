@@ -116,9 +116,13 @@ v-container( grid-list-xs )
                 // facets
                 v-row
                   v-col( cols="12" md="12" )
-                    v-text-field( v-model="facetFields" 
+                    v-autocomplete( v-model="facetFields" 
                       label="Facets:"
+                      :items="allFields"
+                      multiple
                       dense
+                      chips
+                      small-chips
                     )
                 // queryFields qf
                 // boostFunction bf
@@ -233,8 +237,11 @@ export default {
             collections: [],
             collectionLabel: "Collection: ",
 
+            // all available fields, get from solr schema.
+            allFields: ["abc","cde"],
+
             // default facet field is empty.
-            facetFields: "",
+            facetFields: [],
 
             // set the default filter query to empty.
             filterQuery: "",
@@ -430,7 +437,7 @@ export default {
          */
         getFacetFields() {
 
-            if(this.facetFields === "") {
+            if(this.facetFields.length < 1) {
                 // return an empty object.
                 return {};
             } else {
@@ -438,13 +445,14 @@ export default {
                   facet: "on",
                   // set to negative number to return unlimit facets
                   "facet.limit": -1,
+                  // TODO: set the sort option for facets.
                   // using array for multiple values
                   // in association with multiple values in HTTP parameters.
                   // ?facet_field=project_id&facet_field=customer_id
                   //"facet.field":["project_id", "customer_id"]
                   // here is for single value
                   //"facet.field":"customer_id"
-                  "facet.field": this.facetFields.split(",")
+                  "facet.field": this.facetFields
                 };
             }
         },
