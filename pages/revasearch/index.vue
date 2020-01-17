@@ -124,6 +124,13 @@ v-container( grid-list-xs )
                       chips
                       small-chips
                     )
+                      template( v-slot:selection="data" )
+                        v-chip(
+                          v-bind="data"
+                          close
+                          @click:close="removeFacetSelection(data.item)"
+                        )
+                          | {{ data.item }}
                 // queryFields qf
                 // boostFunction bf
                 // boostQuery bq
@@ -670,6 +677,17 @@ export default {
             // load the resule set.
             this.simpleSearch();
 
+        },
+
+        /**
+         * handle remove facet selection on settings dialog.
+         */
+        removeFacetSelection: function(facet) {
+
+            console.log("selected facet:", facet);
+            const index = this.facetFields.indexOf(facet);
+            // replace one element at index position.
+            if( index >=0 ) this.facetFields.splice(index, 1);
         },
 
         /**
