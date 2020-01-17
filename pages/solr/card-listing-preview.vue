@@ -1,10 +1,10 @@
 <template lang="pug">
 // the preview card.
-v-card
+v-card.mb-2
   div( class="d-flex flex-no-wrap justify-space-between" )
-    v-avatar( size="120" tile )
+    v-avatar( size="180" tile )
       v-img( :src="previewThumbnail" 
-        max-width="120"
+        max-width="180"
         @click.stop="showCarousels = true"
       )
     div
