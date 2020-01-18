@@ -77,17 +77,20 @@ v-container( grid-list-xs )
                 // residence type, city, neighbourhood
                 v-row
                   v-col( cols="12" md="4" )
-                    v-text-field( v-model="residenceType"
+                    //v-text-field( v-model="residenceType"
+                    v-text-field( 
                       label="Residence Type:"
                       dense
                     )
                   v-col( cols="12" md="4" )
-                    v-text-field( v-model="city"
+                    //v-text-field( v-model="city"
+                    v-text-field( 
                       label="City:"
                       dense
                     )
                   v-col( cols="12" md="4" )
-                    v-text-field( v-model="neighbourhood"
+                    //v-text-field( v-model="neighbourhood"
+                    v-text-field( 
                       label="Neighbourhood:"
                       dense
                     )
@@ -120,13 +123,15 @@ v-container( grid-list-xs )
                       label="Facets:"
                       :items="allFields"
                       multiple
+                      @change="facetSelectionChange"
+                      @input="facetInput = null"
+                      :search-input.sync="facetInput"
                       dense
                       chips
                       small-chips
                     )
                       template( v-slot:selection="data" )
                         v-chip(
-                          v-bind="data"
                           close
                           @click:close="removeFacetSelection(data.item)"
                         )
@@ -249,6 +254,8 @@ export default {
 
             // default facet field is empty.
             facetFields: [],
+            // facet input.
+            facetInput: null,
 
             // set the default filter query to empty.
             filterQuery: "",
@@ -691,6 +698,14 @@ export default {
         },
 
         /**
+         * handle facet selection change from the autocomplete component.
+         */
+        facetSelectionChange: function() {
+
+            console.log(this.facetFields);
+        },
+
+        /**
          * method to handle cancel button on Settings dialog.
          */
         settingsCancel: function() {
@@ -747,6 +762,10 @@ export default {
 
                         self[key] = response.data[key];
                     });
+
+                    // TODO: load all available fields.
+
+                    // TODO: load all cities.
                 });
         }
     }
