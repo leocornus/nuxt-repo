@@ -756,11 +756,25 @@ export default {
             const theProfile = self.profileRepo + self.profileName;
             axios.get(theProfile).
                 then(function(response) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     //console.log(JSON.parse(response.data));
                     Object.keys(response.data).forEach( function(key) {
 
-                        self[key] = response.data[key];
+                        // handle files separately:
+                        if( key === "files" ) {
+                            response.data[key].forEach( function(file) {
+                                axios.get( self.profileRepo + file.fileName ).
+                                    then( function( fileRes ) {
+
+                                        //console.log( fileRes.data.split("\n") );
+                                        self[file.fieldName] = fileRes.data.split("\n");
+                                    });
+                            });
+                        } else {
+
+                            // simple copy all other fields.
+                            self[key] = response.data[key];
+                        }
                     });
 
                     // TODO: load all available fields.
