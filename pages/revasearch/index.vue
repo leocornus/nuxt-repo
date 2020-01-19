@@ -74,6 +74,27 @@ v-container( grid-list-xs )
                       dense
                     )
 
+                // pick cities. 
+                v-row
+                  v-col( cols="12" md="12" )
+                    v-autocomplete( v-model="cities" 
+                      label="Cities:"
+                      :items="allCities"
+                      multiple
+                      @input="cityInput = null"
+                      :search-input.sync="cityInput"
+                      dense
+                      chips
+                      small-chips
+                    )
+                      template( v-slot:selection="data" )
+                        v-chip(
+                          close
+                        )
+                          | {{ data.item }}
+                // queryFields qf
+                // boostFunction bf
+                // boostQuery bq
                 // residence type, city, neighbourhood
                 v-row
                   v-col( cols="12" md="4" )
@@ -116,7 +137,7 @@ v-container( grid-list-xs )
                       template( v-slot:append )
                         span( v-text="priceRange[1]" )
 
-                // facets
+                // facet fields.
                 v-row
                   v-col( cols="12" md="12" )
                     v-autocomplete( v-model="facetFields" 
@@ -251,11 +272,15 @@ export default {
 
             // all available fields, get from solr schema.
             allFields: ["abc","cde"],
-
             // default facet field is empty.
             facetFields: [],
             // facet input.
             facetInput: null,
+
+            // autocomplete for citeis.
+            allCities: ["Toronto", "Markham"],
+            cities: ["Toronto", "Markham"],
+            cityInput: null,
 
             // set the default filter query to empty.
             filterQuery: "",
