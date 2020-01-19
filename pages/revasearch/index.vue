@@ -90,31 +90,13 @@ v-container( grid-list-xs )
                       template( v-slot:selection="data" )
                         v-chip(
                           close
+                          @click:close="removeCitySelection(data.item)"
                         )
                           | {{ data.item }}
                 // queryFields qf
                 // boostFunction bf
                 // boostQuery bq
                 // residence type, city, neighbourhood
-                v-row
-                  v-col( cols="12" md="4" )
-                    //v-text-field( v-model="residenceType"
-                    v-text-field( 
-                      label="Residence Type:"
-                      dense
-                    )
-                  v-col( cols="12" md="4" )
-                    //v-text-field( v-model="city"
-                    v-text-field( 
-                      label="City:"
-                      dense
-                    )
-                  v-col( cols="12" md="4" )
-                    //v-text-field( v-model="neighbourhood"
-                    v-text-field( 
-                      label="Neighbourhood:"
-                      dense
-                    )
 
                 // price range 
                 v-row
@@ -282,6 +264,11 @@ export default {
             cities: ["Toronto", "Markham"],
             cityInput: null,
 
+            // autocomplete for citeis.
+            allNeighbours: ["Toronto", "Markham"],
+            neighbours: ["Toronto", "Markham"],
+            neighbourInput: null,
+
             // set the default filter query to empty.
             filterQuery: "",
 
@@ -336,7 +323,7 @@ export default {
             if(this.filterQuery === "") {
                 return null;
             } else {
-                return this.filterQuery.split(",");
+                return this.filterQuery.split("||");
             }
         }
     },
@@ -568,12 +555,14 @@ export default {
 
             let query = [];
 
+            // remove the price range and cities first.
             if(this.filterQuery != "") {
-                query = this.filterQuery.split(",")
+                query = this.filterQuery.split("||")
                 if(query.length > 0) {
-                    query = query.filter(item => !item.startsWith("listvalue_i"));
+                    query = query.filter(item => !(item.startsWith("listvalue_i") || 
+                        item.startsWith("city") ));
                 }
-                this.filterQuery = query.join(",");
+                this.filterQuery = query.join("||");
             }
 
             // add the priceRange as filter query.
@@ -584,7 +573,14 @@ export default {
                 query.push(range);
 
                 // prepare the price range query.
-                this.filterQuery = query.join(",");
+                this.filterQuery = query.join("||");
+            }
+
+            // add the cities filter.
+            if(this.cities.length > 0) {
+
+                query.push("city:(\"" + this.cities.join("\",\"") + "\")");
+                this.filterQuery = query.join("||");
             }
 
             if(this.filterQuery === "") {
@@ -593,7 +589,7 @@ export default {
                 return {
                   // filter query list.
                   //fq: ["category:project"],
-                  fq: this.filterQuery.split(",")
+                  fq: this.filterQuery.split("||")
                 }
             }
         },
@@ -714,6 +710,17 @@ export default {
         /**
          * handle remove facet selection on settings dialog.
          */
+        removeCitySelection: function(city) {
+
+            //console.log("selected facet:", facet);
+            const index = this.cities.indexOf(city);
+            // replace one element at index position.
+            if( index >=0 ) this.cities.splice(index, 1);
+        },
+
+        /**
+         * handle remove facet selection on settings dialog.
+         */
         removeFacetSelection: function(facet) {
 
             console.log("selected facet:", facet);
@@ -727,7 +734,7 @@ export default {
          */
         facetSelectionChange: function() {
 
-            console.log(this.facetFields);
+            //console.log(this.facetFields);
         },
 
         /**
