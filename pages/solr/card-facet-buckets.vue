@@ -19,6 +19,7 @@ v-expansion-panels
             @click="$emit('bucket-select', facet.name, bucket.value)"
           )
             v-list-item-content {{bucket.value}}
+            //v-list-item-content(v-text="bucketValue(bucket.value)")
             v-list-item-action
               v-list-item-action-text {{bucket.count}}
 </template>
@@ -32,7 +33,11 @@ export default {
     props: ["facets"],
 
     // using computed for dynamic data.
-    computed: {
+    methods: {
+        bucketValue: function(value) {
+            console.log(value);
+            return value;
+        }
     }
 }
 </script>
