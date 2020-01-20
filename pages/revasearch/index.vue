@@ -661,7 +661,7 @@ export default {
 
             var fq = fieldName + ':"' + bucketValue + '"';
             this.filterQuery = this.filterQuery === "" ? 
-                fq : this.filterQuery + "," + fq;
+                fq : this.filterQuery + "||" + fq;
 
             // reset current page.
             this.currentPage = 1;
@@ -675,10 +675,10 @@ export default {
         removeFilter(filter) {
 
             // remove the filter from the filterQuery.
-            var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
+            var fqs = this.filterQuery.split("||").filter(fq => fq != filter);
             // join will use , as the default separator
             // reset the filterQuery.
-            this.filterQuery = fqs.join(",");
+            this.filterQuery = fqs.join("||");
 
             // remove the fields from settings modal.
             let fieldName = filter.split(":")[0];
