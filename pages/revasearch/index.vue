@@ -41,8 +41,10 @@ v-container( grid-list-xs )
       v-tabs
         v-tab
           v-icon( left ) mdi-settings
+          | Settings
         v-tab
           v-icon( left ) mdi-account
+          | Profiles
 
         // the settings tab.
         v-tab-item
@@ -143,7 +145,7 @@ v-container( grid-list-xs )
                 // boostFunction bf
                 // boostQuery bq
 
-            v-card-actions
+            //v-card-actions
               v-btn( color="green darken-1" text
                 @click="settingsSave"
               ) save profile
@@ -159,6 +161,7 @@ v-container( grid-list-xs )
                   v-col( cols="12" md="12" )
                     v-text-field( v-model="profileRepo" 
                       label="Profile Repository URL:"
+                      autocomplete="on"
                       dense
                     )
                 v-row
