@@ -2,12 +2,17 @@
 v-container(grid-list-md text-center)
   v-list
     v-list-item
+      v-list-item-content {{profileName}}
+    v-list-item
       n-link(to="/revasearch") Reva Search
     v-list-item
       n-link(to="/login") Login
 </template>
 
 <script>
+
+import Profile from '@/libs/profile';
+
 export default {
 
     layout: 'vuetify',
@@ -19,6 +24,7 @@ export default {
 
     data() {
         return {
+            profileName: Profile.name
         }
     }
 }
