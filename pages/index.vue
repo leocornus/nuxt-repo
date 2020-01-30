@@ -1,28 +1,22 @@
 <template lang="pug">
-v-app( light )
-  v-parallax( height="800" src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg" )
-    v-layout( column align-center justify-center class="white--text")
-      h1( class="mb-10 display-1 text-center") Leocornus Ltd.
-      h3( class="mb-4 text-center" )
-        | Open Source Experts to bring 
-        v-chip Innovation
-        | , 
-        v-chip Intelligence
-        |  and 
-        v-chip Efficiency
-        |  on your day to day business!
-      h4 Contact: 
-        v-chip hello@leocorn.com
-
-  v-footer.blue.lighten-1
-    v-layout( row wrap align-center justify-center )
-      div( class="white--text ml-4 text-center" )
-        p &copy; 2009 - 2020 Leocornus Ltd.
+v-container(grid-list-md text-center)
+  v-list
+    v-list-item
+      n-link(to="/revasearch") Reva Search
+    v-list-item
+      n-link(to="/login") Login
 </template>
 
 <script>
 export default {
+
+    layout: 'vuetify',
+
     name: "homepage",
+
+    // turn off authtication.
+    auth: false,
+
     data() {
         return {
         }
