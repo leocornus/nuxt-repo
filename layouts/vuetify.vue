@@ -3,17 +3,46 @@
 v-app
   v-app-bar(color='indigo' dark fixed app dense)
     v-app-bar-nav-icon/
-    v-toolbar-title Toolbar Grid Footer
+    v-toolbar-title Leocornus Development
     v-spacer
-    v-btn(icon)
-      v-icon mdi-magnify
-    v-menu( left bottom offset-y transition="scale-transition" )
+    v-btn(icon to="/" nuxt)
+      v-icon mdi-home
+    // sign in button for not logged in user.
+    v-btn(
+      v-if="!$auth.loggedIn" 
+      color='indigo'
+      depressed
+      @click="login"
+    )
+      | Sign In
+    v-menu(
+      v-if="$auth.loggedIn"
+      left bottom offset-y transition="scale-transition"
+    )
       template( v-slot:activator="{ on }" )
-        v-btn( icon v-on="on" )
-          v-icon mdi-dots-vertical
-      v-list
-        v-list-item( v-for="n in 5" :key="n" @click="() => {}" )
-          v-list-item-title Option {{ n }}
+        v-btn(
+          v-if="$auth.loggedIn" 
+          v-on="on"
+          color="indigo"
+          depressed
+        )
+          v-avatar(
+            size="32"
+          )
+            img(:src="$auth.user.picture")
+            v-icon mdi-menu-down
+      v-card
+        v-list
+          v-list-item
+            v-list-item-avatar
+              img( :src="$auth.user.picture" )
+            v-list-item-content
+              v-list-item-title {{$auth.user.name}}
+              v-list-item-subtitle {{$auth.user.email}}
+          v-list-item( @click="logout" )
+            v-list-item-title Logout
+
+        v-divider
 
   v-content
     Nuxt/
@@ -26,5 +55,19 @@ v-app
 
 <script>
 export default {
+    methods: {
+        login: function() {
+
+            return this.$auth.loginWith('auth0')
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+        logout: function() {
+
+            return this.$auth.logout();
+        }
+    }
 }
 </script>
