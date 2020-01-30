@@ -227,6 +227,8 @@ import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 
 export default {
 
+    auth: false,
+
     components: {
     //    'card-settings': SettingsCard
         'listing-preview': ListingPreviewCard,
