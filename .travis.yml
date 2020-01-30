@@ -11,6 +11,7 @@ branches:
   - master
 
 install:
+  - touch libs/local.js
   - npm install
   - npm run generate
 
