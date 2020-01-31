@@ -5,6 +5,7 @@ v-container( grid-list-xs )
 </template>
 
 <script>
+
 import axios from 'axios';
 
 export default {
