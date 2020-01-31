@@ -845,7 +845,8 @@ export default {
             //this.description
 
             // update profile.
-            config.updateProfile(account, this.profileName, this.description, queryParams);
+            config.updateProfile(account, this.profileName, this.description,
+                this.collectionUrl, queryParams);
         }
     }
 }
