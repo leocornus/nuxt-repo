@@ -54,8 +54,8 @@ v-container( grid-list-xs )
                 // the collection row.
                 v-row
                   v-col( cols="12" md="10" )
-                    v-text-field( v-model="collectionUrl" 
-                      label="Solr Collection URL:"
+                    v-text-field( v-model="profileName" 
+                      label="Pick Profile:"
                       dense
                     )
                   v-col( cols="12" md="2" )
@@ -158,20 +158,25 @@ v-container( grid-list-xs )
               // form to load profile.
               v-form
                 v-row
-                  v-col( cols="12" md="12" )
+                  v-col( cols="12" md="9" )
                     v-text-field( v-model="profileRepo" 
-                      label="Profile Repository URL:"
-                      autocomplete="on"
+                      label="Profile Repository:"
                       dense
                     )
+                  v-col( cols="12" md="3" )
+                    v-btn( @click="loadProfile" ) Load
                 v-row
                   v-col( cols="12" md="9" )
                     v-text-field( v-model="profileName" 
                       label="Pick Profile:"
                       dense
                     )
+                    v-text-field( v-model="description" 
+                      label="Profile Description:"
+                      dense
+                    )
                   v-col( cols="12" md="3" )
-                    v-btn( @click="loadProfile" ) Load
+                    v-btn( @click="saveProfile" ) Save Profile
 
       v-card-actions
         v-spacer
@@ -217,8 +222,9 @@ v-container( grid-list-xs )
 
 <script>
 
-import axios from 'axios'
+import axios from 'axios';
 
+import config from '@/libs/config';
 // import other vue component
 //import SettingsCard from '@/pages/solr/card-settings.vue';
 import ListingPreviewCard from '@/pages/solr/card-listing-preview.vue';
@@ -252,7 +258,7 @@ export default {
             valid: false,
 
             idField: 'id',
-            collectionUrl: 'http://search.example.com',
+            collectionUrl: config.searchUrl,
             // available collections, we will load it at the created hook.
             collections: [],
             collectionLabel: "Collection: ",
@@ -313,7 +319,9 @@ export default {
             perPage: 15,
 
             // the URL to profile repository
-            profileRepo: '/nuxt-repo/',
+            profileRepo: '/',
+            // profile description
+            description: '',
             profileName: 'local.json'
         };
     },
@@ -780,7 +788,7 @@ export default {
             console.log(profile);
             console.log(JSON.stringify(profile));
 
-            this.settingsDialog = false;
+            //this.settingsDialog = false;
         },
 
         /**
@@ -818,6 +826,26 @@ export default {
 
                     // TODO: load all cities.
                 });
+        },
+
+        /**
+         * function to save profile.
+         */
+        saveProfile: function() {
+
+            // preparing the payload.
+            let queryParams = this.buildQuery();
+            console.log(JSON.stringify(queryParams));
+
+            // account
+            let account = this.$auth.user.email;
+            // profile name.
+            //this.profileName
+            // description, comments.
+            //this.description
+
+            // update profile.
+            config.updateProfile(account, this.profileName, this.description, queryParams);
         }
     }
 }
