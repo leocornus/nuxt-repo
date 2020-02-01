@@ -54,8 +54,10 @@ v-container( grid-list-xs )
                 // the collection row.
                 v-row
                   v-col( cols="12" md="10" )
-                    v-text-field( v-model="profileName" 
+                    v-autocomplete(
+                      v-model="profileName"
                       label="Pick Profile:"
+                      :items="allProfiles"
                       dense
                     )
                   v-col( cols="12" md="2" )
@@ -324,8 +326,26 @@ export default {
             profileRepo: '/',
             // profile description
             description: '',
-            profileName: 'local.json'
+            profileName: 'local.json',
+            allProfiles: []
         };
+    },
+
+    /**
+     * initialization after created.
+     */
+    created() {
+
+        let self = this;
+
+        // load all profiles.
+        if(self.$auth.loggedIn) {
+            config.getAllProfiles(self.$auth.user.email, function(profiles, error) {
+                if(profiles) {
+                    self.allProfiles = profiles.map( profile => profile.name );
+                }
+            });
+        }
     },
 
     computed: {
