@@ -175,7 +175,9 @@ v-container( grid-list-xs )
                       label="Profile Description:"
                       dense
                     )
-                  v-col( cols="12" md="3" )
+                  v-col( v-if="$auth.loggedIn"
+                    cols="12" md="3"
+                  )
                     v-btn( @click="saveProfile" ) Save Profile
 
       v-card-actions
