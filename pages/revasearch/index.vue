@@ -348,14 +348,7 @@ export default {
 
         // load all profiles.
         if(self.$auth.loggedIn) {
-            config.getAllProfiles(self.$auth.user.email, function(profiles, error) {
-                if(profiles) {
-                    //self.allProfiles = profiles.map( profile => profile.name );
-                    self.allProfiles = profiles;
-                    // load the first profile.
-                    config.loadProfile2Page(profiles[0], self);
-                }
-            });
+            self.loadAllProfiles();
         }
     },
 
@@ -879,6 +872,28 @@ export default {
             // update profile.
             config.updateProfile(account, this.profileName, this.profileDesc,
                 this.collectionUrl, queryParams);
+
+            // reload all profiles.
+            // only logged in users can save profile!
+            // we don't need chech authentication here.
+            this.loadAllProfiles();
+        },
+
+        /**
+         * load all profiles.
+         */
+        loadAllProfiles: function() {
+
+            let self = this;
+
+            config.getAllProfiles(self.$auth.user.email, function(profiles, error) {
+                if(profiles) {
+                    //self.allProfiles = profiles.map( profile => profile.name );
+                    self.allProfiles = profiles;
+                    // load the first profile.
+                    config.loadProfile2Page(profiles[0], self);
+                }
+            });
         },
 
         /**
@@ -890,9 +905,7 @@ export default {
 
             // load profile for the selected item.
             config.getProfile(item, function(profile, error) {
-                self.profileName = profile.name;
-                self.profileDesc = profile.description;
-                // TODO load profile from the query_json.
+                config.loadProfile2Page(profile, self);
             });
         }
     }
