@@ -58,6 +58,8 @@ v-container( grid-list-xs )
                       v-model="profileName"
                       label="Pick Profile:"
                       :items="allProfiles"
+                      item-text="name"
+                      item-value="id"
                       dense
                     )
                   v-col( cols="12" md="2" )
@@ -342,7 +344,8 @@ export default {
         if(self.$auth.loggedIn) {
             config.getAllProfiles(self.$auth.user.email, function(profiles, error) {
                 if(profiles) {
-                    self.allProfiles = profiles.map( profile => profile.name );
+                    //self.allProfiles = profiles.map( profile => profile.name );
+                    self.allProfiles = profiles;
                 }
             });
         }
