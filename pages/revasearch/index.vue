@@ -55,12 +55,13 @@ v-container( grid-list-xs )
                 v-row
                   v-col( cols="12" md="10" )
                     v-autocomplete(
-                      v-model="profileName"
+                      v-model="profileId"
                       label="Pick Profile:"
                       :items="allProfiles"
                       item-text="name"
                       item-value="id"
                       dense
+                      @change="profileChange"
                     )
                   v-col( cols="12" md="2" )
                     v-checkbox( v-model="debugQuery"
@@ -172,10 +173,10 @@ v-container( grid-list-xs )
                 v-row
                   v-col( cols="12" md="9" )
                     v-text-field( v-model="profileName" 
-                      label="Pick Profile:"
+                      label="Edit profile name:"
                       dense
                     )
-                    v-text-field( v-model="description" 
+                    v-text-field( v-model="profileDesc" 
                       label="Profile Description:"
                       dense
                     )
@@ -327,8 +328,13 @@ export default {
             // the URL to profile repository
             profileRepo: '/',
             // profile description
-            description: '',
+            profileDesc: '',
+            // bind to the autocomplete value.
+            profileId: '',
+            // the profile autocomplete text and
+            // the name for profile editing
             profileName: 'local.json',
+            // array of objects with profile {id, name}
             allProfiles: []
         };
     },
@@ -346,6 +352,8 @@ export default {
                 if(profiles) {
                     //self.allProfiles = profiles.map( profile => profile.name );
                     self.allProfiles = profiles;
+                    // load the first profile.
+                    config.loadProfile2Page(profiles[0], self);
                 }
             });
         }
@@ -868,10 +876,24 @@ export default {
             //this.profileName
             // description, comments.
             //this.description
-
             // update profile.
-            config.updateProfile(account, this.profileName, this.description,
+            config.updateProfile(account, this.profileName, this.profileDesc,
                 this.collectionUrl, queryParams);
+        },
+
+        /**
+         * handle profile change.
+         */
+        profileChange: function(item) {
+
+            let self = this;
+
+            // load profile for the selected item.
+            config.getProfile(item, function(profile, error) {
+                self.profileName = profile.name;
+                self.profileDesc = profile.description;
+                // TODO load profile from the query_json.
+            });
         }
     }
 }
