@@ -348,7 +348,12 @@ export default {
 
         // load all profiles.
         if(self.$auth.loggedIn) {
+
             self.loadAllProfiles();
+            // load all cities.
+            config.getAllCities(cities => {
+                self.allCities = cities;
+            });
         }
     },
 
@@ -905,7 +910,12 @@ export default {
 
             // load profile for the selected item.
             config.getProfile(item, function(profile, error) {
-                config.loadProfile2Page(profile, self);
+
+                if(profile) {
+                    config.loadProfile2Page(profile, self);
+                } else {
+                    console.log(error);
+                }
             });
         }
     }
