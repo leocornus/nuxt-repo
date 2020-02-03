@@ -162,7 +162,7 @@ v-container( grid-list-xs )
             v-card-text
               // form to load profile.
               v-form
-                v-row
+                v-row(v-if="!$auth.loggedIn")
                   v-col( cols="12" md="9" )
                     v-text-field( v-model="profileRepo" 
                       label="Profile Repository:"
@@ -172,11 +172,14 @@ v-container( grid-list-xs )
                     v-btn( @click="loadProfile" ) Load
                 v-row
                   v-col( cols="12" md="9" )
-                    v-text-field( v-model="profileName" 
-                      label="Edit profile name:"
+                    v-text-field(
+                      v-model="profileName" 
+                      label="Edit Profile Name:"
                       dense
                     )
-                    v-textarea( v-model="profileDesc" 
+                    v-textarea(
+                      v-if="$auth.loggedIn"
+                      v-model="profileDesc" 
                       label="Profile Description:"
                     )
                   v-col( v-if="$auth.loggedIn"
