@@ -354,6 +354,8 @@ export default {
             config.getAllCities(cities => {
                 self.allCities = cities;
             });
+
+            self.allFields = config.getAllFields();
         }
     },
 
