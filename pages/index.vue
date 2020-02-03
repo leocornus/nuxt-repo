@@ -2,8 +2,6 @@
 v-container(grid-list-md text-center)
   v-list
     v-list-item
-      v-list-item-content {{profileName}}
-    v-list-item
       n-link(to="/revasearch") Reva Search
     v-list-item
       n-link(to="/login") Login
