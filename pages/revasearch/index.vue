@@ -176,9 +176,8 @@ v-container( grid-list-xs )
                       label="Edit profile name:"
                       dense
                     )
-                    v-text-field( v-model="profileDesc" 
+                    v-textarea( v-model="profileDesc" 
                       label="Profile Description:"
-                      dense
                     )
                   v-col( v-if="$auth.loggedIn"
                     cols="12" md="3"
