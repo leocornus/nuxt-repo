@@ -12,6 +12,7 @@ v-container( grid-list-xs )
           transition="scale-transition"
           offset-y
           min-width="290px"
+          dense
         )
           template( v-slot:activator="{ on }" )
             v-text-field(
@@ -27,13 +28,16 @@ v-container( grid-list-xs )
             v-btn( text color="primary" @click="$refs.menu.save(date)") OK
 
       v-col(cols="2")
-        v-text-field(label="Action:" dense)
+        v-select(
+          label="Action:" 
+          :items="['Buy','Sell']"
+        )
       v-col(cols="2")
-        v-text-field(label="Symbol:" dense)
+        v-text-field(label="Symbol:" )
       v-col(cols="2")
-        v-text-field(label="Quantity:" dense)
+        v-text-field(label="Quantity:" )
       v-col(cols="2")
-        v-text-field(label="Price / Share:" dense)
+        v-text-field(label="Price / Share:" )
       v-col(cols="2")
         v-btn() Add
 
@@ -54,16 +58,6 @@ export default {
         return {
             name: 'Pug World'
         }
-    },
-
-    asyncData() {
-
-        return axios.get('https://www.cloudflare.com/cdn-cgi/trace')
-            .then(function(res) {
-                //console.log(res);
-                let all = res.data.split("\n")[2];
-                return {clientIp: all.split("=")[1]};
-            });
     }
 }
 </script>
