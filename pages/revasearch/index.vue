@@ -359,6 +359,9 @@ export default {
             });
 
             self.allFields = config.getAllFields();
+
+            // call simple search.
+            self.simpleSearch();
         }
     },
 
