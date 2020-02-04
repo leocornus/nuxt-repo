@@ -71,7 +71,7 @@ v-container( grid-list-xs )
                 // basic fields.
                 v-row
                   v-col( cols="12" md="3" )
-                    v-text-field( v-model="perPage"
+                    v-text-field( v-model="rows"
                       label="Items Per Page:"
                       dense
                     )
@@ -325,7 +325,8 @@ export default {
 
             // pagination properties.
             currentPage: 1,
-            perPage: 15,
+            // items per page.
+            rows: 15,
 
             // the URL to profile repository
             profileRepo: '/',
@@ -431,7 +432,7 @@ export default {
                 self.totalHits = response.data.response.numFound;
 
                 // calculate the total page numbers.
-                self.totalPages = Math.ceil(self.totalHits / self.perPage)
+                self.totalPages = Math.ceil(self.totalHits / self.rows)
 
                 // TODO: add explain for each doc if debug query is on.
                 self.results = response.data.response.docs;
@@ -459,7 +460,7 @@ export default {
                 var startRow = postParams.params.start;
                 self.resultSummary =
                     "Showing " + (startRow + 1) + " - " +
-                    Math.min(startRow + self.perPage, self.totalHits) + " of " +
+                    Math.min(startRow + self.rows, self.totalHits) + " of " +
                     self.totalHits + " Items";
                 if(self.totalHits > 0) {
                     console.log('total hits: ' + self.totalHits);
@@ -482,12 +483,12 @@ export default {
             let thisVm = this;
 
             // calculate the start row.
-            var startRow = (thisVm.currentPage - 1) * thisVm.perPage;
+            var startRow = (thisVm.currentPage - 1) * thisVm.rows;
 
             // the parameters for query.
             // we will use Object assign to merge them all together.
             var params = Object.assign({
-              rows: thisVm.perPage,
+              rows: thisVm.rows,
               defType: "edismax",
               start: startRow,
               sort: thisVm.sort,
