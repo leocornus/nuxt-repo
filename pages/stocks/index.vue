@@ -43,6 +43,11 @@ v-container( grid-list-xs )
         v-btn() Add
 
   h2 Transaction History:
+    v-data-table(
+      :headers="headers"
+      :items="transactions"
+      :items-per-page="10"
+    )
 </template>
 
 <script>
@@ -66,7 +71,32 @@ export default {
             action: 'Buy',
             symbol: '',
             quantity: 0,
-            price: 0
+            price: 0,
+
+            /**
+             * headers for the data table.
+             * An object will be used for each column
+             * the value for property value should match the property name of
+             * the data object.
+             */
+            headers: [
+                { text: "Date", value: "when" },
+                { text: "Action", value: "action" },
+                { text: "Symbol", value: "symbol" },
+                { text: "Quantity", value: "quantity" },
+                { text: "Price", value: "price" }
+            ],
+
+            /**
+             */
+            transactions: [
+                {when:"2020-01-25",
+                 action: "Buy",
+                 symbol: "MRNA",
+                 quantity: 14000,
+                 price: 21.4
+                }
+            ]
         }
     }
 }
