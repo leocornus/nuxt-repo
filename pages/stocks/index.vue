@@ -8,36 +8,37 @@ v-container( grid-list-xs )
           ref="menu"
           v-model="menu"
           :close-on-content-click="false"
-          :return-value.sync="date"
+          :return-value.sync="when"
           transition="scale-transition"
           offset-y
           min-width="290px"
-          dense
-        )
+    )
           template( v-slot:activator="{ on }" )
             v-text-field(
-              v-model="date"
-              label="Picker in menu"
+              v-model="when"
+              label="Pick the date"
               prepend-icon="mdi-calendar-range"
               readonly
               v-on="on"
             )
-          v-date-picker( v-model="date" no-title scrollable)
+          // the model should be in ISO format.
+          v-date-picker( v-model="when" no-title scrollable)
             v-spacer
             v-btn(text color="primary" @click="menu = false") Cancel
-            v-btn( text color="primary" @click="$refs.menu.save(date)") OK
+            v-btn( text color="primary" @click="$refs.menu.save(when)") OK
 
       v-col(cols="2")
         v-select(
+          v-model="action"
           label="Action:" 
           :items="['Buy','Sell']"
         )
       v-col(cols="2")
-        v-text-field(label="Symbol:" )
+        v-text-field(v-model="symbol" label="Symbol:" )
       v-col(cols="2")
-        v-text-field(label="Quantity:" )
+        v-text-field(v-model="quantity" label="Quantity:" )
       v-col(cols="2")
-        v-text-field(label="Price / Share:" )
+        v-text-field(v-model="price" label="Price / Share:" )
       v-col(cols="2")
         v-btn() Add
 
@@ -56,7 +57,16 @@ export default {
 
     data() {
         return {
-            name: 'Pug World'
+
+            menu: '',
+            // conver to ISO format: YYYY-MM-DD,
+            // v-date-picker is prefer ISO format.
+            when: (new Date()).toISOString().split('T')[0],
+
+            action: 'Buy',
+            symbol: '',
+            quantity: 0,
+            price: 0
         }
     }
 }
