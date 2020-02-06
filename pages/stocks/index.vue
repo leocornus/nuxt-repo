@@ -52,6 +52,7 @@ v-container( grid-list-xs )
 
 <script>
 
+import stocks from '@/libs/stocks.js';
 import axios from 'axios';
 
 export default {
@@ -116,6 +117,18 @@ export default {
             }
 
             this.transactions.push(payload);
+
+            if(this.$auth.loggedIn) {
+            
+                stocks.addTransaction(this.$auth.user.email,
+                    this.when, this.action, this.symbol, this.price,
+                    this.quantity, function(res, error) {
+                        if(res) {
+                            // reload data-table.
+                        }
+                    });
+
+            }
         }
     }
 }
