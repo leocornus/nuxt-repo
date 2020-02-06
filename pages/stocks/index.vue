@@ -40,7 +40,7 @@ v-container( grid-list-xs )
       v-col(cols="2")
         v-text-field(v-model="price" label="Price / Share:" )
       v-col(cols="2")
-        v-btn() Add
+        v-btn(@click="addTransaction") Add
 
   h2 Transaction History:
     v-data-table(
@@ -97,6 +97,25 @@ export default {
                  price: 21.4
                 }
             ]
+        }
+    },
+
+    methods: {
+        /**
+         * add transaction.
+         */
+        addTransaction() {
+
+            // get ready the payload.
+            let payload = {
+                when: this.when,
+                action: this.action,
+                symbol: this.symbol,
+                quantity: this.quantity,
+                price: this.price
+            }
+
+            this.transactions.push(payload);
         }
     }
 }
