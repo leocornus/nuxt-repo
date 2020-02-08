@@ -910,14 +910,7 @@ export default {
             let self = this;
 
             // load profile for the selected item.
-            config.getProfile(item, function(profile, error) {
-
-                if(profile) {
-                    config.loadProfile2Page(profile, self);
-                } else {
-                    console.log(error);
-                }
-            });
+            config.getProfile(item, self);
         }
     }
 }
