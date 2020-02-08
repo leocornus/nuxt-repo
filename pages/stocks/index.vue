@@ -46,7 +46,7 @@ v-container( grid-list-xs )
     v-data-table(
       :headers="headers"
       :items="transactions"
-      :items-per-page="10"
+      :items-per-page="perPage"
     )
 </template>
 
@@ -73,6 +73,9 @@ export default {
             symbol: '',
             quantity: 0,
             price: 0,
+
+            // items per page
+            perPage: 10,
 
             /**
              * headers for the data table.
@@ -116,20 +119,18 @@ export default {
                 price: this.price
             }
 
-            this.transactions.push(payload);
-
             if(this.$auth.loggedIn) {
             
                 stocks.addTransaction(this.$auth.user.email,
                     this.when, this.action, this.symbol, this.price,
-                    this.quantity, function(res, error) {
-                        if(res) {
-                            // reload data-table.
-                        }
-                    });
-
+                    this.quantity, this);
+            } else {
+                this.transactions.push(payload);
             }
         }
+
+        /**
+         */
     }
 }
 </script>
