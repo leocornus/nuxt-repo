@@ -12,6 +12,7 @@ branches:
 
 install:
   - touch libs/local.js
+  - touch libs/stocks.js
   - npm install
   - npm run generate
 
