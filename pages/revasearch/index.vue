@@ -884,12 +884,12 @@ export default {
             //this.description
             // update profile.
             config.updateProfile(account, this.profileName, this.profileDesc,
-                this.collectionUrl, queryParams);
+                this.collectionUrl, queryParams, this);
 
             // reload all profiles.
             // only logged in users can save profile!
             // we don't need chech authentication here.
-            this.loadAllProfiles();
+            //this.loadAllProfiles();
         },
 
         /**
@@ -899,14 +899,7 @@ export default {
 
             let self = this;
 
-            config.getAllProfiles(self.$auth.user.email, function(profiles, error) {
-                if(profiles) {
-                    //self.allProfiles = profiles.map( profile => profile.name );
-                    self.allProfiles = profiles;
-                    // load the first profile.
-                    config.loadProfile2Page(profiles[0], self);
-                }
-            });
+            config.getAllProfiles(self.$auth.user.email, self);
         },
 
         /**
