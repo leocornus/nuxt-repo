@@ -352,7 +352,6 @@ export default {
         // load all profiles.
         if(self.$auth.loggedIn) {
 
-            self.loadAllProfiles();
             // load all cities.
             config.getAllCities(cities => {
                 self.allCities = cities;
@@ -360,6 +359,8 @@ export default {
 
             self.allFields = config.getAllFields();
 
+            self.loadAllProfiles();
+        } else {
             // call simple search.
             self.simpleSearch();
         }
