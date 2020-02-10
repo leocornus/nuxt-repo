@@ -112,6 +112,15 @@ export default {
         }
     },
 
+    /**
+     */
+    created() {
+
+        if(this.$auth.loggedIn) {
+            stocks.getTransactions(this.$auth.user.email, 0, this.perPage, this);
+        }
+    },
+
     methods: {
         /**
          * add transaction.
