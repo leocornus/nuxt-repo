@@ -43,11 +43,19 @@ v-container( grid-list-xs )
         v-btn(@click="addTransaction") Add
 
   h2 Transaction History:
-    v-data-table(
-      :headers="headers"
-      :items="transactions"
-      :items-per-page="perPage"
-    )
+    v-layout( row wrap )
+      v-row
+        // all in one history
+        v-col( cols="12" md="4" )
+          v-data-table(
+            :headers="headers"
+            :items="transactions"
+            :items-per-page="perPage"
+          )
+        // the most recent symbol history
+        v-col( cols="12" md="4" )
+        // the second most recent symbol history
+        v-col( cols="12" md="4" )
 </template>
 
 <script>
