@@ -45,29 +45,38 @@ v-container( grid-list-xs )
   h2 Transaction History:
     v-layout( row wrap )
       v-row
+        v-col( cols="12" md="3" )
+          facet-buckets(
+            :facets="facets"
+          )
         // all in one history
-        v-col( cols="12" md="4" )
+        v-col( cols="12" md="9" )
           v-data-table(
             :headers="headers"
             :items="transactions"
             :items-per-page="perPage"
           )
-        // the most recent symbol history
-        v-col( cols="12" md="4" )
-        // the second most recent symbol history
-        v-col( cols="12" md="4" )
 </template>
 
 <script>
 
-import stocks from '@/libs/stocks.js';
 import axios from 'axios';
+
+import stocks from '@/libs/stocks.js';
+import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
 
 export default {
 
     auth: false,
 
     layout: 'vuetify',
+
+    components: {
+    //    'card-settings': SettingsCard
+    //    'listing-preview': ListingPreviewCard,
+        'facet-buckets': FacetBucketsCard
+    //    'query-filters': QueryFiltersCard
+    },
 
     data() {
         return {
@@ -100,6 +109,7 @@ export default {
             ],
 
             /**
+             * transactions in array format.
              */
             transactions: [
                 {when:"2020-01-25",
@@ -108,7 +118,12 @@ export default {
                  quantity: 14000,
                  price: 21.4
                 }
-            ]
+            ],
+
+            /**
+             * facets.
+             */
+            facets: null
         }
     },
 
