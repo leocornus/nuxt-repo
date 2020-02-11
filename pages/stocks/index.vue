@@ -1,7 +1,7 @@
 <template lang="pug">
 v-container( grid-list-xs )
   h2 Add Transaction:
-  v-form
+  v-form(v-model="valid")
     v-row
       v-col(cols="2")
         v-menu(
@@ -32,15 +32,30 @@ v-container( grid-list-xs )
           v-model="action"
           label="Action:" 
           :items="['Buy','Sell']"
+          :rules="[v => !!v || 'Action is required']"
+          required
         )
       v-col(cols="2")
-        v-text-field(v-model="symbol" label="Symbol:" )
+        v-text-field(
+          v-model="symbol"
+          label="Symbol:"
+          :rules="[v => !!v || 'Symbol is required']"
+          required
+        )
       v-col(cols="2")
-        v-text-field(v-model="quantity" label="Quantity:" )
+        v-text-field(v-model="quantity" label="Quantity:"
+          required
+        )
       v-col(cols="2")
-        v-text-field(v-model="price" label="Price / Share:" )
+        v-text-field(v-model="price" label="Price / Share:"
+          required
+        )
       v-col(cols="2")
-        v-btn(@click="addTransaction") Add
+        v-btn(
+          :disabled="!valid"
+          color="success"
+          @click="addTransaction"
+        ) Add
 
   h2 Transaction History:
   v-layout( row wrap )
@@ -86,6 +101,9 @@ export default {
 
     data() {
         return {
+
+            // validate the form.
+            valid: true,
 
             menu: '',
             // conver to ISO format: YYYY-MM-DD,
@@ -214,6 +232,7 @@ export default {
          * utility method to reset all form fields.
          */
         resetFields() {
+
             // set to today.
             this.when = (new Date()).toISOString().split('T')[0];
             this.action = "";
