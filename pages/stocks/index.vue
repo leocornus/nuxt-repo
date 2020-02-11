@@ -209,6 +209,18 @@ export default {
             // reload all transactions
             stocks.getTransactions(this.$auth.user.email, 0, this.perPage, this);
         },
+
+        /**
+         * utility method to reset all form fields.
+         */
+        resetFields() {
+            // set to today.
+            this.when = (new Date()).toISOString().split('T')[0];
+            this.action = "";
+            this.symbol = "";
+            this.quantity = 0;
+            this.price = 0;
+        }
     }
 }
 </script>
