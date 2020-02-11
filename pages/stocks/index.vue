@@ -82,6 +82,16 @@ v-container( grid-list-xs )
           :items="transactions"
           :items-per-page="perPage"
         )
+          template(v-slot:item.actions="{ item }")
+            v-icon(
+              small
+              class="mr-2"
+              @click="editItem(item)"
+            ) mdi-file-edit
+            v-icon(
+              small
+              @click="deleteItem(item)"
+            ) mdi-delete
 </template>
 
 <script>
@@ -144,7 +154,8 @@ export default {
                 { text: "Action", value: "action" },
                 { text: "Symbol", value: "symbol" },
                 { text: "Quantity", value: "quantity" },
-                { text: "Price", value: "price" }
+                { text: "Price", value: "price" },
+                { text: 'Actions', value: 'actions', sortable: false },
             ],
 
             /**
@@ -254,6 +265,20 @@ export default {
             this.symbol = "";
             this.quantity = 0;
             this.price = 0;
+        },
+
+        /**
+         * edit item
+         */
+        editItem(item) {
+            console.log("edit", item);
+        },
+
+        /**
+         * delete item
+         */
+        deleteItem(item) {
+            console.log("delete", item);
         }
     }
 }
