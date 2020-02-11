@@ -43,11 +43,17 @@ v-container( grid-list-xs )
           required
         )
       v-col(cols="2")
-        v-text-field(v-model="quantity" label="Quantity:"
+        v-text-field(
+          v-model="quantity"
+          label="Quantity:"
+          :rules="quantityRules"
           required
         )
       v-col(cols="2")
-        v-text-field(v-model="price" label="Price / Share:"
+        v-text-field(
+          v-model="price"
+          label="Price / Share:"
+          :rules="priceRules"
           required
         )
       v-col(cols="2")
@@ -113,7 +119,16 @@ export default {
             action: 'Buy',
             symbol: '',
             quantity: 0,
+            quantityRules: [
+              v => !!v || 'Quantity is required',
+              v => /^\d+$/.test(v) || 'Quantity must be integer',
+            ],
             price: 0,
+            priceRules: [
+              v => !!v || 'Price is required',
+              // need the starts and ends to make procise match
+              v => /^[0-9]*\.[0-9]+$/.test(v) || 'Price must be float',
+            ],
 
             // items per page
             perPage: 10,
