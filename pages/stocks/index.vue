@@ -43,24 +43,24 @@ v-container( grid-list-xs )
         v-btn(@click="addTransaction") Add
 
   h2 Transaction History:
-    v-layout( row wrap )
-      v-row
-        v-col( cols="12" md="3" )
-          query-filters(
-            :filters="filters"
-            v-on:filter-select="removeFilter"
-          )
-          facet-buckets(
-            :facets="facets"
-            v-on:bucket-select="handleBucketSelect"
-          )
-        // all in one history
-        v-col( cols="12" md="9" )
-          v-data-table(
-            :headers="headers"
-            :items="transactions"
-            :items-per-page="perPage"
-          )
+  v-layout( row wrap )
+    v-row
+      v-col( cols="12" md="3" )
+        query-filters(
+          :filters="filters"
+          v-on:filter-select="removeFilter"
+        )
+        facet-buckets(
+          :facets="facets"
+          v-on:bucket-select="handleBucketSelect"
+        )
+      // all in one history
+      v-col( cols="12" md="9" )
+        v-data-table(
+          :headers="headers"
+          :items="transactions"
+          :items-per-page="perPage"
+        )
 </template>
 
 <script>
