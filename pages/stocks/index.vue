@@ -46,6 +46,10 @@ v-container( grid-list-xs )
     v-layout( row wrap )
       v-row
         v-col( cols="12" md="3" )
+          query-filters(
+            :filters="filters"
+            v-on:filter-select="removeFilter"
+          )
           facet-buckets(
             :facets="facets"
             v-on:bucket-select="handleBucketSelect"
@@ -65,6 +69,7 @@ import axios from 'axios';
 
 import stocks from '@/libs/stocks.js';
 import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
+import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 
 export default {
 
@@ -75,8 +80,8 @@ export default {
     components: {
     //    'card-settings': SettingsCard
     //    'listing-preview': ListingPreviewCard,
-        'facet-buckets': FacetBucketsCard
-    //    'query-filters': QueryFiltersCard
+        'facet-buckets': FacetBucketsCard,
+        'query-filters': QueryFiltersCard
     },
 
     data() {
@@ -142,6 +147,21 @@ export default {
         }
     },
 
+    computed: {
+
+        /**
+         * return the filter querys.
+         */
+        filters: function() {
+
+            if(this.filterQuery === "") {
+                return null;
+            } else {
+                return this.filterQuery.split("||");
+            }
+        }
+    },
+
     methods: {
         /**
          * add transaction.
@@ -173,7 +193,22 @@ export default {
         handleBucketSelect(fieldName, fieldValue) {
 
             stocks.processBucketSelect(fieldName, fieldValue, this);
-        }
+        },
+
+        /**
+         * handle remove filter.
+         */
+        removeFilter(filter) {
+
+            // remove the filter from the filterQuery.
+            var fqs = this.filterQuery.split("||").filter(fq => fq != filter);
+            // join will use , as the default separator
+            // reset the filterQuery.
+            this.filterQuery = fqs.join("||");
+
+            // reload all transactions
+            stocks.getTransactions(this.$auth.user.email, 0, this.perPage, this);
+        },
     }
 }
 </script>
