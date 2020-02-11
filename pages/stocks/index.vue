@@ -48,6 +48,7 @@ v-container( grid-list-xs )
         v-col( cols="12" md="3" )
           facet-buckets(
             :facets="facets"
+            v-on:bucket-select="handleBucketSelect"
           )
         // all in one history
         v-col( cols="12" md="9" )
@@ -123,7 +124,12 @@ export default {
             /**
              * facets.
              */
-            facets: null
+            facets: null,
+
+            /**
+             * filter query.
+             */
+            filterQuery: ""
         }
     },
 
@@ -159,10 +165,15 @@ export default {
             } else {
                 this.transactions.push(payload);
             }
-        }
+        },
 
         /**
+         * handle bucket select.
          */
+        handleBucketSelect(fieldName, fieldValue) {
+
+            stocks.processBucketSelect(fieldName, fieldValue, this);
+        }
     }
 }
 </script>
