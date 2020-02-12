@@ -92,6 +92,8 @@ v-container( grid-list-xs )
               small
               @click="deleteItem(item)"
             ) mdi-delete
+          template(v-slot:item.value="{ item }")
+            | {{ transactionValue(item) }}
 </template>
 
 <script>
@@ -143,6 +145,10 @@ export default {
             // items per page
             perPage: 10,
 
+            // formater
+            format: new Intl.NumberFormat('en-US', 
+                { style: 'currency', currency: 'USD' }),
+
             /**
              * headers for the data table.
              * An object will be used for each column
@@ -155,6 +161,7 @@ export default {
                 { text: "Symbol", value: "symbol" },
                 { text: "Quantity", value: "quantity" },
                 { text: "Price", value: "price" },
+                { text: 'Value', value: 'value', sortable: false },
                 { text: 'Actions', value: 'actions', sortable: false },
             ],
 
@@ -281,6 +288,15 @@ export default {
 
             //console.log("delete", item);
             stocks.removeTransaction(item, this);
+        },
+
+        /**
+         * calcuate transaction value
+         */
+        transactionValue(item) {
+
+            // format the number
+            return this.format.format(stocks.transactionValue(item));
         }
     }
 }
