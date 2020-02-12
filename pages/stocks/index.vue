@@ -83,11 +83,11 @@ v-container( grid-list-xs )
           :items-per-page="perPage"
         )
           template(v-slot:item.actions="{ item }")
-            v-icon(
-              small
-              class="mr-2"
-              @click="editItem(item)"
-            ) mdi-file-edit
+            //v-icon(
+            //  small
+            //  class="mr-2"
+            //  @click="editItem(item)"
+            //) mdi-file-edit
             v-icon(
               small
               @click="deleteItem(item)"
@@ -278,7 +278,9 @@ export default {
          * delete item
          */
         deleteItem(item) {
-            console.log("delete", item);
+
+            //console.log("delete", item);
+            stocks.removeTransaction(item, this);
         }
     }
 }
