@@ -71,6 +71,16 @@ v-container( grid-list-xs )
           :filters="filters"
           v-on:filter-select="removeFilter"
         )
+        // the statistics card.
+        v-card( class="mb-3" )
+          v-list.blue.lighten-1
+            v-subheader Stats
+            v-list-item-group
+              v-list-item(
+                v-for="(key, i) in Object.keys(summary)"
+                :key="'summary-' + i"
+              )
+                v-list-item-content {{key + "=" + summary[key]}}
         facet-buckets(
           :facets="facets"
           v-on:bucket-select="handleBucketSelect"
@@ -144,6 +154,9 @@ export default {
 
             // items per page
             perPage: 10,
+
+            // sum of the transactions' values
+            summary: 0,
 
             // formater
             format: new Intl.NumberFormat('en-US', 
