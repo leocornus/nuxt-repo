@@ -72,15 +72,9 @@ v-container( grid-list-xs )
           v-on:filter-select="removeFilter"
         )
         // the statistics card.
-        v-card( class="mb-3" )
-          v-list.blue.lighten-1
-            v-subheader Stats
-            v-list-item-group
-              v-list-item(
-                v-for="(key, i) in Object.keys(summary)"
-                :key="'summary-' + i"
-              )
-                v-list-item-content {{key + "=" + summary[key]}}
+        stats(
+          :stats="summary"
+        )
         facet-buckets(
           :facets="facets"
           v-on:bucket-select="handleBucketSelect"
@@ -113,6 +107,7 @@ import axios from 'axios';
 import stocks from '@/libs/stocks.js';
 import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
 import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
+import StatsCard from '@/pages/solr/card-stats.vue';
 
 export default {
 
@@ -124,7 +119,8 @@ export default {
     //    'card-settings': SettingsCard
     //    'listing-preview': ListingPreviewCard,
         'facet-buckets': FacetBucketsCard,
-        'query-filters': QueryFiltersCard
+        'query-filters': QueryFiltersCard,
+        'stats': StatsCard
     },
 
     data() {
