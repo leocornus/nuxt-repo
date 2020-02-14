@@ -149,10 +149,11 @@ export default {
             ],
 
             // items per page
-            perPage: 10,
+            perPage: 100,
 
             // sum of the transactions' values
             summary: null,
+            total: null,
 
             // formater
             format: new Intl.NumberFormat('en-US', 
