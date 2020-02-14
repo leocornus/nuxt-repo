@@ -8,6 +8,9 @@ v-card( v-if="stats" class="mb-3")
     hide-default-header
     hide-default-footer
   )
+    template( v-slot:item.value="{ item }" )
+      v-chip( :color="getValueColor(item.value)" dard
+      ) {{ usCurrency.format(item.value) }}
   // using v-list.
   //v-list.blue.lighten-1
   //  v-subheader Stats
@@ -32,7 +35,11 @@ export default {
             headers: [
                 { text: "name", value: "name" },
                 { text: "value", value: "value" },
-            ]
+            ],
+
+            // formater
+            usCurrency: new Intl.NumberFormat('en-US', 
+                { style: 'currency', currency: 'USD' })
         }
     },
 
@@ -47,6 +54,14 @@ export default {
                     value: this.stats[key]
                 }
             });
+        }
+    },
+    
+    methods: {
+
+        getValueColor: function(theValue) {
+
+            return theValue < 0 ? 'red' : 'success';
         }
     }
 }
