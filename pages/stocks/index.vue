@@ -152,7 +152,7 @@ export default {
             perPage: 10,
 
             // sum of the transactions' values
-            summary: 0,
+            summary: null,
 
             // formater
             format: new Intl.NumberFormat('en-US', 
