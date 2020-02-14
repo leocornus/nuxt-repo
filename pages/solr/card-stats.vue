@@ -10,7 +10,7 @@ v-card( v-if="stats" class="mb-3")
   )
     template( v-slot:item.value="{ item }" )
       v-chip( :color="getValueColor(item.value)" dard
-      ) {{ usCurrency.format(item.value) }}
+      ) {{ formatValue(item) }}
   // using v-list.
   //v-list.blue.lighten-1
   //  v-subheader Stats
@@ -59,9 +59,28 @@ export default {
     
     methods: {
 
+        // set different color based on the value.
         getValueColor: function(theValue) {
 
             return theValue < 0 ? 'red' : 'success';
+        },
+
+        /**
+         * format the value based on the item name
+         */
+        formatValue: function(item) {
+
+            let theValue = item.value;
+            switch(item.name) {
+                case "sum":
+                    theValue = this.usCurrency.format(item.value);
+                    break;
+                default:
+                    // do nothing here.
+                    break;
+            }
+
+            return theValue;
         }
     }
 }
