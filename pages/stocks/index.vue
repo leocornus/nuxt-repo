@@ -22,10 +22,12 @@ v-container( grid-list-xs )
               v-on="on"
             )
           // the model should be in ISO format.
-          v-date-picker( v-model="when" no-title scrollable)
-            v-spacer
-            v-btn(text color="primary" @click="menu = false") Cancel
-            v-btn( text color="primary" @click="$refs.menu.save(when)") OK
+          v-date-picker(
+            v-model="when"
+            scrollable
+            color="green lighten-1"
+            @click:date="$refs.menu.save(when)"
+          )
 
       v-col(cols="2")
         v-select(
@@ -62,6 +64,9 @@ v-container( grid-list-xs )
           color="success"
           @click="addTransaction"
         ) Add
+        v-btn(
+          color="primary"
+        ) Settings
 
   h2 Transaction History:
   v-layout( row wrap )
@@ -153,7 +158,6 @@ export default {
 
             // sum of the transactions' values
             summary: null,
-            total: null,
 
             // formater
             format: new Intl.NumberFormat('en-US', 
@@ -245,6 +249,7 @@ export default {
                     this.quantity, this);
             } else {
                 this.transactions.push(payload);
+                this.resetFields();
             }
         },
 
