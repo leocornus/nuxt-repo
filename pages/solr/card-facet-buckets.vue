@@ -3,6 +3,7 @@
 v-expansion-panels
   v-expansion-panel(
     v-for="(facet, index) in facets"
+    v-if="facet.buckets.length > 1"
     :key="'facet-' + index"
     :class="{'grey lighten-2': index % 2 === 0}"
   )
@@ -15,7 +16,6 @@ v-expansion-panels
         v-list-item-group
           v-list-item(
             v-for="(bucket, i) in facet.buckets"
-            v-if="bucket.count > 1"
             :key="'bucket-' + i"
             @click="$emit('bucket-select', facet.name, bucket.value)"
           )
