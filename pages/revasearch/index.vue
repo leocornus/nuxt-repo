@@ -242,7 +242,7 @@ import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 
 export default {
 
-    auth: false,
+    auth: true,
 
     components: {
     //    'card-settings': SettingsCard
