@@ -160,10 +160,16 @@ v-container( grid-list-xs )
           v-if="results"
           v-on:input="simpleSearch"
         )
-        listing-preview(
-          v-for="(doc, index) in results"
-          :doc="doc" :key="doc.id"
-          :index="index" :idFieldName="idField"
+        //listing-preview(
+        //  v-for="(doc, index) in results"
+        //  :doc="doc" :key="doc.id"
+        //  :index="index" :idFieldName="idField"
+        //)
+        v-data-table(
+          v-if="results"
+          :headers="headers"
+          :items="results"
+          hide-default-footer
         )
         v-pagination( v-model="currentPage" :length="totalPages" total-visible="10"
           v-if="results"
@@ -264,6 +270,28 @@ export default {
                 return null;
             } else {
                 return this.filterQuery.split(",");
+            }
+        },
+
+        /**
+         * return the header for simple table.
+         */
+        headers: function() {
+
+            if(this.fieldList === "") {
+
+                return [
+                    // TODO: update to use the configged id field.
+                    { text: "ID", value: "id" }
+                ];
+            } else {
+                // prepare headers from the field list.
+                return this.fieldList.split(",").map(field => {
+                    return {
+                        text: field,
+                        value: field
+                    }
+                });
             }
         }
     },
