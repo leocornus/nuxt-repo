@@ -90,6 +90,7 @@ v-container( grid-list-xs )
           :headers="headers"
           :items="transactions"
           :items-per-page="perPage"
+          dense
         )
           template(v-slot:item.actions="{ item }")
             //v-icon(

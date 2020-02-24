@@ -203,7 +203,6 @@ v-container( grid-list-xs )
     // the search result list.
     v-row
       v-col( cols="12" md="3" )
-        h3 Facets
         // the filters card.
         query-filters( :filters="filters"
           v-on:filter-select="removeFilter"
