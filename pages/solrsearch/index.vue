@@ -179,7 +179,8 @@ v-container( grid-list-xs )
 
 <script>
 
-import axios from 'axios'
+import axios from 'axios';
+import solr from '@/libs/solrsearch';
 
 // import other vue component
 //import SettingsCard from '@/pages/solr/card-settings.vue';
@@ -189,6 +190,7 @@ import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 
 export default {
 
+    // list of componments used in this page.
     components: {
     //    'card-settings': SettingsCard
         'listing-preview': ListingPreviewCard,
@@ -196,6 +198,7 @@ export default {
         'query-filters': QueryFiltersCard
     },
 
+    // set the layout.
     layout: 'vuetify',
 
     name: 'solrsearch',
@@ -293,6 +296,24 @@ export default {
                     }
                 });
             }
+        }
+    },
+
+    /**
+     * actions after page loaded.
+     */
+    created() {
+
+        let self = this;
+
+        if(self.$auth.loggedIn) {
+            // load list of profiles
+            solr.getAllProfiles(this.$auth.user.email, self);
+
+            // pick the first profile.
+
+            // load cities.
+            // load fields.
         }
     },
 
