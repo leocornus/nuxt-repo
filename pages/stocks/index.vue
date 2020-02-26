@@ -72,6 +72,7 @@ v-container( grid-list-xs )
   v-layout( row wrap )
     v-row
       v-col( cols="12" md="3" )
+        time-window()
         query-filters(
           :filters="filters"
           v-on:filter-select="removeFilter"
@@ -114,6 +115,7 @@ import stocks from '@/libs/stocks.js';
 import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
 import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 import StatsCard from '@/pages/solr/card-stats.vue';
+import TimeWindowCard from '@/pages/solr/card-time-window.vue';
 
 export default {
 
@@ -126,6 +128,7 @@ export default {
     //    'listing-preview': ListingPreviewCard,
         'facet-buckets': FacetBucketsCard,
         'query-filters': QueryFiltersCard,
+        'time-window': TimeWindowCard,
         'stats': StatsCard
     },
 
