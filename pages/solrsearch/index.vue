@@ -272,7 +272,7 @@ export default {
             if(this.filterQuery === "") {
                 return null;
             } else {
-                return this.filterQuery.split(",");
+                return this.filterQuery.split("||");
             }
         },
 
@@ -546,7 +546,7 @@ export default {
                 return {
                   // filter query list.
                   //fq: ["c4c_type:project"],
-                  fq: this.filterQuery.split(",")
+                  fq: this.filterQuery.split("||")
                 }
             }
         },
@@ -632,10 +632,10 @@ export default {
         removeFilter(filter) {
 
             // remove the filter from the filterQuery.
-            var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
+            var fqs = this.filterQuery.split("||").filter(fq => fq != filter);
             // join will use , as the default separator
             // reset the filterQuery.
-            this.filterQuery = fqs.join();
+            this.filterQuery = fqs.join("||");
 
             // reset current page.
             this.currentPage = 1;
