@@ -1,17 +1,20 @@
 <template lang="pug">
 // the card to show time window.
-v-card( class="mb-3")
+v-card( class="mb-3" dense )
   v-card-subtitle Time Window
   // group of buttons.
   v-card-text
     v-btn-toggle(
       v-model="toggleExclusive"
       mandatory
+      dense
     )
       v-btn All
-      v-btn 1
-      v-btn 7
-      v-btn 30
+      v-btn Today
+      v-btn 7 Days
+      v-btn 30 Days
+      v-btn 2 Monthes
+      v-btn 3 Monthes
 </template>
 
 <script>
