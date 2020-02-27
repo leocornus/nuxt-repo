@@ -1,8 +1,17 @@
 <template lang="pug">
 // the card to show time window.
 v-card( class="mb-3")
-  h4 Time Window
+  v-card-subtitle Time Window
   // group of buttons.
+  v-card-text
+    v-btn-toggle(
+      v-model="toggleExclusive"
+      mandatory
+    )
+      v-btn All
+      v-btn 1
+      v-btn 7
+      v-btn 30
 </template>
 
 <script>
@@ -15,6 +24,7 @@ export default {
 
     data() {
         return {
+            toggleExclusive: undefined
         }
     },
 
