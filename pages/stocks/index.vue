@@ -71,8 +71,9 @@ v-container( grid-list-xs )
   h2 Transaction History:
   v-layout( row wrap )
     v-row
-      v-col( cols="12" md="3" )
+      v-col( cols="12" md="12")
         time-window()
+      v-col( cols="12" md="3" )
         query-filters(
           :filters="filters"
           v-on:filter-select="removeFilter"
