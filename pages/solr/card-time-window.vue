@@ -35,7 +35,7 @@ v-card( class="mb-3" dense )
     v-chip-group(
       v-model="windowType"
       mandatory
-      active-class="primary--text"
+      active-class="deep-purple--text text--accent-4"
     )
       v-chip(
         value="relative"
