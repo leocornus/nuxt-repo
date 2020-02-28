@@ -10,12 +10,24 @@ v-card( class="mb-3" dense )
       mandatory
       dense
     )
-      v-btn All
-      v-btn Today
-      v-btn 7 Days
-      v-btn 30 Days
-      v-btn 2 Monthes
-      v-btn 3 Monthes
+      v-btn(
+        @click = "$emit('relative-select', 0)"
+      ) All
+      v-btn(
+        @click = "$emit('relative-select', 1)"
+      ) Today
+      v-btn(
+        @click = "$emit('relative-select', 7)"
+      ) 7 Days
+      v-btn(
+        @click = "$emit('relative-select', 30)"
+      ) 30 Days
+      v-btn(
+        @click = "$emit('relative-select', 60)"
+      ) 2 Monthes
+      v-btn(
+        @click = "$emit('relative-select', 90)"
+      ) 3 Monthes
     v-chip-group(
       mandatory
       active-class="primary--text"
