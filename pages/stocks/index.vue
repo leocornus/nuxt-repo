@@ -72,7 +72,10 @@ v-container( grid-list-xs )
   v-layout( row wrap )
     v-row
       v-col( cols="12" md="12")
-        time-window()
+        time-window(
+          v-on:time-window-type="handleTimeWindowType"
+          v-on:relative-select="handleRelativeDates"
+        )
       v-col( cols="12" md="3" )
         query-filters(
           :filters="filters"
@@ -317,6 +320,22 @@ export default {
 
             // format the number
             return this.format.format(stocks.transactionValue(item));
+        },
+
+        /**
+         * handle relative days selection event for time window
+         */
+        handleRelativeDates(dates) {
+
+            console.log(dates);
+        },
+
+        /**
+         * handle time window type change.
+         */
+        handleTimeWindowType(type) {
+
+            console.log(type);
         }
     }
 }
