@@ -4,7 +4,9 @@ v-card( class="mb-3" dense )
   v-card-subtitle Time Window
   // group of buttons.
   v-card-text
+    // relative time window
     v-btn-toggle(
+      v-if="windowType === 'relative'"
       v-model="toggleExclusive"
       active-class="primary--text"
       mandatory
@@ -28,13 +30,25 @@ v-card( class="mb-3" dense )
       v-btn(
         @click = "$emit('relative-select', 90)"
       ) 3 Monthes
+
+    // time window type.
     v-chip-group(
+      v-model="windowType"
       mandatory
       active-class="primary--text"
     )
-      v-chip Relative
-      v-chip Absolate
-      v-chip Since
+      v-chip(
+        value="relative"
+        @click="$emit('time-window-type', 'relative')"
+      ) Relative
+      v-chip(
+        value="absolute"
+        @click="$emit('time-window-type', 'absolute')"
+      ) Absolute
+      v-chip(
+        value="since"
+        @click="$emit('time-window-type', 'since')"
+      ) Since
 </template>
 
 <script>
@@ -47,6 +61,9 @@ export default {
 
     data() {
         return {
+            // window type
+            windowType: 'relative',
+
             toggleExclusive: undefined
         }
     },
