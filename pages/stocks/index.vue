@@ -96,6 +96,7 @@ v-container( grid-list-xs )
           :items="transactions"
           :items-per-page="perPage"
           dense
+          hide-default-footer
         )
           template(v-slot:item.actions="{ item }")
             //v-icon(
@@ -216,7 +217,7 @@ export default {
     created() {
 
         if(this.$auth.loggedIn) {
-            stocks.getTransactions(this.$auth.user.email, 0, this.perPage, this);
+            stocks.getTransactions(this, 0);
         }
     },
 
@@ -281,7 +282,7 @@ export default {
             this.filterQuery = fqs.join("||");
 
             // reload all transactions
-            stocks.getTransactions(this.$auth.user.email, 0, this.perPage, this);
+            stocks.getTransactions(this, 0);
         },
 
         /**
