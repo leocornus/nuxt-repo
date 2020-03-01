@@ -208,7 +208,13 @@ export default {
             /**
              * filter query.
              */
-            filterQuery: ""
+            filterQuery: "",
+
+            /**
+             * date range array, [from, to]
+             * defalt is all days
+             */
+            dateRange: ["*", "*"]
         }
     },
 
