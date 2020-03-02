@@ -13,22 +13,22 @@ v-expansion-panels
         dense
       )
         v-btn(
-          @click = "$emit('relative-select', 0)"
+          @click = "handleRelativeDates(0)"
         ) All
         v-btn(
-          @click = "$emit('relative-select', 1)"
+          @click = "handleRelativeDates(1)"
         ) Today
         v-btn(
-          @click = "$emit('relative-select', 7)"
+          @click = "handleRelativeDates(7)"
         ) 7 Days
         v-btn(
-          @click = "$emit('relative-select', 30)"
+          @click = "handleRelativeDates(30)"
         ) 30 Days
         v-btn(
-          @click = "$emit('relative-select', 60)"
+          @click = "handleRelativeDates(60)"
         ) 2 Monthes
         v-btn(
-          @click = "$emit('relative-select', 90)"
+          @click = "handleRelativeDates(90)"
         ) 3 Monthes
       
       // time window type.
@@ -64,7 +64,10 @@ export default {
             // window type
             windowType: 'relative',
 
-            toggleExclusive: undefined
+            toggleExclusive: undefined,
+
+            // Date range, from to,
+            dateRange: ["*", "*"]
         }
     },
 
@@ -75,6 +78,24 @@ export default {
     
     methods: {
 
+        /**
+         * handle relative days selection event for time window
+         */
+        handleRelativeDates(dates) {
+
+            //console.log(dates);
+            if(dates < 1) {
+                this.dateRange = ["*", "*"];
+            } else if(dates == 1) {
+                this.dateRange = ["NOW-" + dates + "DAY", "*"];
+            } else {
+                this.dateRange = ["NOW-" + dates + "DAYS", "*"];
+            }
+
+            //stocks.getTransactions(this, 0);
+            // emit the date change event.
+            this.$emit('dates-change', this.dateRange);
+        }
     }
 }
 </script>
