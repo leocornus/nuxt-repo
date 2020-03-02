@@ -1,6 +1,6 @@
 <template lang="pug">
 // the card to show time window.
-v-expansion-panels
+v-expansion-panels(dense)
   v-expansion-panel
     v-expansion-panel-header Time Window
     v-expansion-panel-content
@@ -34,6 +34,7 @@ v-expansion-panels
       // absolute date pickers.
       v-row(
         v-if="windowType === 'absolute'"
+        dense
       )
         v-col(
           cols="2"
@@ -46,7 +47,6 @@ v-expansion-panels
             transition="scale-transition"
             offset-y
             min-width="290px"
-            dense
           )
             template( v-slot:activator="{ on }" )
               v-text-field(
