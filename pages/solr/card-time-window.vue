@@ -30,7 +30,76 @@ v-expansion-panels
         v-btn(
           @click = "handleRelativeDates(90)"
         ) 3 Monthes
-      
+
+      // absolute date pickers.
+      v-row(
+        v-if="windowType === 'absolute'"
+      )
+        v-col(
+          cols="2"
+        ).py-0
+          v-menu(
+            ref="fromPicker"
+            v-model="fromPicker"
+            :close-on-content-click="false"
+            :return-value.sync="from"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+            dense
+          )
+            template( v-slot:activator="{ on }" )
+              v-text-field(
+                v-model="from"
+                label="FROM"
+                prepend-icon="mdi-calendar-range"
+                readonly
+                v-on="on"
+              ).py-0
+            // the model should be in ISO format.
+            v-date-picker(
+              v-model="from"
+              scrollable
+              color="green lighten-1"
+              @click:date="$refs.fromPicker.save(from)"
+            )
+        v-col(
+          cols="2"
+        ).py-0
+          v-menu(
+            ref="toPicker"
+            v-model="toPicker"
+            :close-on-content-click="false"
+            :return-value.sync="to"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          )
+            template( v-slot:activator="{ on }" )
+              v-text-field(
+                v-model="to"
+                label="TO"
+                prepend-icon="mdi-calendar-range"
+                readonly
+                v-on="on"
+              ).py-0
+            // the model should be in ISO format.
+            v-date-picker(
+              v-model="to"
+              scrollable
+              color="green lighten-1"
+              @click:date="$refs.toPicker.save(to)"
+            )
+        v-col(
+          cols="2"
+        ).py-0
+          v-btn(
+            dark
+            color="indigo"
+            @click="handleAbsoluteDates"
+          )
+            v-icon mdi-check
+
       // time window type.
       v-chip-group(
         v-model="windowType"
@@ -39,15 +108,12 @@ v-expansion-panels
       )
         v-chip(
           value="relative"
-          @click="$emit('time-window-type', 'relative')"
         ) Relative
         v-chip(
           value="absolute"
-          @click="$emit('time-window-type', 'absolute')"
         ) Absolute
         v-chip(
           value="since"
-          @click="$emit('time-window-type', 'since')"
         ) Since
 </template>
 
@@ -67,7 +133,13 @@ export default {
             toggleExclusive: undefined,
 
             // Date range, from to,
-            dateRange: ["*", "*"]
+            dateRange: ["*", "*"],
+
+            // absolute date range picker.
+            from: "",
+            fromPicker: "",
+            to: "",
+            toPicker: ""
         }
     },
 
@@ -93,6 +165,17 @@ export default {
             }
 
             //stocks.getTransactions(this, 0);
+            // emit the date change event.
+            this.$emit('dates-change', this.dateRange);
+        },
+
+        /**
+         */
+        handleAbsoluteDates() {
+
+            //console.table({"from": this.from, "to": this.to});
+            this.dateRange = [this.from + "T00:00:00Z", this.to + "T00:00:00Z"];
+
             // emit the date change event.
             this.$emit('dates-change', this.dateRange);
         }
