@@ -127,8 +127,8 @@ export default {
 
     data() {
         return {
-            // window type
-            windowType: 'relative',
+            // window type: relative, absolute, since
+            windowType: 'absolute',
 
             toggleExclusive: undefined,
 
