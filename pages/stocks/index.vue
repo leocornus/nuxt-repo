@@ -73,7 +73,7 @@ v-container( grid-list-xs )
     v-row
       v-col( cols="12" md="12")
         time-window(
-          v-on:relative-select="handleRelativeDates"
+          v-on:dates-change="handleDatesChange"
         )
       v-col( cols="12" md="3" )
         query-filters(
@@ -331,16 +331,9 @@ export default {
         /**
          * handle relative days selection event for time window
          */
-        handleRelativeDates(dates) {
+        handleDatesChange(newRange) {
 
-            //console.log(dates);
-            if(dates < 1) {
-                this.dateRange = ["*", "*"];
-            } else if(dates == 1) {
-                this.dateRange = ["NOW-" + dates + "DAY", "*"];
-            } else {
-                this.dateRange = ["NOW-" + dates + "DAYS", "*"];
-            }
+            this.dateRange = newRange;
 
             // reload transactions.
             stocks.getTransactions(this, 0);
