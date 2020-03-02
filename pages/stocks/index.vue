@@ -73,7 +73,6 @@ v-container( grid-list-xs )
     v-row
       v-col( cols="12" md="12")
         time-window(
-          v-on:time-window-type="handleTimeWindowType"
           v-on:relative-select="handleRelativeDates"
         )
       v-col( cols="12" md="3" )
@@ -334,15 +333,17 @@ export default {
          */
         handleRelativeDates(dates) {
 
-            console.log(dates);
-        },
+            //console.log(dates);
+            if(dates < 1) {
+                this.dateRange = ["*", "*"];
+            } else if(dates == 1) {
+                this.dateRange = ["NOW-" + dates + "DAY", "*"];
+            } else {
+                this.dateRange = ["NOW-" + dates + "DAYS", "*"];
+            }
 
-        /**
-         * handle time window type change.
-         */
-        handleTimeWindowType(type) {
-
-            console.log(type);
+            // reload transactions.
+            stocks.getTransactions(this, 0);
         }
     }
 }
