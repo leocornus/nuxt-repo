@@ -112,9 +112,9 @@ v-expansion-panels
         v-chip(
           value="absolute"
         ) Absolute
-        v-chip(
-          value="since"
-        ) Since
+        //v-chip(
+        //  value="since"
+        //) Since
 </template>
 
 <script>
