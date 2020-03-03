@@ -41,6 +41,8 @@ v-container( grid-list-xs )
         v-tab
           v-icon( left ) mdi-settings
         v-tab
+          v-icon( left ) mdi-format-list-bulleted
+        v-tab
           v-icon( left ) mdi-account
 
         // the settings tab.
@@ -101,33 +103,40 @@ v-container( grid-list-xs )
                 // queryFields qf
                 // boostFunction bf
                 // boostQuery bq
-
-            v-card-actions
-              v-btn( color="green darken-1" text
-                @click="saveProfile"
-              ) save profile
-              v-spacer
-
+        // ================================
+        // the account / profile tab.
+        v-tab-item
+          v-card( flat )
+            v-card-text {{ queryParams }}
+        // ================================
         // the account / profile tab.
         v-tab-item
           v-card( flat )
             v-card-text
               // form to load profile.
               v-form
-                v-row
+                v-row(v-if="!$auth.loggedIn")
                   v-col( cols="12" md="12" )
                     v-text-field( v-model="profileRepo" 
                       label="Profile Repository URL:"
                       dense
                     )
+                  v-col( cols="12" md="3" )
+                    v-btn( @click="loadProfile" ) Load
                 v-row
                   v-col( cols="12" md="9" )
                     v-text-field( v-model="profileName" 
                       label="Pick Profile:"
                       dense
                     )
-                  v-col( cols="12" md="3" )
-                    v-btn( @click="loadProfile" ) Load
+                    v-textarea(
+                      v-model="profileDesc" 
+                      label="Profile Description:"
+                    )
+                  v-col( v-if="$auth.loggedIn"
+                    cols="12" md="3"
+                  )
+                    v-btn( @click="saveProfile" ) Save Profile
 
       v-card-actions
         v-spacer
@@ -159,6 +168,7 @@ v-container( grid-list-xs )
         v-pagination( v-model="currentPage" :length="totalPages" total-visible="10"
           v-if="results"
           v-on:input="simpleSearch"
+          dense
         )
         //listing-preview(
         //  v-for="(doc, index) in results"
@@ -189,6 +199,8 @@ import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
 import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 
 export default {
+
+    auth: true,
 
     // list of componments used in this page.
     components: {
@@ -258,7 +270,9 @@ export default {
 
             // the URL to profile repository
             profileRepo: '/nuxt-repo/',
-            profileName: 'local.json'
+            profileName: 'local.json',
+            // profile description
+            profileDesc: ''
         };
     },
 
@@ -296,6 +310,14 @@ export default {
                     }
                 });
             }
+        },
+
+        /**
+         * the query parameters.
+         */
+        queryParams: function() {
+
+            return this.buildQuery();
         }
     },
 
@@ -672,6 +694,7 @@ export default {
         },
 
         /**
+         * testing method to explore the Vue object.
          */
         settingsSave: function() {
 
