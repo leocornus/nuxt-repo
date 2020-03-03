@@ -104,7 +104,7 @@ v-container( grid-list-xs )
 
             v-card-actions
               v-btn( color="green darken-1" text
-                @click="settingsSave"
+                @click="saveProfile"
               ) save profile
               v-spacer
 
@@ -308,7 +308,7 @@ export default {
 
         if(self.$auth.loggedIn) {
             // load list of profiles
-            solr.getAllProfiles(this.$auth.user.email, self);
+            solr.getAllProfiles(self);
 
             // pick the first profile.
 
@@ -693,6 +693,22 @@ export default {
             console.log(JSON.stringify(profile));
 
             this.settingsDialog = false;
+        },
+
+        /**
+         * function to save profile.
+         */
+        saveProfile: function() {
+
+            // preparing the payload.
+            let queryParams = this.buildQuery();
+            console.log(JSON.stringify(queryParams));
+
+            solr.updateProfile(this, queryParams);
+            // reload all profiles.
+            // only logged in users can save profile!
+            // we don't need chech authentication here.
+            //this.loadAllProfiles();
         },
 
         /**
