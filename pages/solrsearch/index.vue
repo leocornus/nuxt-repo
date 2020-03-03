@@ -45,11 +45,23 @@ v-container( grid-list-xs )
         v-tab
           v-icon( left ) mdi-account
 
+        // ===============================
         // the settings tab.
         v-tab-item
           v-card( flat )
             v-card-text
               v-form( v-model="valid" )
+                v-row
+                  v-col( cols="12" md="10" )
+                    v-autocomplete(
+                      v-model="profileId"
+                      label="Pick Profile:"
+                      :items="allProfiles"
+                      item-text="name"
+                      item-value="id"
+                      dense
+                      @change="profileChange"
+                    )
                 // the collection row.
                 v-row
                   v-col( cols="12" md="10" )
@@ -103,11 +115,13 @@ v-container( grid-list-xs )
                 // queryFields qf
                 // boostFunction bf
                 // boostQuery bq
+
         // ================================
         // the account / profile tab.
         v-tab-item
           v-card( flat )
             v-card-text {{ queryParams }}
+
         // ================================
         // the account / profile tab.
         v-tab-item
@@ -272,7 +286,9 @@ export default {
             profileRepo: '/nuxt-repo/',
             profileName: 'local.json',
             // profile description
-            profileDesc: ''
+            profileDesc: '',
+            // array of objects with profile {id, name}
+            allProfiles: []
         };
     },
 
@@ -751,6 +767,17 @@ export default {
                         self[key] = response.data[key];
                     });
                 });
+        },
+
+        /**
+         * handle profile change.
+         */
+        profileChange: function(item) {
+
+            let self = this;
+
+            // load profile for the selected item.
+            solr.getProfile(item, self);
         }
     }
 }
