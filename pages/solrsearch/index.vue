@@ -92,12 +92,12 @@ v-container( grid-list-xs )
                       dense
                     )
                 // filter query
-                v-row
-                  v-col( cols="12" md="12" )
-                    v-text-field( v-model="filterQuery" 
-                      label="Filter Query:"
-                      dense
-                    )
+                //v-row
+                //  v-col( cols="12" md="12" )
+                //    v-text-field( v-model="filterQuery" 
+                //      label="Filter Query:"
+                //      dense
+                //    )
                 // field list 
                 v-row
                   v-col( cols="12" md="12" )
@@ -158,7 +158,7 @@ v-container( grid-list-xs )
           @click="settingsCancel"
         ) cancel
         v-btn( color="green darken-1" text
-          @click="settingsCancel"
+          @click="settingsOk"
         ) Ok
 
   // the carousel dialog.
@@ -706,6 +706,14 @@ export default {
          */
         settingsCancel: function() {
 
+            this.settingsDialog = false;
+        },
+
+        /**
+         */
+        settingsOk: function() {
+
+            this.simpleSearch();
             this.settingsDialog = false;
         },
 
