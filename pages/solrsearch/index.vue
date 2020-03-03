@@ -679,27 +679,6 @@ export default {
             this.currentPage = 1;
             // load the resule set.
             this.simpleSearch();
-
-            // remove the fields from settings modal.
-            //let fieldName = filter.split(":")[0];
-            //switch(fieldName) {
-            //    case 'city':
-            //        this.city = "";
-            //        break;
-            //    case 'neighbourhoodname':
-            //        this.neighbourhood = "";
-            //        break;
-            //    case 'residencetype':
-            //        this.residenceType = "";
-            //        break;
-            //    case 'listvalue_i':
-            //        this.priceFrom = 0;
-            //        this.priceTo = 0;
-            //        break;
-            //    default:
-            //        // Do nothing here, just skip!
-            //        break;
-            //}
         },
 
         /**
