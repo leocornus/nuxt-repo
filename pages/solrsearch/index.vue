@@ -121,10 +121,23 @@ v-container( grid-list-xs )
                 // facets
                 v-row
                   v-col( cols="12" md="12" )
-                    v-text-field( v-model="facetFields" 
-                      label="Facets:"
+                    v-autocomplete( v-model="facetFields" 
+                      label="Facet fields:"
+                      :items="allFields"
+                      multiple
+                      @change="facetSelectionChange"
+                      @input="facetInput = null"
+                      :search-input.sync="facetInput"
                       dense
+                      chips
+                      small-chips
                     )
+                      template( v-slot:selection="data" )
+                        v-chip(
+                          close
+                          @click:close="removeFacetSelection(data.item)"
+                        )
+                          | {{ data.item }}
                 // queryFields qf
                 // boostFunction bf
                 // boostQuery bq
@@ -262,7 +275,9 @@ export default {
             // all available fields, get from solr schema.
             allFields: ["abc","cde"],
             // default facet field is empty.
-            facetFields: "",
+            facetFields: [],
+            // facet input.
+            facetInput: null,
 
             // set the default filter query to empty.
             filterQuery: "",
@@ -506,7 +521,7 @@ export default {
          */
         getFacetFields() {
 
-            if(this.facetFields === "") {
+            if(this.facetFields.length < 1) {
                 // return an empty object.
                 return {};
             } else {
@@ -520,7 +535,7 @@ export default {
                   //"facet.field":["project_id", "customer_id"]
                   // here is for single value
                   //"facet.field":"customer_id"
-                  "facet.field": this.facetFields.split(",")
+                  "facet.field": this.facetFields
                 };
             }
         },
