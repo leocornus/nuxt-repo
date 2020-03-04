@@ -656,7 +656,7 @@ export default {
 
             var fq = fieldName + ":" + bucketValue;
             this.filterQuery = this.filterQuery === "" ? 
-                fq : this.filterQuery + "," + fq;
+                fq : this.filterQuery + "||" + fq;
 
             // reset current page.
             this.currentPage = 1;
