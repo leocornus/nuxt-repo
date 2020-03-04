@@ -101,7 +101,7 @@ v-container( grid-list-xs )
                 // field list 
                 v-row
                   v-col( cols="12" md="12" )
-                    v-autocomplete( v-model="fieldList" 
+                    v-autocomplete( v-model="fieldList"
                       label="Field List:"
                       :items="allFields"
                       multiple
@@ -121,7 +121,7 @@ v-container( grid-list-xs )
                 // facets
                 v-row
                   v-col( cols="12" md="12" )
-                    v-autocomplete( v-model="facetFields" 
+                    v-autocomplete( v-model="facetFields"
                       label="Facet fields:"
                       :items="allFields"
                       multiple
@@ -166,7 +166,7 @@ v-container( grid-list-xs )
                 v-row
                   v-col( cols="12" md="9" )
                     v-text-field( v-model="profileName" 
-                      label="Pick Profile:"
+                      label="Profile Name:"
                       dense
                     )
                     v-textarea(
@@ -805,7 +805,7 @@ export default {
         removeFieldSelection: function(field) {
 
             //console.log("selected facet:", facet);
-            const index = this.fieldList.indexOf(fiels);
+            const index = this.fieldList.indexOf(field);
             // replace one element at index position.
             if( index >=0 ) this.fieldList.splice(index, 1);
         },
