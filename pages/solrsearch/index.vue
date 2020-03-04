@@ -101,10 +101,23 @@ v-container( grid-list-xs )
                 // field list 
                 v-row
                   v-col( cols="12" md="12" )
-                    v-text-field( v-model="fieldList" 
+                    v-autocomplete( v-model="fieldList" 
                       label="Field List:"
+                      :items="allFields"
+                      multiple
+                      @change="fieldSelectionChange"
+                      @input="fieldListInput = null"
+                      :search-input.sync="fieldListInput"
                       dense
+                      chips
+                      small-chips
                     )
+                      template( v-slot:selection="data" )
+                        v-chip(
+                          close
+                          @click:close="removeFieldSelection(data.item)"
+                        )
+                          | {{ data.item }}
                 // facets
                 v-row
                   v-col( cols="12" md="12" )
@@ -246,6 +259,8 @@ export default {
             collections: [],
             collectionLabel: "Collection: ",
 
+            // all available fields, get from solr schema.
+            allFields: ["abc","cde"],
             // default facet field is empty.
             facetFields: "",
 
@@ -256,7 +271,8 @@ export default {
             sort: "",
 
             // set default field list to empty, which will return all fields.
-            fieldList: "",
+            fieldList: ['abc'],
+            fieldListInput: null,
             // the boostQuery field.
             boostQuery: "",
             // the boost function field.
@@ -311,7 +327,7 @@ export default {
          */
         headers: function() {
 
-            if(this.fieldList === "") {
+            if( this.fieldList.length < 1 ) {
 
                 return [
                     // TODO: update to use the configged id field.
@@ -319,7 +335,8 @@ export default {
                 ];
             } else {
                 // prepare headers from the field list.
-                return this.fieldList.split(",").map(field => {
+                //return this.fieldList;
+                return this.fieldList.map(field => {
                     return {
                         text: field,
                         value: field
@@ -515,12 +532,12 @@ export default {
          */
         getFieldList() {
 
-            if(this.fieldList === "") {
+            if( this.fieldList.length < 1 ) {
                 // not fieldList specified, return an enpty object.
                 return {};
             } else {
                 // always add the id field to the field list..
-                let fields = this.fieldList.split(",");
+                let fields = this.fieldList;
                 if(!fields.includes(this.idField)) {
                     fields.push(this.idField);
                 }
@@ -765,6 +782,44 @@ export default {
 
             // load profile for the selected item.
             solr.getProfile(item, self);
+        },
+
+        /**
+         * handle remove field selection on settings dialog.
+         */
+        removeFieldSelection: function(field) {
+
+            //console.log("selected facet:", facet);
+            const index = this.fieldList.indexOf(fiels);
+            // replace one element at index position.
+            if( index >=0 ) this.fieldList.splice(index, 1);
+        },
+
+        /**
+         * handle facet selection change from the autocomplete component.
+         */
+        fieldSelectionChange: function() {
+
+            //console.log(this.facetFields);
+        },
+
+        /**
+         * handle remove facet selection on settings dialog.
+         */
+        removeFacetSelection: function(facet) {
+
+            //console.log("selected facet:", facet);
+            const index = this.facetFields.indexOf(facet);
+            // replace one element at index position.
+            if( index >=0 ) this.facetFields.splice(index, 1);
+        },
+
+        /**
+         * handle facet selection change from the autocomplete component.
+         */
+        facetSelectionChange: function() {
+
+            //console.log(this.facetFields);
         }
     }
 }
