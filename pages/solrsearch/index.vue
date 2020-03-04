@@ -219,6 +219,7 @@ v-container( grid-list-xs )
           v-if="results"
           :headers="headers"
           :items="results"
+          :itemsPerPage="perPage"
           hide-default-footer
         )
         v-pagination( v-model="currentPage" :length="totalPages" total-visible="10"
