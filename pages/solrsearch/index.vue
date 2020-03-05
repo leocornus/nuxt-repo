@@ -146,7 +146,9 @@ v-container( grid-list-xs )
         // the account / profile tab.
         v-tab-item
           v-card( flat )
-            v-card-text {{ queryParams }}
+            v-card-text(
+              style="white-space:pre-wrap"
+            ) {{ queryParams }}
 
         // ================================
         // the account / profile tab.
@@ -366,7 +368,7 @@ export default {
          */
         queryParams: function() {
 
-            return this.buildQuery();
+            return JSON.stringify(this.buildQuery(), null, 2);
         }
     },
 
