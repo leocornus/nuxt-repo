@@ -11,7 +11,7 @@ v-app
           span( id="lines" ) 0
         p Level:
           span( id="level" ) 0
-  v-btn Play
+      v-btn Play
 </template>
 
 <script>
@@ -22,6 +22,10 @@ export default {
 </script>
 
 <style lang="css">
+* {
+  font-family: 'Press Start 2P', cursive;
+}
+
 .grid {
   display: grid;
   grid-template-columns: 320px 200px;
