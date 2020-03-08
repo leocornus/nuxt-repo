@@ -1,7 +1,7 @@
 <template lang="pug">
 v-app
   div.grid
-    canvas( id="board" ).game-board
+    canvas( ref="board" ).game-board
     div.right-column
       div
         h1 TETRIS
@@ -11,13 +11,43 @@ v-app
           span( id="lines" ) 0
         p Level:
           span( id="level" ) 0
-      v-btn Play
+      v-btn(@click="play") Play
 </template>
 
 <script>
 export default {
 
-    auth: false
+    auth: false,
+
+    data() {
+        return {
+            // size of the game board.
+            cols: 10,
+            rows: 20,
+            blockSize: 30
+        }
+    },
+
+    /**
+     * mounted is after DOM built!
+     */
+    mounted() {
+
+        this.ctx = this.$refs.board.getContext('2d');
+        //console.log(this.ctx);
+
+        this.ctx.canvas.width = this.cols * this.blockSize;
+        this.ctx.canvas.height = this.rows * this.blockSize;
+
+        this.ctx.scale(this.blockSize, this.blockSize);
+    },
+
+    methods: {
+
+        play() {
+            console.log(this.$refs.board);
+        }
+    }
 }
 </script>
 
