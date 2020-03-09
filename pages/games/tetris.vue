@@ -85,6 +85,9 @@ export default {
         this.ctx.canvas.height = this.rows * this.blockSize;
 
         this.ctx.scale(this.blockSize, this.blockSize);
+
+        // add the event lisenter.
+        window.addEventListener('keydown', this.handleKeydown);
     },
 
     methods: {
@@ -94,10 +97,52 @@ export default {
             this.grid = this.getEmptyBoard();
             console.table(this.grid);
 
-            let piece = new Piece(this.ctx);
-            console.log(piece);
+            this.piece = new Piece(this.ctx);
+            console.log(this.piece);
 
-            piece.draw();
+            this.piece.draw();
+        },
+
+        /**
+         * handle key down event.
+         */
+        handleKeydown(event) {
+
+            let self = this;
+
+            switch(event.key) {
+                // move left
+                case "h":
+                case "H":
+                    self.moveLeft(self.piece);
+                    break;
+                // move down.
+                case "j":
+                case "J":
+                    self.moveDown(self.piece);
+                    break;
+                // move right
+                case "l":
+                case "L":
+                    self.moveRight(self.piece);
+                    break;
+                default:
+                    //console.log(event);
+                    break;
+            }
+        },
+
+        moveLeft() {
+
+            this.piece.x =- 1;
+            this.ctx.clearRec(0, 0, this.cts.canvas.width, this.ctx.canvas.height);
+            this.piece.draw();
+        },
+        moveDown() {
+            console.log("down");
+        },
+        moveRight() {
+            console.log("right");
         },
 
         getEmptyBoard() {
