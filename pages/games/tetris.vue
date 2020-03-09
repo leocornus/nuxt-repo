@@ -45,7 +45,19 @@ export default {
     methods: {
 
         play() {
-            console.log(this.$refs.board);
+
+            this.grid = this.getEmptyBoard();
+
+            console.table(this.grid);
+        },
+
+        getEmptyBoard() {
+
+            let self = this;
+
+            return Array.from( {length: self.rows}, () => {
+                return Array(self.cols).fill(0);
+            });
         }
     }
 }
