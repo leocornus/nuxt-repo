@@ -775,7 +775,7 @@ export default {
          */
         removeFacetSelection: function(facet) {
 
-            console.log("selected facet:", facet);
+            //console.log("selected facet:", facet);
             const index = this.facetFields.indexOf(facet);
             // replace one element at index position.
             if( index >=0 ) this.facetFields.splice(index, 1);

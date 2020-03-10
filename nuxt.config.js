@@ -7,7 +7,7 @@ export default {
     mode: 'spa',
 
     server: {
-        // port: 3000, // default is 3000
+        //port: 80, // default is 3000
         host: '0.0.0.0' // default is localhost
     },
 
