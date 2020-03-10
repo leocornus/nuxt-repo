@@ -19,31 +19,33 @@ v-app
  * the piece class.
  */
 class Piece {
-  x;
-  y;
-  color;
-  shape;
-  ctx;
-  
-  constructor(ctx) {
-    this.ctx = ctx;
-    this.spawn();
-  }
-  
-  spawn() {
-    this.color = 'blue';
-    this.shape = [
-      [2, 0, 0], 
-      [2, 2, 2], 
-      [0, 0, 0]
-    ];
-    
-    // Starting position.
-    this.x = 3;
-    this.y = 0;
-  }
+
+    x;
+    y;
+    color;
+    shape;
+    ctx;
+
+    constructor(ctx) {
+        this.ctx = ctx;
+        this.spawn();
+    }
+
+    spawn() {
+        this.color = 'blue';
+        this.shape = [
+          [2, 0, 0],
+          [2, 2, 2],
+          [0, 0, 0]
+        ];
+
+        // Starting position.
+        this.x = 3;
+        this.y = 0;
+    }
 
     draw() {
+
         this.ctx.fillStyle = this.color;
   
         this.shape.forEach((row, y) => {
@@ -114,7 +116,7 @@ export default {
                 // move left
                 case "h":
                 case "H":
-                    self.moveLeft(self.piece);
+                    self.moveLeft();
                     break;
                 // move down.
                 case "j":
@@ -134,15 +136,21 @@ export default {
 
         moveLeft() {
 
-            this.piece.x =- 1;
-            this.ctx.clearRec(0, 0, this.cts.canvas.width, this.ctx.canvas.height);
+            this.piece.x -= 1;
+            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
             this.piece.draw();
         },
         moveDown() {
-            console.log("down");
+
+            this.piece.y += 1;
+            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+            this.piece.draw();
         },
         moveRight() {
-            console.log("right");
+
+            this.piece.x += 1;
+            this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+            this.piece.draw();
         },
 
         getEmptyBoard() {
