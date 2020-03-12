@@ -55,10 +55,16 @@ v-expansion-panels(dense)
         )
       v-btn(
         dark
-        color="indigo"
+        color="success"
         @click="handleAbsoluteDates"
       )
         v-icon mdi-check
+      v-btn(
+        dark
+        color="error"
+        @click="handleCleanDates"
+      )
+        v-icon mdi-calendar-remove
 </template>
 
 <script>
@@ -96,6 +102,18 @@ export default {
 
             //console.table({"from": this.from, "to": this.to});
             this.dateRange = [this.from + "T00:00:00Z", this.to + "T00:00:00Z"];
+
+            // emit the date change event.
+            this.$emit('dates-change', this.dateRange);
+        },
+
+        /**
+         */
+        handleCleanDates() {
+
+            this.from = "";
+            this.to = "";
+            this.dateRange = ["*", "*"];
 
             // emit the date change event.
             this.$emit('dates-change', this.dateRange);
