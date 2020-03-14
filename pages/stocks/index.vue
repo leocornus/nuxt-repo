@@ -106,6 +106,8 @@ v-container( grid-list-xs )
               small
               @click="deleteItem(item)"
             ) mdi-delete
+          template(v-slot:item.when="{ item }")
+            | {{ item.when.split("T")[0] }}
           template(v-slot:item.value="{ item }")
             v-chip(
               :color="item.action === 'Buy' ? 'error' : 'success'"
