@@ -27,7 +27,7 @@ v-container( grid-list-xs )
       class="pa-2"
       @click.stop="settingsDialog = true"
     )
-      v-icon mdi-settings
+      v-icon mdi-cog-outline
       | settings
 
   // the settings dialog.
@@ -39,7 +39,7 @@ v-container( grid-list-xs )
       // the vertical tabs.
       v-tabs( vertical )
         v-tab
-          v-icon( left ) mdi-settings
+          v-icon( left ) mdi-cog-outline
         v-tab
           v-icon( left ) mdi-format-list-bulleted
         v-tab
