@@ -65,6 +65,12 @@ v-expansion-panels(dense)
         @click="handleCleanDates"
       )
         v-icon mdi-calendar-remove
+      v-btn(
+        dark
+        color="primary"
+        @click="handleToday"
+      )
+        v-icon mdi-calendar-today
 </template>
 
 <script>
@@ -117,6 +123,17 @@ export default {
 
             // emit the date change event.
             this.$emit('dates-change', this.dateRange);
+        },
+
+        /**
+         * handle today button.
+         */
+        handleToday() {
+
+            // set to today,
+            this.from = this.to = (new Date()).toISOString().split("T")[0];
+
+            this.handleAbsoluteDates();
         }
     }
 }
