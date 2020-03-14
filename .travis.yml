@@ -14,6 +14,7 @@ install:
   - touch libs/local.js
   - touch libs/stocks.js
   - touch libs/solrsearch.js
+  - touch libs/tetris.js
   - npm install
   - npm run generate
 
