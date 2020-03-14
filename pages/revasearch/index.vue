@@ -27,7 +27,7 @@ v-container( grid-list-xs )
       class="pa-2"
       @click.stop="settingsDialog = true"
     )
-      v-icon mdi-settings
+      v-icon mdi-cog-outline
       | settings
 
   // the settings dialog.
@@ -40,7 +40,7 @@ v-container( grid-list-xs )
       //v-tabs( vertical )
       v-tabs
         v-tab
-          v-icon( left ) mdi-settings
+          v-icon( left ) mdi-cog-outline
           | Settings
         v-tab
           v-icon( left ) mdi-account
