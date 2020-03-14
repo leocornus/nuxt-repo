@@ -107,7 +107,10 @@ v-container( grid-list-xs )
               @click="deleteItem(item)"
             ) mdi-delete
           template(v-slot:item.value="{ item }")
-            | {{ transactionValue(item) }}
+            v-chip(
+              :color="item.action === 'Buy' ? 'error' : 'success'"
+              dark
+            ) {{ transactionValue(item) }}
 </template>
 
 <script>
