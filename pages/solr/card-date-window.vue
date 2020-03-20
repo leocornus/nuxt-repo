@@ -106,8 +106,10 @@ export default {
          */
         handleAbsoluteDates() {
 
+            let rangeFrom = this.from === "" ? "*" : this.from + "T00:00:00Z";
+            let rangeTo = this.to === "" ? "*" : this.to + "T00:00:00Z";
             //console.table({"from": this.from, "to": this.to});
-            this.dateRange = [this.from + "T00:00:00Z", this.to + "T00:00:00Z"];
+            this.dateRange = [rangeFrom, rangeTo];
 
             // emit the date change event.
             this.$emit('dates-change', this.dateRange);
