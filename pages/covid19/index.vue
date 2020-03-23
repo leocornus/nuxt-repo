@@ -31,12 +31,7 @@ export default {
 
             cases: [],
 
-            headers: [
-                { text: "Country", value: "country_region"},
-                { text: "Confirmed", value: "confirmed"},
-                { text: "Deaths", value: "death"},
-                { text: "Recovered", value: "recovered"}
-            ]
+            headers: covid.getHeaders()
         };
     },
 
