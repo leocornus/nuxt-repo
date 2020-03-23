@@ -7,13 +7,13 @@ v-container( grid-list-xs )
       v-row
         v-col(col="2")
           h4 Confirmed
-          v-chip( color="error" ) {{total.confirmed}}
+          v-chip( color="error" ) {{ numFormater.format(total.confirmed) }}
         v-col(col="2")
           h4 Deaths
-          v-chip( color="error" ) {{total.death}}
+          v-chip( color="error" ) {{ numFormater.format(total.death) }}
         v-col(col="2")
           h4 Recovered
-          v-chip( color="success" ) {{total.recovered}}
+          v-chip( color="success" ) {{ numFormater.format(total.recovered) }}
     v-card-content
       v-data-table(
          :headers="headers"
@@ -49,7 +49,9 @@ export default {
 
             cases: [],
 
-            headers: covid.getHeaders()
+            headers: covid.getHeaders(),
+
+            numFormater: new Intl.NumberFormat('en-US')
         };
     },
 
