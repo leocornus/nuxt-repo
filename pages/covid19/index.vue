@@ -1,12 +1,24 @@
 <template lang="pug">
 v-container( grid-list-xs )
-  v-row
-    v-col( cols="12" md="12" )
+  h2 Global Cases
+  v-card
+    v-card-title
+      //h3 Global Cases
+      v-row
+        v-col(col="2")
+          h4 Confirmed
+          v-chip( color="error" ) {{total.confirmed}}
+        v-col(col="2")
+          h4 Deaths
+          v-chip( color="error" ) {{total.death}}
+        v-col(col="2")
+          h4 Recovered
+          v-chip( color="success" ) {{total.recovered}}
+    v-card-content
       v-data-table(
          :headers="headers"
          :items="cases"
          :items-per-page="perPage"
-         hide-default-footer
       )
 </template>
 
@@ -26,8 +38,14 @@ export default {
     data() {
         return {
 
+            total: {
+                confirmed: 100,
+                death: 23,
+                recovered: 58
+            },
+
             // items per page.
-            perPage: 25,
+            perPage: 15,
 
             cases: [],
 
