@@ -33,6 +33,7 @@ import PrimeNumber from '@/libs/PrimeNumber';
 import CardPrimeNumbers from '@/pages/vuetify/card-primenumbers.vue';
 
 export default {
+    auth: false,
     components: {
         'card-pns': CardPrimeNumbers
     },
