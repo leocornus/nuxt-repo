@@ -12,6 +12,7 @@ branches:
 
 install:
   - touch libs/local.js
+  - touch libs/covid19.js
   - touch libs/stocks.js
   - touch libs/solrsearch.js
   - touch libs/tetris.js
