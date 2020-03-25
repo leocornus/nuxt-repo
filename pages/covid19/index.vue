@@ -1,6 +1,7 @@
 <template lang="pug">
 v-container( grid-list-xs )
-  h2 Global Cases
+  h2(class="text-center") COVID-19 Global Cases
+  h4 Last updated: {{ lastUpdated }}
   v-card
     v-card-title
       //h3 Global Cases
@@ -14,7 +15,7 @@ v-container( grid-list-xs )
         v-col(col="2")
           h4 Recovered
           v-chip( color="success" ) {{ numFormater.format(total.recovered) }}
-    v-card-content
+    v-card-text
       v-data-table(
          :headers="headers"
          :items="cases"
@@ -48,6 +49,8 @@ export default {
             perPage: 15,
 
             cases: [],
+
+            lastUpdated: '',
 
             headers: covid.getHeaders(),
 
