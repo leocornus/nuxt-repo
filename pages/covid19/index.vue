@@ -27,7 +27,16 @@ v-container( grid-list-xs )
          :headers="headers"
          :items="cases"
          :items-per-page="perPage"
+         :sortBy="sortBy"
+         sortDesc
       )
+        // set the number format.
+        template(v-slot:item.confirmed="{ item }")
+          | {{ numFormater.format(item.confirmed) }}
+        template(v-slot:item.death="{ item }")
+          | {{ numFormater.format(item.death) }}
+        template(v-slot:item.recovered="{ item }")
+          | {{ numFormater.format(item.recovered) }}
 </template>
 
 <script>
@@ -54,6 +63,7 @@ export default {
 
             // items per page.
             perPage: 15,
+            sortBy: ["confirmed"],
 
             cases: [],
 
