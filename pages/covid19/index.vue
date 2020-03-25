@@ -1,7 +1,14 @@
 <template lang="pug">
 v-container( grid-list-xs )
   h2(class="text-center") COVID-19 Global Cases
-  h4 Last updated: {{ lastUpdated }}
+  div(class="text-center").mb-1
+    v-chip(label) Last updated:
+      i {{ lastUpdated }}
+    v-btn( small color="teal"
+      @click="reload"
+    ).ml-2.lighten-4
+      v-icon(left) mdi-reload
+      | Refresh
   v-card
     v-card-title
       //h3 Global Cases
@@ -63,6 +70,14 @@ export default {
     created() {
 
         covid.getCases(this, 0);
+    },
+
+    methods: {
+
+        reload() {
+
+            covid.getCases(this, 0);
+        }
     }
 }
 </script>
