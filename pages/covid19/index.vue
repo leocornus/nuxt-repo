@@ -15,13 +15,16 @@ v-container( grid-list-xs )
       v-row(class="text-center")
         v-col(col="2")
           h4 Confirmed
-          v-chip( color="warning" x-large ) {{ numFormater.format(total.confirmed) }}
+          v-chip( color="warning" x-large )
+            span(id="confirmedId") {{ numFormater.format(total.confirmed) }}
         v-col(col="2")
           h4 Deaths
-          v-chip( color="error" x-large ) {{ numFormater.format(total.death) }}
+          v-chip( color="error" x-large )
+            span(id="deathId") {{ numFormater.format(total.death) }}
         v-col(col="2")
           h4 Recovered
-          v-chip( color="success" x-large ) {{ numFormater.format(total.recovered) }}
+          v-chip( color="success" x-large )
+            span(id="recoveredId") {{ numFormater.format(total.recovered) }}
     v-card-text
       v-data-table(
          :headers="headers"
@@ -42,6 +45,7 @@ v-container( grid-list-xs )
 <script>
 
 import covid from '@/libs/covid19.js';
+import {CountUp} from 'countup.js';
 
 export default {
 
@@ -56,9 +60,9 @@ export default {
         return {
 
             total: {
-                confirmed: 100,
-                death: 23,
-                recovered: 58
+                confirmed: 0,
+                death: 0,
+                recovered: 0
             },
 
             // items per page.
@@ -79,14 +83,53 @@ export default {
      */
     created() {
 
-        covid.getCases(this, 0);
+        let self = this;
+
+        covid.getCases(this, 0, function() {
+
+            self.confirmedCount.update(self.total.confirmed);
+            self.deathCount.update(self.total.death);
+            self.recoveredCount.update(self.total.recovered);
+        });
+    },
+
+    mounted() {
+
+        this.confirmedCount = new CountUp( "confirmedId", this.total.confirmed );
+        this.deathCount = new CountUp( "deathId", this.total.death);
+        this.recoveredCount = new CountUp( "recoveredId", this.total.recovered);
+        //console.log(confirmedCount);
     },
 
     methods: {
 
         reload() {
 
-            covid.getCases(this, 0);
+            let self = this;
+
+            self.cleanData();
+
+            covid.getCases(this, 0, function() {
+
+                self.confirmedCount.update(self.total.confirmed);
+                self.deathCount.update(self.total.death);
+                self.recoveredCount.update(self.total.recovered);
+            });
+        },
+
+        cleanData() {
+
+            // clean total.
+            this.total = {
+                confirmed: 0,
+                death: 0,
+                recovered: 0
+            }
+            this.cases = [];
+            // reset count.
+            this.confirmedCount.reset();
+            this.deathCount.reset();
+            this.recoveredCount.reset();
         }
     }
 }
