@@ -15,13 +15,13 @@ v-container( grid-list-xs )
       v-row
         v-col(col="2")
           h4 Confirmed
-          v-chip( color="error" ) {{ numFormater.format(total.confirmed) }}
+          v-chip( color="warning" large ) {{ numFormater.format(total.confirmed) }}
         v-col(col="2")
           h4 Deaths
-          v-chip( color="error" ) {{ numFormater.format(total.death) }}
+          v-chip( color="error" large ) {{ numFormater.format(total.death) }}
         v-col(col="2")
           h4 Recovered
-          v-chip( color="success" ) {{ numFormater.format(total.recovered) }}
+          v-chip( color="success" large ) {{ numFormater.format(total.recovered) }}
     v-card-text
       v-data-table(
          :headers="headers"
