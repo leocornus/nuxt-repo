@@ -125,7 +125,9 @@ export default {
                 death: 0,
                 recovered: 0
             }
+            // reset cases.
             this.cases = [];
+            this.lastUpdated = '';
             // reset count.
             this.confirmedCount.reset();
             this.deathCount.reset();
