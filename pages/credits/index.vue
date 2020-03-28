@@ -14,7 +14,7 @@ v-container( grid-list-xs )
           label="Credit earned"
           v-model="credit"
           required
-          :rules="[v => !!v || 'Credit is required']"
+          :rules="creditRules"
         )
       v-col(cols="3")
         v-btn(
@@ -44,6 +44,10 @@ export default {
              formValid: true,
              accomplishment: '',
              credit: 1,
+             creditRules: [
+                 v => !!v || 'Credit is required!',
+                 v => /^-?[0-9]*(\.\d+)?$/.test(v) || 'Credit should be integer or decimal'
+             ],
 
              headers: [
                 { text: "Accomplishment", value: "accomplishment" },
@@ -66,6 +70,10 @@ export default {
                 accomplishment: this.accomplishment,
                 credit: this.credit
             });
+
+            // reset all fields.
+            this.accomplishment = "";
+            this.credit = "";
         }
     }
 }
