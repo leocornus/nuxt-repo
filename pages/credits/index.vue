@@ -157,7 +157,13 @@ export default {
              },
 
              start: 0,
-             perPage: 15
+             perPage: 15,
+
+             /**
+              * date range array, [from, to]
+              * defalt is all days
+              */
+             dateRange: ["*", "*"]
          };
     },
 
@@ -192,7 +198,12 @@ export default {
 
         /**
          */
-        handleDatesChange() {
+        handleDatesChange(newRange) {
+
+            this.dateRange = newRange;
+
+            // reload transactions.
+            credits.getAccomplishments(this);
         }
     },
 
