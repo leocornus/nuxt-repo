@@ -3,7 +3,15 @@ v-container( grid-list-xs )
   h2 Add Accomplishment
   v-form(v-model="formValid")
     v-row(align="end")
-      v-col(cols="9")
+      v-col(cols="12")
+        v-text-field(
+          label="Accomplishment Description"
+          v-model="accomplishment"
+          required
+          :rules="[v => !!v || 'Description is required']"
+        )
+    v-row
+      v-col(cols="3")
         v-menu(
           ref="menu"
           v-model="menu"
@@ -28,12 +36,32 @@ v-container( grid-list-xs )
             color="green lighten-1"
             @click:date="$refs.menu.save(day)"
           )
-        v-text-field(
-          label="Accomplishment Description"
-          v-model="accomplishment"
-          required
-          :rules="[v => !!v || 'Description is required']"
+      v-col(cols="3")
+        v-menu(
+          ref="menut"
+          v-model="menut"
+          :close-on-content-click="false"
+          :return-value.sync="time"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
         )
+          template( v-slot:activator="{ on }" )
+            v-text-field(
+              v-model="time"
+              label="Pick the time"
+              prepend-icon="mdi-calendar-clock"
+              readonly
+              v-on="on"
+            )
+          // the model should be in ISO format.
+          v-time-picker(
+            v-model="time"
+            scrollable
+            color="green lighten-1"
+            @click:minute="$refs.menut.save(time)"
+          )
+      v-col(cols="3")
         v-text-field(
           label="Credit earned"
           v-model="credit"
@@ -72,6 +100,10 @@ export default {
              // conver to ISO format: YYYY-MM-DD,
              // v-date-picker is prefer ISO format.
              day: (new Date()).toISOString().split('T')[0],
+
+             menut: "",
+             //time: (new Date()).toISOString().split('T')[1],
+             time: "12:00",
 
              formValid: true,
              accomplishment: '',
