@@ -76,23 +76,40 @@ v-container( grid-list-xs )
         ) Add
 
   h2 Accomplishments
-  v-data-table(
-    :headers="headers"
-    :items="jobs"
-    :item-per-page="perPage"
-  )
-    template(v-slot:item.credit="{item}")
-      div {{ item.credit}}
+  v-layout( row wrap )
+    v-row
+      v-col(cols="12" md="3")
+        date-window(
+          v-on:dates-change="handleDatesChange"
+        )
+        stats(
+          :stats="summary"
+        )
+      v-col(cols="12" md="9")
+        v-data-table(
+          :headers="headers"
+          :items="jobs"
+          :item-per-page="perPage"
+        )
+          template(v-slot:item.credit="{item}")
+            div {{ item.credit}}
 </template>
 
 <script>
 
 import credits from '@/libs/credits.js';
+import StatsCard from '@/pages/solr/card-stats.vue';
+import DateWindowCard from '@/pages/solr/card-date-window.vue';
 
 export default {
 
     auth: false,
     layout: 'vuetify',
+
+    components: {
+        'date-window': DateWindowCard,
+        'stats': StatsCard
+    },
 
     data() {
 
@@ -125,11 +142,21 @@ export default {
                  { text: "Accomplishment", value: "accomplishment" },
                  { text: "Credit", value: "credit" }
              ],
+
              jobs: [
                  //{accomplishment: '',
                  // credit: 1
                  //}
              ],
+
+             //summary: null,
+             summary: {
+                 "Job Count": 4,
+                 "Total Credits:": 23.5,
+                 "Negative Credits:": -22
+             },
+
+             start: 0,
              perPage: 15
          };
     },
@@ -162,6 +189,11 @@ export default {
             this.day = credits.getToday();
             this.time = credits.getCurrentTime();
         },
+
+        /**
+         */
+        handleDatesChange() {
+        }
     },
 
     /**
