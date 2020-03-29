@@ -4,6 +4,30 @@ v-container( grid-list-xs )
   v-form(v-model="formValid")
     v-row(align="end")
       v-col(cols="9")
+        v-menu(
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          :return-value.sync="day"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        )
+          template( v-slot:activator="{ on }" )
+            v-text-field(
+              v-model="day"
+              label="Pick the date"
+              prepend-icon="mdi-calendar-range"
+              readonly
+              v-on="on"
+            )
+          // the model should be in ISO format.
+          v-date-picker(
+            v-model="day"
+            scrollable
+            color="green lighten-1"
+            @click:date="$refs.menu.save(day)"
+          )
         v-text-field(
           label="Accomplishment Description"
           v-model="accomplishment"
@@ -29,6 +53,8 @@ v-container( grid-list-xs )
     :items="jobs"
     :item-per-page="perPage"
   )
+    template(v-slot:item.credit="{item}")
+      div(class="credit") {{ item.credit}}
 </template>
 
 <script>
@@ -41,6 +67,12 @@ export default {
     data() {
 
          return {
+
+             menu: '',
+             // conver to ISO format: YYYY-MM-DD,
+             // v-date-picker is prefer ISO format.
+             day: (new Date()).toISOString().split('T')[0],
+
              formValid: true,
              accomplishment: '',
              credit: 1,
@@ -50,8 +82,11 @@ export default {
              ],
 
              headers: [
-                { text: "Accomplishment", value: "accomplishment" },
-                { text: "Credit", value: "credit" }
+                 // text will be the lable and 
+                 //value will be the property name of the object.
+                 { text: "Day", value: "day" },
+                 { text: "Accomplishment", value: "accomplishment" },
+                 { text: "Credit", value: "credit" }
              ],
              jobs: [
                  //{accomplishment: '',
@@ -67,6 +102,7 @@ export default {
         addAccomplishment() {
 
             this.jobs.push({
+                day: this.day,
                 accomplishment: this.accomplishment,
                 credit: this.credit
             });
@@ -81,4 +117,7 @@ export default {
 </script>
 
 <style lang="sass">
+.credit
+  background-color: red
+  color: white
 </style>
