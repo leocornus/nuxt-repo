@@ -75,7 +75,8 @@ v-container( grid-list-xs )
           @click="addAccomplishment"
         ) Add
 
-  h2 Accomplishments
+  h2 Accomplishments 
+    span(v-if="$auth.loggedIn") for {{ $auth.user.name }}
   v-layout( row wrap )
     v-row
       v-col(cols="12" md="3")
@@ -202,8 +203,9 @@ export default {
 
             this.dateRange = newRange;
 
-            // reload transactions.
-            credits.getAccomplishments(this);
+            if(this.$auth.loggedIn) {
+                credits.getAccomplishments(this);
+            }
         }
     },
 
