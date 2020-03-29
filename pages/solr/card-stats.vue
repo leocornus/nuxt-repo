@@ -9,7 +9,7 @@ v-card( v-if="stats" class="mb-3")
     hide-default-footer
   )
     template( v-slot:item.value="{ item }" )
-      v-chip( :color="getValueColor(item.value)" dard
+      v-chip( :color="getValueColor(item.value)" dark
       ) {{ formatValue(item) }}
   // using v-list.
   //v-list.blue.lighten-1
@@ -62,7 +62,7 @@ export default {
         // set different color based on the value.
         getValueColor: function(theValue) {
 
-            return theValue < 0 ? 'red' : 'success';
+            return theValue < 0 ? 'error' : 'success';
         },
 
         /**
