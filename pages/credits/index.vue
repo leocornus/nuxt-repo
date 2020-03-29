@@ -87,6 +87,8 @@ v-container( grid-list-xs )
 
 <script>
 
+import credits from '@/libs/credits.js';
+
 export default {
 
     auth: false,
@@ -99,12 +101,13 @@ export default {
              menu: '',
              // conver to ISO format: YYYY-MM-DD,
              // v-date-picker is prefer ISO format.
-             day: (new Date()).toISOString().split('T')[0],
+             //day: (new Date()).toISOString().split('T')[0],
+             day: credits.getToday(),
 
              menut: "",
              // the time format will like the following
              //time: "12:00",
-             time: (new Date()).toLocaleString().split(', ')[1].split(":").slice(0,2).join(":"),
+             time: credits.getCurrentTime(),
 
              formValid: true,
              accomplishment: '',
