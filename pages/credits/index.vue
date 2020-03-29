@@ -104,7 +104,7 @@ export default {
              menut: "",
              // the time format will like the following
              //time: "12:00",
-             time: (new Date()).toISOString().split('T')[1].split(":").slice(0,2).join(":"),
+             time: (new Date()).toLocaleString().split(', ')[1].split(":").slice(0,2).join(":"),
 
              formValid: true,
              accomplishment: '',
