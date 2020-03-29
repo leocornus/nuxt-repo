@@ -82,7 +82,7 @@ v-container( grid-list-xs )
     :item-per-page="perPage"
   )
     template(v-slot:item.credit="{item}")
-      div(class="credit") {{ item.credit}}
+      div {{ item.credit}}
 </template>
 
 <script>
@@ -102,8 +102,9 @@ export default {
              day: (new Date()).toISOString().split('T')[0],
 
              menut: "",
-             //time: (new Date()).toISOString().split('T')[1],
-             time: "12:00",
+             // the time format will like the following
+             //time: "12:00",
+             time: (new Date()).toISOString().split('T')[1].split(":").slice(0,2).join(":"),
 
              formValid: true,
              accomplishment: '',
@@ -117,6 +118,7 @@ export default {
                  // text will be the lable and 
                  //value will be the property name of the object.
                  { text: "Day", value: "day" },
+                 { text: "Time", value: "time" },
                  { text: "Accomplishment", value: "accomplishment" },
                  { text: "Credit", value: "credit" }
              ],
@@ -135,6 +137,7 @@ export default {
 
             this.jobs.push({
                 day: this.day,
+                time: this.time,
                 accomplishment: this.accomplishment,
                 credit: this.credit
             });
