@@ -118,10 +118,10 @@ export default {
              ],
 
              headers: [
-                 // text will be the lable and 
-                 //value will be the property name of the object.
+                 // text will be the label and 
+                 // value will be the property name of the object.
                  { text: "Day", value: "day" },
-                 { text: "Time", value: "time" },
+                 //{ text: "Time", value: "time" },
                  { text: "Accomplishment", value: "accomplishment" },
                  { text: "Credit", value: "credit" }
              ],
@@ -138,16 +138,38 @@ export default {
 
         addAccomplishment() {
 
-            this.jobs.push({
-                day: this.day,
-                time: this.time,
-                accomplishment: this.accomplishment,
-                credit: this.credit
-            });
+            if(this.$auth.loggedIn) {
+
+                credits.addAccomplishment(this);
+            } else {
+
+                this.jobs.push({
+                    day: this.day,
+                    time: this.time,
+                    accomplishment: this.accomplishment,
+                    credit: this.credit
+                });
+
+                this.resetFields();
+            }
+        },
+
+        resetFields() {
 
             // reset all fields.
             this.accomplishment = "";
             this.credit = "";
+            this.day = credits.getToday();
+            this.time = credits.getCurrentTime();
+        },
+    },
+
+    /**
+     */
+    created() {
+
+        if(this.$auth.loggedIn) {
+            credits.getAccomplishments(this);
         }
     }
 }
