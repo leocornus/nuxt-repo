@@ -16,6 +16,7 @@ install:
   - touch libs/stocks.js
   - touch libs/solrsearch.js
   - touch libs/tetris.js
+  - touch libs/credits.js
   - npm install
   - npm run generate
 
