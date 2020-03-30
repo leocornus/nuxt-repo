@@ -18,13 +18,25 @@ v-container( grid-list-xs )
           v-chip( color="warning" x-large )
             span(id="confirmedId") {{ numFormater.format(total.confirmed) }}
         v-col(col="2")
+          h4 New Today 
+          v-chip( color="warning darken-2" large )
+            span(id="confirmedId") {{ numFormater.format(total.new_confirmed) }}
+        v-col(col="2")
           h4 Deaths
           v-chip( color="error" x-large )
             span(id="deathId") {{ numFormater.format(total.death) }}
         v-col(col="2")
+          h4 New Deaths
+          v-chip( color="error" large )
+            span(id="deathId") {{ numFormater.format(total.new_death) }}
+        v-col(col="2")
           h4 Recovered
           v-chip( color="success" x-large )
             span(id="recoveredId") {{ numFormater.format(total.recovered) }}
+        v-col(col="2")
+          h4 New Today 
+          v-chip( color="success" large )
+            span(id="recoveredId") {{ numFormater.format(total.new_recovered) }}
     v-card-text
       v-data-table(
          :headers="headers"
@@ -62,7 +74,10 @@ export default {
             total: {
                 confirmed: 0,
                 death: 0,
-                recovered: 0
+                recovered: 0,
+                "new_confirmed": 0,
+                "new_death": 0,
+                "new_recovered": 0
             },
 
             // items per page.
@@ -123,7 +138,10 @@ export default {
             this.total = {
                 confirmed: 0,
                 death: 0,
-                recovered: 0
+                recovered: 0,
+                "new_confirmed": 0,
+                "new_death": 0,
+                "new_recovered": 0
             }
             // reset cases.
             this.cases = [];
