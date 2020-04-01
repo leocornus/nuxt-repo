@@ -19,24 +19,24 @@ v-container( grid-list-xs )
             span(id="confirmedId") {{ numFormater.format(total.confirmed) }}
         v-col(col="2")
           h4 New Today 
-          v-chip( color="warning darken-2" large )
-            span(id="confirmedId") {{ numFormater.format(total.new_confirmed) }}
+          v-chip( color="warning darken-2" large ) +
+            span(id="newConfirmedId") {{ numFormater.format(total.new_confirmed) }}
         v-col(col="2")
           h4 Deaths
           v-chip( color="error" x-large )
             span(id="deathId") {{ numFormater.format(total.death) }}
         v-col(col="2")
           h4 New Deaths
-          v-chip( color="error" large )
-            span(id="deathId") {{ numFormater.format(total.new_death) }}
+          v-chip( color="error" large ) +
+            span(id="newDeathId") {{ numFormater.format(total.new_death) }}
         v-col(col="2")
           h4 Recovered
           v-chip( color="success" x-large )
             span(id="recoveredId") {{ numFormater.format(total.recovered) }}
         v-col(col="2")
           h4 New Today 
-          v-chip( color="success" large )
-            span(id="recoveredId") {{ numFormater.format(total.new_recovered) }}
+          v-chip( color="success" large ) +
+            span(id="newRecoveredId") {{ numFormater.format(total.new_recovered) }}
     v-card-text
       v-data-table(
          :headers="headers"
@@ -48,6 +48,8 @@ v-container( grid-list-xs )
         // set the number format.
         template(v-slot:item.confirmed="{ item }")
           | {{ numFormater.format(item.confirmed) }}
+        template(v-slot:item.new_confirmed="{ item }")
+          | +{{ numFormater.format(item.new_confirmed) }}
         template(v-slot:item.death="{ item }")
           | {{ numFormater.format(item.death) }}
         template(v-slot:item.recovered="{ item }")
