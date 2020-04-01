@@ -93,7 +93,10 @@ v-container( grid-list-xs )
           :item-per-page="perPage"
         )
           template(v-slot:item.credit="{item}")
-            div {{ item.credit}}
+            v-chip(
+              :color="item.credit < 0  ? 'error' : 'success'"
+              dark
+            ) {{ item.credit}}
 </template>
 
 <script>
