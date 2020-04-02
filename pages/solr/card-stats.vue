@@ -73,6 +73,7 @@ export default {
             let theValue = item.value;
             switch(item.name) {
                 case "sum":
+                case "perShare":
                     theValue = this.usCurrency.format(item.value);
                     break;
                 default:
