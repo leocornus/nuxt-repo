@@ -117,8 +117,6 @@ v-container( grid-list-xs )
 
 <script>
 
-import axios from 'axios';
-
 import stocks from '@/libs/stocks.js';
 import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
 import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';

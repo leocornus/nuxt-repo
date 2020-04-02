@@ -56,7 +56,7 @@ export default {
             });
         }
     },
-    
+
     methods: {
 
         // set different color based on the value.

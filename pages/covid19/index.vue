@@ -1,6 +1,6 @@
 <template lang="pug">
 v-container( grid-list-xs )
-  h2(class="text-center") COVID-19 Global Cases
+  h1(class="text-center") COVID-19 Global Cases
   div(class="text-center").mb-1
     v-chip(label) Last updated:
       i {{ lastUpdated }}
@@ -49,7 +49,7 @@ v-container( grid-list-xs )
         template(v-slot:item.confirmed="{ item }")
           | {{ numFormater.format(item.confirmed) }}
         template(v-slot:item.new_confirmed="{ item }")
-          | +{{ numFormater.format(item.new_confirmed) }}
+          | {{ numFormater.format(item.new_confirmed) }}
         template(v-slot:item.death="{ item }")
           | {{ numFormater.format(item.death) }}
         template(v-slot:item.recovered="{ item }")
