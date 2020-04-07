@@ -20,7 +20,7 @@ v-container( grid-list-xs )
           p.display-2.text--primary
             span(id="confirmedId") {{ numFormater.format(total.confirmed) }}
           div New confimed
-          div.display-1.text--primary.text--white
+          div.display-1.white--text
             span(id="newConfirmedId") {{ numFormater.format(total.new_confirmed) }}
     v-col(col="4")
       v-card( class="mx-auto"
@@ -32,7 +32,7 @@ v-container( grid-list-xs )
           p.display-2.text--primary
             span(id="deathId") {{ numFormater.format(total.death) }}
           div New deaths
-          div.display-1.text--primary.text--white
+          div.display-1.white--text
             span(id="newDeathId") {{ numFormater.format(total.new_death) }}
     v-col(col="4")
       v-card( class="mx-auto"
@@ -44,11 +44,11 @@ v-container( grid-list-xs )
           p.display-2.text--primary
             span(id="recoveredId") {{ numFormater.format(total.recovered) }}
           div New recovered
-          div.display-1.text--primary.text--white
+          div.display-1.white--text
             span(id="newRecoveredId") {{ numFormater.format(total.new_recovered) }}
   v-card
     v-card-title
-      //h3 Global Cases
+      h3 Cases break down by countries
       v-row(class="text-center d-none")
         v-col(col="2")
           h4 Confirmed
