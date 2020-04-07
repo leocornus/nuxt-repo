@@ -7,6 +7,10 @@ v-container(grid-list-md text-center)
           div Simple number clock
           p.display-1.text--primary {{ timeFormatter.format(currentTime) }}
     v-col( col="3" )
+      v-card
+        v-card-text
+          div Simple count down
+          p.display-1.text--primary {{ timerFormat(timer) }}
     v-col( col="3" )
     v-col( col="3" )
 </template>
@@ -33,7 +37,10 @@ export default {
                     // set to 24 hour format.
                     hour12: false
                 }
-            )
+            ),
+
+            // timer in seconds
+            timer: 60
         };
     },
 
@@ -50,6 +57,14 @@ export default {
         clockTick() {
 
             this.updateCurrentTime();
+        },
+
+        /**
+         * format the given seconds in clock style.
+         */
+        timerFormat( seconds ) {
+
+            return seconds;
         }
     },
 
