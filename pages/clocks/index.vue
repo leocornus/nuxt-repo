@@ -19,6 +19,7 @@ export default {
     auth: false,
 
     data() {
+
         return {
 
             currentTime: null
@@ -26,18 +27,28 @@ export default {
     },
 
     methods: {
+
         updateCurrentTime() {
 
             this.currentTime = new Date();
+        },
+
+        /**
+         * for each clock tick
+         */
+        clockTick() {
+
+            this.updateCurrentTime();
         }
     },
 
     created() {
+
         this.currentTime = new Date();
 
         // setInterval is available here:
         // The interval is in MS
-        setInterval( () => this.updateCurrentTime(), 1 * 1000 );
+        setInterval( () => this.clockTick(), 1 * 1000 );
     }
 }
 </script>
