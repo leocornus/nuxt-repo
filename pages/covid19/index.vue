@@ -9,10 +9,47 @@ v-container( grid-list-xs )
     ).ml-2.lighten-4
       v-icon(left) mdi-reload
       | Refresh
+  v-row
+    v-col(col="4")
+      v-card( class="mx-auto"
+        color="warning"
+        shaped
+      )
+        v-card-text
+          div Confirmed
+          p.display-2.text--primary
+            span(id="confirmedId") {{ numFormater.format(total.confirmed) }}
+          div New confimed
+          div.display-1.text--primary.text--white
+            span(id="newConfirmedId") {{ numFormater.format(total.new_confirmed) }}
+    v-col(col="4")
+      v-card( class="mx-auto"
+        color="error"
+        shaped
+      )
+        v-card-text
+          div Deaths
+          p.display-2.text--primary
+            span(id="deathId") {{ numFormater.format(total.death) }}
+          div New deaths
+          div.display-1.text--primary.text--white
+            span(id="newDeathId") {{ numFormater.format(total.new_death) }}
+    v-col(col="4")
+      v-card( class="mx-auto"
+        color="success"
+        shaped
+      )
+        v-card-text
+          div Recovered
+          p.display-2.text--primary
+            span(id="recoveredId") {{ numFormater.format(total.recovered) }}
+          div New recovered
+          div.display-1.text--primary.text--white
+            span(id="newRecoveredId") {{ numFormater.format(total.new_recovered) }}
   v-card
     v-card-title
       //h3 Global Cases
-      v-row(class="text-center")
+      v-row(class="text-center d-none")
         v-col(col="2")
           h4 Confirmed
           v-chip( color="warning" x-large )
@@ -32,7 +69,7 @@ v-container( grid-list-xs )
         v-col(col="2")
           h4 Recovered
           v-chip( color="success" x-large )
-            span(id="recoveredId") {{ numFormater.format(total.recovered) }}
+            span(id="n-recoveredId") {{ numFormater.format(total.recovered) }}
         v-col(col="2")
           h4 New Today 
           v-chip( color="success" large ) +
