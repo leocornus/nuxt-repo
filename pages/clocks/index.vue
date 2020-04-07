@@ -5,7 +5,7 @@ v-container(grid-list-md text-center)
       v-card
         v-card-text
           div Simple number clock
-          p.display-1.text--primary {{ currentTime }}
+          p.display-1.text--primary {{ timeFormatter.format(currentTime) }}
     v-col( col="3" )
     v-col( col="3" )
     v-col( col="3" )
@@ -22,7 +22,15 @@ export default {
 
         return {
 
-            currentTime: null
+            currentTime: null,
+
+            // MDN time formatter.
+            timeFormatter: new Intl.DateTimeFormat( 'en-US',
+                {
+                    hour: 'numeric', minute: 'numeric', second: 'numeric',
+                    hour12: true
+                }
+            )
         };
     },
 
