@@ -5,7 +5,7 @@ v-container(grid-list-md text-center)
       v-card
         v-card-text
           div Simple number clock
-          p {{ currentTime }}
+          p.display-1.text--primary {{ currentTime }}
     v-col( col="3" )
     v-col( col="3" )
     v-col( col="3" )
@@ -18,8 +18,26 @@ export default {
     name: 'clocks',
     auth: false,
 
-    methods: {
-    }
+    data() {
+        return {
 
+            currentTime: null
+        };
+    },
+
+    methods: {
+        updateCurrentTime() {
+
+            this.currentTime = new Date();
+        }
+    },
+
+    created() {
+        this.currentTime = new Date();
+
+        // setInterval is available here:
+        // The interval is in MS
+        setInterval( () => this.updateCurrentTime(), 1 * 1000 );
+    }
 }
 </script>
