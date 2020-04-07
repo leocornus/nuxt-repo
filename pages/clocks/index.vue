@@ -24,11 +24,14 @@ export default {
 
             currentTime: null,
 
-            // MDN time formatter.
+            // MDN time formatter:
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
             timeFormatter: new Intl.DateTimeFormat( 'en-US',
+                // set options to only show current time.
                 {
                     hour: 'numeric', minute: 'numeric', second: 'numeric',
-                    hour12: true
+                    // set to 24 hour format.
+                    hour12: false
                 }
             )
         };
