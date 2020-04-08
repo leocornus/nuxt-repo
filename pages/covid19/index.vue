@@ -8,7 +8,7 @@ v-container( grid-list-xs )
       @click="reload"
     ).ml-2.lighten-4
       v-icon(left) mdi-reload
-      | Refresh
+      | Refresh in {{ timerFormat(timer) }}
   v-row
     v-col(col="4")
       v-card( class="mx-auto"
@@ -129,7 +129,10 @@ export default {
 
             headers: covid.getHeaders(),
 
-            numFormater: new Intl.NumberFormat('en-US')
+            numFormater: new Intl.NumberFormat('en-US'),
+
+            // refresh timer, in seconds.
+            timer: 180
         };
     },
 
@@ -168,6 +171,9 @@ export default {
                 self.confirmedCount.update(self.total.confirmed);
                 self.deathCount.update(self.total.death);
                 self.recoveredCount.update(self.total.recovered);
+
+                // reset timer.
+                self.timer = 300;
             });
         },
 
@@ -189,6 +195,32 @@ export default {
             this.confirmedCount.reset();
             this.deathCount.reset();
             this.recoveredCount.reset();
+        },
+
+        /**
+         * for each clock tick
+         */
+        clockTick() {
+
+            // count down timer.
+            if( this.timer > 0 )
+                // count down
+                this.timer --;
+            else {
+                // reload page.
+                //this.reload();
+            }
+        },
+
+        /**
+         * format the given seconds in clock style.
+         */
+        timerFormat( seconds ) {
+
+            // string padStart will add leading 0
+            const mins = (Math.floor(seconds / 60.0) + "").padStart(2, '0');
+            const remains = (seconds % 60 + "").padStart(2, '0');
+            return mins + ":" + remains;
         }
     }
 }
