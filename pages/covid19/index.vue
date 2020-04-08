@@ -1,15 +1,24 @@
 <template lang="pug">
 v-container( grid-list-xs )
   h1(class="text-center") COVID-19 Global Cases
-  div(class="text-center").mb-1
-    v-chip(label) Last updated:
-      i {{ lastUpdated }}
-    v-btn( small color="teal"
-      @click="reload"
-    ).ml-2.lighten-4
-      v-icon(left) mdi-reload
-      | Refresh in {{ timerFormat(timer) }}
+  v-row
+    v-col
+      v-chip(label) {{ timeFormatter.format(currentTime) }}
+      //span.text--primary 
+    v-spacer
+    v-col
+      v-chip(label) Last updated:
+        i.text--primary {{ timeFormatter.format(lastUpdated) }}
+    v-spacer
+    v-col.text-right
+      v-btn( small color="teal"
+        @click="reload"
+      ).ml-2.lighten-4
+        v-icon(left) mdi-reload
+        | Refresh in {{ timerFormat(timer) }}
+
   v-progress-linear( :value="(timerAmount - timer) / timerAmount * 100" )
+
   v-row
     v-col(col="4")
       v-card( class="mx-auto"
@@ -126,11 +135,24 @@ export default {
 
             cases: [],
 
-            lastUpdated: '',
+            lastUpdated: null,
 
             headers: covid.getHeaders(),
 
+            currentTime: new Date(),
             numFormater: new Intl.NumberFormat('en-US'),
+
+            // MDN time formatter:
+            timeFormatter: new Intl.DateTimeFormat( 'en-US',
+                // set options to only show current time.
+                {
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                    hour: 'numeric', minute: 'numeric', second: 'numeric',
+                    // set to 24 hour format.
+                    hour12: false,
+                    timeZone: 'GMT', timeZoneName: 'short'
+                }
+            ),
 
             // refresh timer, in seconds.
             timerAmount: 120,
@@ -194,7 +216,7 @@ export default {
             }
             // reset cases.
             this.cases = [];
-            this.lastUpdated = '';
+            this.lastUpdated = null;
             // reset count.
             this.confirmedCount.reset();
             this.deathCount.reset();
@@ -208,6 +230,9 @@ export default {
          * for each clock tick
          */
         clockTick() {
+
+            // update current time.
+            this.currentTime = new Date();
 
             // count down timer.
             if( this.timer > 0 )
