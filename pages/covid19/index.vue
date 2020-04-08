@@ -147,6 +147,8 @@ export default {
             self.confirmedCount.update(self.total.confirmed);
             self.deathCount.update(self.total.death);
             self.recoveredCount.update(self.total.recovered);
+
+            setInterval( () => self.clockTick(), 1 * 1000 );
         });
     },
 
@@ -173,7 +175,7 @@ export default {
                 self.recoveredCount.update(self.total.recovered);
 
                 // reset timer.
-                self.timer = 300;
+                self.timer = 180;
             });
         },
 
@@ -206,10 +208,9 @@ export default {
             if( this.timer > 0 )
                 // count down
                 this.timer --;
-            else {
+            else
                 // reload page.
-                //this.reload();
-            }
+                this.reload();
         },
 
         /**
