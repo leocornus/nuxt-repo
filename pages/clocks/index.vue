@@ -40,7 +40,7 @@ export default {
             ),
 
             // timer in seconds
-            timer: 60
+            timer: 160
         };
     },
 
@@ -57,6 +57,14 @@ export default {
         clockTick() {
 
             this.updateCurrentTime();
+
+            // count down timer.
+            if( this.timer > 0 )
+                // count down
+                this.timer --;
+            else
+                // reset timer.
+                this.timer = 60;
         },
 
         /**
@@ -64,7 +72,10 @@ export default {
          */
         timerFormat( seconds ) {
 
-            return seconds;
+            // string padStart will add leading 0
+            const mins = (Math.floor(seconds / 60.0) + "").padStart(2, '0');
+            const remains = (seconds % 60 + "").padStart(2, '0');
+            return mins + ":" + remains;
         }
     },
 
