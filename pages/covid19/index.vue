@@ -9,6 +9,7 @@ v-container( grid-list-xs )
     ).ml-2.lighten-4
       v-icon(left) mdi-reload
       | Refresh in {{ timerFormat(timer) }}
+  v-progress-linear( :value="(timerAmount - timer) / timerAmount * 100" )
   v-row
     v-col(col="4")
       v-card( class="mx-auto"
@@ -132,6 +133,7 @@ export default {
             numFormater: new Intl.NumberFormat('en-US'),
 
             // refresh timer, in seconds.
+            timerAmount: 120,
             timer: 120
         };
     },
@@ -175,7 +177,7 @@ export default {
                 self.recoveredCount.update(self.total.recovered);
 
                 // reset timer.
-                self.timer = 120;
+                self.timer = self.timerAmount;
             });
         },
 
@@ -197,6 +199,9 @@ export default {
             this.confirmedCount.reset();
             this.deathCount.reset();
             this.recoveredCount.reset();
+
+            // reset timer.
+            this.timer = this.timerAmount;
         },
 
         /**
