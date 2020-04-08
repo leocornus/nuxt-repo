@@ -132,7 +132,7 @@ export default {
             numFormater: new Intl.NumberFormat('en-US'),
 
             // refresh timer, in seconds.
-            timer: 180
+            timer: 120
         };
     },
 
@@ -175,7 +175,7 @@ export default {
                 self.recoveredCount.update(self.total.recovered);
 
                 // reset timer.
-                self.timer = 180;
+                self.timer = 120;
             });
         },
 
