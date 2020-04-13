@@ -1,6 +1,10 @@
 <template lang="pug">
 v-container( grid-list-xs )
-  h1(class="text-center") COVID-19 Global Cases
+  v-breadcrumbs( 
+    v-if="filters.length > 0"
+    :items="getBreadcrumbs()"
+  ).pa-0
+  h1(class="text-center") {{ pageHead }}
   v-row
     v-col
       v-chip(label) {{ timeFormatter.format(currentTime) }}
@@ -58,40 +62,31 @@ v-container( grid-list-xs )
             span(id="newRecoveredId") {{ numFormater.format(total.new_recovered) }}
   v-card
     v-card-title
-      h3 Cases break down by countries
-      v-row(class="text-center d-none")
-        v-col(col="2")
-          h4 Confirmed
-          v-chip( color="warning" x-large )
-            span(id="confirmedId") {{ numFormater.format(total.confirmed) }}
-        v-col(col="2")
-          h4 New Today 
-          v-chip( color="warning darken-2" large ) +
-            span(id="newConfirmedId") {{ numFormater.format(total.new_confirmed) }}
-        v-col(col="2")
-          h4 Deaths
-          v-chip( color="error" x-large )
-            span(id="deathId") {{ numFormater.format(total.death) }}
-        v-col(col="2")
-          h4 New Deaths
-          v-chip( color="error" large ) +
-            span(id="newDeathId") {{ numFormater.format(total.new_death) }}
-        v-col(col="2")
-          h4 Recovered
-          v-chip( color="success" x-large )
-            span(id="n-recoveredId") {{ numFormater.format(total.recovered) }}
-        v-col(col="2")
-          h4 New Today 
-          v-chip( color="success" large ) +
-            span(id="newRecoveredId") {{ numFormater.format(total.new_recovered) }}
+      h3 {{ dataTableHead }}
+      v-spacer
+      v-text-field(
+        v-model="tableSearch"
+        prepend-inner-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
+        clearable
+      )
     v-card-text
       v-data-table(
          :headers="headers"
          :items="cases"
          :items-per-page="perPage"
          :sortBy="sortBy"
+         :search="tableSearch"
          sortDesc
       )
+        template(v-slot:item.country_region="{ item }")
+          a( 
+            v-if="item.facet_count > 1"
+            @click="selectCountry(item.country_region)"
+          ) {{ item.country_region }}
+          span( v-else ) {{ item.country_region }}
         // set the number format.
         template(v-slot:item.confirmed="{ item }")
           | {{ numFormater.format(item.confirmed) }}
@@ -99,6 +94,8 @@ v-container( grid-list-xs )
           | {{ numFormater.format(item.new_confirmed) }}
         template(v-slot:item.death="{ item }")
           | {{ numFormater.format(item.death) }}
+        template(v-slot:item.new_death="{ item }")
+          | {{ numFormater.format(item.new_death) }}
         template(v-slot:item.recovered="{ item }")
           | {{ numFormater.format(item.recovered) }}
 </template>
@@ -111,14 +108,17 @@ import {CountUp} from 'countup.js';
 export default {
 
     auth: false,
-
-    layout: 'vuetify',
+    layout: "vuetify",
 
     // components.
 
     // data.
     data() {
         return {
+
+            pageHead: "COVID-19 Global Cases",
+
+            dataTableHead: "Cases breakdown by countries", 
 
             total: {
                 confirmed: 0,
@@ -156,7 +156,13 @@ export default {
 
             // refresh timer, in seconds.
             timerAmount: 120,
-            timer: 120
+            timer: 120,
+
+            // for data table search.
+            tableSearch: '',
+
+            // filters.
+            filters: []
         };
     },
 
@@ -201,6 +207,9 @@ export default {
                 // reset timer.
                 self.timer = self.timerAmount;
             });
+
+            // reset headers.
+            self.headers = covid.getHeaders();
         },
 
         cleanData() {
@@ -224,6 +233,25 @@ export default {
 
             // reset timer.
             this.timer = this.timerAmount;
+        },
+
+        /**
+         * handle country select.
+         */
+        selectCountry( country ) {
+
+            this.filters[0] = {name: "country", value: country};
+
+            // reload data
+            this.reload();
+
+            // reset search field.
+            this.tableSearch = "";
+
+            // reset page head,
+            this.pageHead = "COVID-19 Cases - " + country;
+            // reset data table head.
+            this.dataTableHead = country + " cases by states";
         },
 
         /**
@@ -252,6 +280,29 @@ export default {
             const mins = (Math.floor(seconds / 60.0) + "").padStart(2, '0');
             const remains = (seconds % 60 + "").padStart(2, '0');
             return mins + ":" + remains;
+        },
+
+        /**
+         * build the bread crumbs.
+         */
+        getBreadcrumbs( ) {
+
+            let items = [
+                {
+                    text: "Global Cases",
+                    disable: false,
+                    href: "/"
+                }
+            ];
+
+            if( this.filters.length > 0 ) {
+                items.push({
+                    text: this.filters[0].value,
+                    disable: false
+                });
+            }
+
+            return items;
         }
     }
 }
