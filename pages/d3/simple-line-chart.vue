@@ -2,7 +2,7 @@
 v-container(grid-list-md text-center)
   svg(
     width="500"
-    height="270"
+    height="570"
   )
     g( style="transform: translate(0, 10px)" )
       path( :d="line" )
@@ -21,7 +21,7 @@ export default {
 
         return {
 
-            data: [99, 71, 78, 25, 36, 92],
+            data: [99, 71, 120, 89, 78, 25, 36, 92],
             line: ''
 
         };
@@ -36,8 +36,8 @@ export default {
 
         getScales() {
 
-            const x = d3.scaleTime().range([0, 430]);
-            const y = d3.scaleLinear().range([210, 0]);
+            const x = d3.scaleTime().range([0, 500]);
+            const y = d3.scaleLinear().range([570, 0]);
             d3.axisLeft().scale(x);
             d3.axisBottom().scale(y);
             x.domain(d3.extent(this.data, (d, i) => i));
