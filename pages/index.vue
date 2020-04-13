@@ -2,11 +2,15 @@
 v-container(grid-list-md text-center)
   v-list
     v-list-item
-      n-link(to="/covid19") COVID-19 Cases
+      a(href="https://covid19.leocorn.com") COVID-19 Cases Live Site (https:/covid19.leocorn.com)
+    v-list-item
+      n-link(to="/covid19") COVID-19 Cases (DEV Site)
     v-list-item
       n-link(to="/vuetify/prime-number") Prime Number Checker
     v-list-item
       n-link(to="/revasearch") Reva Search
+    v-list-item
+      n-link(to="/clocks") Clocks and Timers
     v-list-item
       n-link(to="/login") Login
 </template>
