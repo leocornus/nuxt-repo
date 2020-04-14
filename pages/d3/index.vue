@@ -2,7 +2,9 @@
 v-container(grid-list-md text-center)
   v-list
     v-list-item
-      n-link( to="d3/simple-line-chart" ) Simple Line Chart
+      n-link( to="simple-line-chart" ) Simple Line Chart
+    v-list-item
+      n-link( to="multi-lines-chart" ) Multiple Lines Chart
 </template>
 
 <script>
