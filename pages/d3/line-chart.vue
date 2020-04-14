@@ -110,18 +110,26 @@ export default {
 
             // create svg, using 100% of the room!
             vm.svg = d3.select('#linechart').append("svg")
-                //.attr("width", "100%")
-                //.attr("height", "100%");
-                .attr("width", 500)
-                .attr("height", 480);
+                .attr("width", "100%")
+                .attr("height", "100%");
+                //.attr("width", 500)
+                //.attr("height", 480);
                 //.call(vm.responsivefy);
 
-            console.log(vm.svg.attr('width'));
-            console.log(vm.chartMargin);
+            //console.log(vm.svg.attr('width'));
+            //let parentNode = d3.select(d3.select('#linechart').node().parentNode);
+            //console.log(parseInt(parentNode.style('width')));
+            //console.log("middle col: ", parentNode.node().getBoundingClientRect());
+            //console.log("svg DOMRect: ", vm.svg.node().getBoundingClientRect());
+            //console.log("svg: ", vm.svg.node().getBBox());
+            //console.log(vm.chartMargin);
             
             // calculate the dimention of the chart.
-            vm.chartWidth = +vm.svg.attr("width") - vm.chartMargin.left - vm.chartMargin.right;
-            vm.chartHeight = +vm.svg.attr("height") - vm.chartMargin.top - vm.chartMargin.bottom;
+            // +vm.svg.attr("innerWidth")
+            const svgRect = vm.svg.node().getBoundingClientRect();
+            vm.chartWidth = svgRect.width - vm.chartMargin.left - vm.chartMargin.right;
+            // +vm.svg.style("height")
+            vm.chartHeight = svgRect.height - vm.chartMargin.top - vm.chartMargin.bottom;
             console.log(vm.chartWidth, vm.chartHeight);
 
             // the element group for lines.
