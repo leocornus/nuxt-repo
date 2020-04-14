@@ -4,9 +4,13 @@ v-container(grid-list-md text-center)
     width="500"
     height="570"
   )
-    g( style="transform: translate(0, 10px)" )
+    // the line chart. group of element.
+    g( transform="translate(0, 10px)" )
       path( class="one" :d="line1" )
+        text line One
       path( class="two" :d="line2" )
+      // x axis, at the bottom.
+      // y axis at left
 </template>
 
 <script>
@@ -15,7 +19,7 @@ import * as d3 from "d3";
 export default {
 
     layout: 'vuetify',
-    name: 'simple-line-chart',
+    name: 'multi-lines-chart',
     auth: false,
 
     data() {
