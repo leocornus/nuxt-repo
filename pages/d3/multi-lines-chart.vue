@@ -102,15 +102,31 @@ export default {
                     .attr("text-anchor", "end")
                     .text("Price ($)");
 
+                cities[0].stroke = {
+                    color: "#fb8c00",
+                    width: 1
+                };
+                cities[1].stroke = {
+                    color: "#ff5252",
+                    width: 2.5 
+                };
+                cities[2].stroke = {
+                    color: "#4caf50",
+                    width: 1
+                };
+
                 // draw path.
-                vm.drawPath(cities[0].values);
+                cities.forEach( city => {
+
+                    vm.drawPath(city.values, city.stroke);
+                });
             });
         },
 
         /**
          * draw path from the given data.
          */
-        drawPath(data) {
+        drawPath(data, stroke) {
 
             let vm = this;
 
@@ -118,10 +134,10 @@ export default {
             let path = vm.linesGroup.append("path")
               .datum(data)
               .attr("fill", "none")
-              .attr("stroke", "steelblue")
-              .attr("stroke-linejoin", "round")
-              .attr("stroke-linecap", "round")
-              .attr("stroke-width", 1.5)
+              .attr("stroke", stroke.color)
+              .attr("stroke-linejoin", "miter")
+              .attr("stroke-linecap", "miter")
+              .attr("stroke-width", stroke.width)
               .attr("d", vm.lineFunc);
 
             // get total nodes for transition.
