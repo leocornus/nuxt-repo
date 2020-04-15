@@ -69,21 +69,15 @@ export default {
             let parseTime = d3.timeParse("%Y-%m-%d");
 
             // load initial data.
-            d3.csv("/d3/lines.csv",
-                // work on each row to make sure the data type.
-                function(aLine) {
-                    aLine.date = parseTime(aLine.date);
-                    // the leading + will make sure to convert to an integer.
-                    aLine.close = +aLine.value;
-                    return aLine;
-                }
-            ).then(function(data) {
+            d3.json("/d3/multiLines-cities.json")
+            .then(function(cities) {
             
-                console.log(data);
+                console.log(cities);
+                let data = cities[0].values;
 
                 // setup domain for x, y scale range, based on the live data.
-                vm.xRange.domain(d3.extent(data, function(aLine) { return aLine.date; } ));
-                vm.yRange.domain([0, d3.max(data, function(aLine) { return aLine.close; }) + 100]);
+                vm.xRange.domain(d3.extent(data, function(aLine) { return new Date(aLine.date); } ));
+                vm.yRange.domain([0, d3.max(data, function(aLine) { return +aLine.temperature; }) + 10]);
 
                 // add the x axis at the bottom.
                 vm.linesGroup.append("g")
@@ -171,8 +165,8 @@ export default {
 
             // define or set the function to draw the line.
             vm.lineFunc = d3.line()
-                .x( function(aItem) { return vm.xRange( aItem.date ) } )
-                .y( function(aItem) { return vm.yRange( aItem.close) } );
+                .x( function(aItem) { return vm.xRange( new Date(aItem.date) ) } )
+                .y( function(aItem) { return vm.yRange( +aItem.temperature) } );
         },
     }
 }
