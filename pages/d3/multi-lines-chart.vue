@@ -1,13 +1,17 @@
 <template lang="pug">
 v-container(grid-list-md)
-  h1 A chart with multiple lines.
-  p Here are some features we are trying to show up:
-  ul
-    li responsive line chart.
-    li simple animation
+  h1 A line chart with multiple lines.
+  p This is a example to show temperatures for multiple citeis throught a year.
 
   v-row
     v-col( cols="2" )
+      v-checkbox(
+        v-for="(city, index) in cities"
+        :key="index"
+        v-model="selectedCities"
+        :label="city.name"
+        :value="city.name"
+      )
       v-btn(@click="updateChart") Update
     v-col( cols="8" )
       div( id="linechart" )
@@ -34,7 +38,11 @@ export default {
                 right: 20,
                 bottom: 30,
                 left: 50
-            }
+            },
+
+            // data.
+            cities: [],
+            selectedCities: []
         };
     },
 
@@ -70,10 +78,13 @@ export default {
 
             // load initial data.
             d3.json("/d3/multiLines-cities.json")
-            .then(function(cities) {
+            .then(function(result) {
             
-                console.log(cities);
-                let data = cities[0].values;
+                //console.log(cities);
+                vm.cities = result;
+                //vm.selectedCities = vm.cities.map( city => city.name );
+                //vm.selectedCities = [vm.cities[0].name];
+                let data = vm.cities[0].values;
 
                 // ==== draw axes!
 
@@ -102,23 +113,24 @@ export default {
                     .attr("text-anchor", "end")
                     .text("Price ($)");
 
-                cities[0].stroke = {
+                vm.cities[0].stroke = {
                     color: "#fb8c00",
                     width: 1
                 };
-                cities[1].stroke = {
+                vm.cities[1].stroke = {
                     color: "#ff5252",
                     width: 2.5 
                 };
-                cities[2].stroke = {
+                vm.cities[2].stroke = {
                     color: "#4caf50",
                     width: 1
                 };
 
                 // draw path.
-                cities.forEach( city => {
+                vm.cities.forEach( city => {
 
-                    vm.drawPath(city.values, city.stroke);
+                    if(vm.selectedCities.includes( city.name ))
+                        vm.drawPath(city.values, city.stroke);
                 });
             });
         },
