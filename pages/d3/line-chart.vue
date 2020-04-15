@@ -7,10 +7,10 @@ v-container(grid-list-md)
     li simple animation
 
   v-row
-    v-col( cols="3" )
-    v-col( cols="6" )
+    v-col( cols="2" )
+    v-col( cols="8" )
       div( id="linechart" )
-    v-col( cols="3" )
+    v-col( cols="2" )
 </template>
 
 <script>
@@ -98,6 +98,25 @@ export default {
                     .text("Price ($)");
 
                 // add path for lines.
+                vm.path = vm.linesGroup.append("path")
+                  .datum(data)
+                  .attr("fill", "none")
+                  .attr("stroke", "steelblue")
+                  .attr("stroke-linejoin", "round")
+                  .attr("stroke-linecap", "round")
+                  .attr("stroke-width", 1.5)
+                  .attr("d", vm.lineFunc);
+
+                // get total nodes for transition.
+                //let totalLength = vm.path.node().getTotalLength();
+                //vm.path
+                //  .attr("stroke-dasharray", totalLength + " " + totalLength)
+                //  // this is the initial value
+                //  .attr("stroke-dashoffset", totalLength)
+                //  .transition()
+                //    .duration(5000)
+                //    .ease(d3.easeLinear)
+                //    .attr("stroke-dashoffset", 0); // this is the final value.
             });
         },
 
@@ -111,9 +130,9 @@ export default {
             // create svg, using 100% of the room!
             vm.svg = d3.select('#linechart').append("svg")
                 .attr("width", "100%")
-                .attr("height", "100%");
+                //.attr("height", "100%");
                 //.attr("width", 500)
-                //.attr("height", 480);
+                .attr("height", 480);
                 //.call(vm.responsivefy);
 
             //console.log(vm.svg.attr('width'));
@@ -143,7 +162,7 @@ export default {
             // define or set the function to draw the line.
             vm.lineFunc = d3.line()
                 .x( function(aItem) { return vm.xRange( aItem.date ) } )
-                .y( function(aItem) { return vm.yRange( aItem.clase) } );
+                .y( function(aItem) { return vm.yRange( aItem.close) } );
         },
     }
 }
