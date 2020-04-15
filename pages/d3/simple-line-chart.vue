@@ -1,15 +1,24 @@
 <template lang="pug">
 v-container(grid-list-md text-center)
-  v-breadcrumbs(
-    :items="[{text: 'D3 Demo', disable: false, href: '/d3'}]"
-  ).pa-0
   svg(
-    width="500"
-    height="570"
+    :width="width"
+    :height="height"
   )
     // the chart.
-    g( transform="translate(0, 10)" )
+    g(
+      :transform="'translate(' + chartMargin.left + ',' + chartMargin.top + ')'"
+    )
       path( :d="line" )
+    // the x axis
+    g(
+      id="x-axis" 
+      :transform="'translate(' + chartMargin.left + ',' + chartHeight + ')'"
+    )
+    // the y axix
+    g(
+      id="y-axis"
+      :transform="'translate(' + chartMargin.left + ',0)'"
+    )
 </template>
 
 <script>
@@ -24,6 +33,18 @@ export default {
     data() {
 
         return {
+
+            // set the chart dimention.
+            width: 500,
+            height: 570,
+
+            // chart margin:
+            chartMargin: {
+                top: 20,
+                right: 20,
+                bottom: 30,
+                left: 50
+            },
 
             data: [99, 71, 120, 89, 78, 25, 36, 92],
             line: ''
@@ -40,14 +61,24 @@ export default {
 
         getScales() {
 
-            const x = d3.scaleTime().range([0, 500]);
-            const y = d3.scaleLinear().range([570, 0]);
-            let xAxis = d3.axisLeft().scale(x);
-            console.log("x axis: ", xAxis);
-            console.log("x axis ticks: ", xAxis.ticks());
-            let yAxis = d3.axisBottom().scale(y);
+            let vm = this;
+
+            vm.chartWidth = vm.width - vm.chartMargin.left - vm.chartMargin.right;
+            vm.chartHeight = vm.height - vm.chartMargin.top - vm.chartMargin.bottom;
+            // range is normally the size of the chart.
+            const x = d3.scaleTime().range([0, vm.chartWidth]);
+            const y = d3.scaleLinear().rangeRound([vm.chartHeight, 0]);
             x.domain(d3.extent(this.data, (d, i) => i));
-            y.domain([0, d3.max(this.data, d => d)]);
+            y.domain([0, d3.max(this.data, d => d) + 5]);
+
+            let xAxis = d3.axisBottom(x);
+            //console.log("x axis: ", xAxis);
+            //console.log("x axis ticks: ", xAxis.ticks());
+            d3.select("#x-axis").call(xAxis);
+
+            let yAxis = d3.axisLeft(y);
+            d3.select("#y-axis").call(yAxis);
+
             return { x, y };
         },
             
@@ -66,7 +97,8 @@ export default {
 
 <style lang="sass" scoped>
 svg
-  margin: 25px
+  // turn on / off boder for testing.
+  border: 0px solid red
 
 path
   fill: none
