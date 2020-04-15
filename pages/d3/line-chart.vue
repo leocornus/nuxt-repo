@@ -1,5 +1,8 @@
 <template lang="pug">
 v-container(grid-list-md)
+  v-breadcrumbs(
+    :items="[{text: 'D3 Demo', disable: false, href: '/d3'}]"
+  ).pa-0
   h1 A line chart with simple animation
   p Here are some features we are trying to show up:
   ul
