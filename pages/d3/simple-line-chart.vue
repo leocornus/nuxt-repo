@@ -1,5 +1,7 @@
 <template lang="pug">
-v-container(grid-list-md text-center)
+v-container(grid-list-md)
+  h1 A simple line chart
+  p This page is try to demostrate a very simple line chart.
   svg(
     :width="width"
     :height="height"
@@ -36,7 +38,7 @@ export default {
 
             // set the chart dimention.
             width: 500,
-            height: 570,
+            height: 470,
 
             // chart margin:
             chartMargin: {
