@@ -1,5 +1,8 @@
 <template lang="pug">
 v-container(grid-list-md text-center)
+  v-breadcrumbs(
+    :items="[{text: 'D3 Demo', disable: false, href: '/d3'}]"
+  ).pa-0
   svg(
     width="500"
     height="570"
