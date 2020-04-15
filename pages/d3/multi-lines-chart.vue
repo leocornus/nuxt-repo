@@ -75,7 +75,10 @@ export default {
                 console.log(cities);
                 let data = cities[0].values;
 
+                // ==== draw axes!
+
                 // setup domain for x, y scale range, based on the live data.
+                // d3.extent will restun a pair of min and max for the given data.
                 vm.xRange.domain(d3.extent(data, function(aLine) { return new Date(aLine.date); } ));
                 vm.yRange.domain([0, d3.max(data, function(aLine) { return +aLine.temperature; }) + 10]);
 
@@ -99,29 +102,40 @@ export default {
                     .attr("text-anchor", "end")
                     .text("Price ($)");
 
-                // add path for lines.
-                vm.path = vm.linesGroup.append("path")
-                  .datum(data)
-                  .attr("fill", "none")
-                  .attr("stroke", "steelblue")
-                  .attr("stroke-linejoin", "round")
-                  .attr("stroke-linecap", "round")
-                  .attr("stroke-width", 1.5)
-                  .attr("d", vm.lineFunc);
-
-                // get total nodes for transition.
-                let totalLength = vm.path.node().getTotalLength();
-                //console.log("Total Length: ", totalLength);
-                //console.log("The path selection: ", vm.path.node());
-                vm.path
-                  .attr("stroke-dasharray", totalLength + " " + totalLength)
-                  // this is the initial value
-                  .attr("stroke-dashoffset", totalLength)
-                  .transition()
-                    .duration(5000)
-                    .ease(d3.easeLinear)
-                    .attr("stroke-dashoffset", 0); // this is the final value.
+                // draw path.
+                vm.drawPath(cities[0].values);
             });
+        },
+
+        /**
+         * draw path from the given data.
+         */
+        drawPath(data) {
+
+            let vm = this;
+
+            // add path for lines.
+            let path = vm.linesGroup.append("path")
+              .datum(data)
+              .attr("fill", "none")
+              .attr("stroke", "steelblue")
+              .attr("stroke-linejoin", "round")
+              .attr("stroke-linecap", "round")
+              .attr("stroke-width", 1.5)
+              .attr("d", vm.lineFunc);
+
+            // get total nodes for transition.
+            let totalLength = path.node().getTotalLength();
+            //console.log("Total Length: ", totalLength);
+            //console.log("The path selection: ", vm.path.node());
+            path
+              .attr("stroke-dasharray", totalLength + " " + totalLength)
+              // this is the initial value
+              .attr("stroke-dashoffset", totalLength)
+              .transition()
+                .duration(5000)
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0); // this is the final value.
         },
 
         /**
