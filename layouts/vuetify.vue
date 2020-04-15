@@ -5,6 +5,8 @@ v-app
     v-app-bar-nav-icon/
     v-toolbar-title Leocornus Development
     v-spacer
+    v-btn(icon to="/d3" nuxt)
+      v-icon mdi-home-analytics
     v-btn(icon to="/" nuxt)
       v-icon mdi-home
     // sign in button for not logged in user.
