@@ -80,10 +80,11 @@ export default {
                 // add the x axis at the bottom.
                 vm.linesGroup.append("g")
                   .attr("transform", "translate(0," + vm.chartHeight + ")")
-                  .call(d3.axisBottom(vm.xRange))
+                  .call(d3.axisBottom(vm.xRange));
                   // TODO: what is this for?
-                  .select(".domain")
-                  .remove();
+                  // this is to remove the line on X axis.
+                  //.select(".domain")
+                  //.remove();
 
                 // add the y axis at the left.
                 vm.linesGroup.append("g")
@@ -108,15 +109,17 @@ export default {
                   .attr("d", vm.lineFunc);
 
                 // get total nodes for transition.
-                //let totalLength = vm.path.node().getTotalLength();
-                //vm.path
-                //  .attr("stroke-dasharray", totalLength + " " + totalLength)
-                //  // this is the initial value
-                //  .attr("stroke-dashoffset", totalLength)
-                //  .transition()
-                //    .duration(5000)
-                //    .ease(d3.easeLinear)
-                //    .attr("stroke-dashoffset", 0); // this is the final value.
+                let totalLength = vm.path.node().getTotalLength();
+                //console.log("Total Length: ", totalLength);
+                //console.log("The path selection: ", vm.path.node());
+                vm.path
+                  .attr("stroke-dasharray", totalLength + " " + totalLength)
+                  // this is the initial value
+                  .attr("stroke-dashoffset", totalLength)
+                  .transition()
+                    .duration(5000)
+                    .ease(d3.easeLinear)
+                    .attr("stroke-dashoffset", 0); // this is the final value.
             });
         },
 
