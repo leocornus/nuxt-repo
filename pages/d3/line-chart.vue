@@ -1,8 +1,5 @@
 <template lang="pug">
 v-container(grid-list-md)
-  v-breadcrumbs(
-    :items="[{text: 'D3 Demo', disable: false, href: '/d3'}]"
-  ).pa-0
   h1 A line chart with simple animation
   p Here are some features we are trying to show up:
   ul
@@ -11,6 +8,7 @@ v-container(grid-list-md)
 
   v-row
     v-col( cols="2" )
+      v-btn(@click="updateChart") Update
     v-col( cols="8" )
       div( id="linechart" )
     v-col( cols="2" )
@@ -50,6 +48,16 @@ export default {
     },
 
     methods: {
+
+        /**
+         */
+        updateChart() {
+
+            // clear the chart.
+            d3.selectAll("svg").remove();
+            this.drawChart();
+
+        },
 
         /**
          * draw the line chart.
