@@ -61,7 +61,7 @@ export default {
             let parseTime = d3.timeParse("%Y-%m-%d");
 
             // load initial data.
-            d3.csv("lines.csv",
+            d3.csv("/d3/lines.csv",
                 // work on each row to make sure the data type.
                 function(aLine) {
                     aLine.date = parseTime(aLine.date);
