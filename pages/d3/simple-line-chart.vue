@@ -66,7 +66,8 @@ export default {
             vm.chartWidth = vm.width - vm.chartMargin.left - vm.chartMargin.right;
             vm.chartHeight = vm.height - vm.chartMargin.top - vm.chartMargin.bottom;
             // range is normally the size of the chart.
-            const x = d3.scaleTime().range([0, vm.chartWidth]);
+            //const x = d3.scaleTime().range([0, vm.chartWidth]);
+            const x = d3.scaleLinear().rangeRound([0, vm.chartWidth]);
             const y = d3.scaleLinear().rangeRound([vm.chartHeight, 0]);
             x.domain(d3.extent(this.data, (d, i) => i));
             y.domain([0, d3.max(this.data, d => d) + 5]);
