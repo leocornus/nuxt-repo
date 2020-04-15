@@ -4,7 +4,8 @@ v-container(grid-list-md text-center)
     width="500"
     height="570"
   )
-    g( style="transform: translate(0, 10px)" )
+    // the chart.
+    g( transform="translate(0, 10)" )
       path( :d="line" )
 </template>
 
@@ -38,8 +39,10 @@ export default {
 
             const x = d3.scaleTime().range([0, 500]);
             const y = d3.scaleLinear().range([570, 0]);
-            d3.axisLeft().scale(x);
-            d3.axisBottom().scale(y);
+            let xAxis = d3.axisLeft().scale(x);
+            console.log("x axis: ", xAxis);
+            console.log("x axis ticks: ", xAxis.ticks());
+            let yAxis = d3.axisBottom().scale(y);
             x.domain(d3.extent(this.data, (d, i) => i));
             y.domain([0, d3.max(this.data, d => d)]);
             return { x, y };

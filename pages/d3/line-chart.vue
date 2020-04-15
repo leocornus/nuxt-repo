@@ -29,8 +29,9 @@ export default {
             // the data for the line chart.
             // TODO: data structure.
             linesData: [99, 71, 120, 89, 78, 25, 36, 92],
-            
+
             // set margins for the chart.
+            // margin will be used to draw axes.
             chartMargin: {
                 top: 20,
                 right: 20,
@@ -53,7 +54,7 @@ export default {
         drawChart() {
 
             let vm = this;
-            
+
             // initialize the svg element.
             vm.initializeSvg();
 
@@ -81,7 +82,6 @@ export default {
                 vm.linesGroup.append("g")
                   .attr("transform", "translate(0," + vm.chartHeight + ")")
                   .call(d3.axisBottom(vm.xRange));
-                  // TODO: what is this for?
                   // this is to remove the line on X axis.
                   //.select(".domain")
                   //.remove();
