@@ -111,7 +111,7 @@ export default {
                     .attr("y", 6)
                     .attr("dy", "0.71em")
                     .attr("text-anchor", "end")
-                    .text("Price ($)");
+                    .text("Temperature (ºF)");
 
                 vm.cities[0].stroke = {
                     color: "#fb8c00",
@@ -119,7 +119,7 @@ export default {
                 };
                 vm.cities[1].stroke = {
                     color: "#ff5252",
-                    width: 2.5 
+                    width: 3 
                 };
                 vm.cities[2].stroke = {
                     color: "#4caf50",
