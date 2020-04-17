@@ -14,6 +14,8 @@ v-container(grid-list-md text-center)
     v-list-item
       n-link(to="/clocks") Clocks and Timers
     v-list-item
+      n-link(to="/javascript-sandbox") Some of my old work around JavaScript: JQuery, D3, etc.
+    v-list-item
       n-link(to="/login") Login
 </template>
 
