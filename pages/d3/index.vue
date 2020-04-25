@@ -7,6 +7,8 @@ v-container(grid-list-md text-center)
       n-link( to="/d3/line-chart" ) Line Chart with x, y axes and simple animation
     v-list-item
       n-link( to="/d3/multi-lines-chart" ) Multiple Lines Chart
+    v-list-item
+      n-link( to="/d3/color-scale" ) Color Scale 
 </template>
 
 <script>
