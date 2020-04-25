@@ -5,12 +5,20 @@ v-container(grid-list-md)
 
   h2 Category10 scheme
   p( 
-    v-for="(sentence, index) in category10Strings"
-    :key = "index"
+    v-for="(sentence, index) in sentences"
+    :key="index"
   )
     v-chip(
       v-for="(word, wi) in sentence.split(' ')"
       :color="category10Colors(word)"
+      :key="wi"
+      label
+    ) {{ word }}
+    br
+    v-chip(
+      v-for="(word, wi) in sentence.split(' ')"
+      :color="pairedColors(word)"
+      :key="wi"
       label
     ) {{ word }}
 </template>
@@ -25,17 +33,28 @@ export default {
     auth: false,
 
     data() {
+
         return {
 
-            // the category10 scheme.
-            category10Colors: d3.scaleOrdinal( d3.schemeCategory10 ),
-
-            category10Strings: [
+            sentences: [
                 "A sentence with less than ten words",
                 "A sentence with exact ten words one two three four",
                 "A sentence with more than ten words one two three four"
             ],
+
+            // the category10 scheme.
+            category10Colors: d3.scaleOrdinal( d3.schemeCategory10 ),
+
+            pairedColors: d3.scaleOrdinal( d3.schemePaired )
         };
+    },
+
+    created() {
+
+        this.category10Colors.domain(this.sentences[1]);
+
+        console.log(this.category10Colors);
+        console.log(this.pairedColors);
     },
 
     methods: {
