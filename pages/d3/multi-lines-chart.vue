@@ -180,7 +180,7 @@ export default {
                 //.attr("width", 500)
                 .attr("height", 480);
                 //.call(vm.responsivefy);
-            console.log(vm.svg);
+            //console.log(vm.svg);
 
             //console.log(vm.svg.attr('width'));
             //let parentNode = d3.select(d3.select('#linechart').node().parentNode);
