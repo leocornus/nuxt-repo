@@ -152,21 +152,6 @@ export default {
               .attr("stroke-width", stroke.width)
               .attr("d", vm.lineFunc);
 
-            if(label) {
-                vm.linesGroup.append("text")
-                  // use the ending value 
-                  .datum({name: label, value: data[data.length - 1]})
-                  .attr("transform", function(d) {
-                      console.log(d);
-                      return "translate(" + vm.xRange(new Date(d.value.date)) + "," +
-                          vm.yRange(+d.value.temperature) + ")";
-                  })
-                  .attr("x", 3)
-                  .attr("dy", "0.35em")
-                  .style("font", "10px sans-serif")
-                  .text(function(d) { return d.name; });
-            }
-
             // get total nodes for transition.
             let totalLength = path.node().getTotalLength();
             //console.log("Total Length: ", totalLength);
@@ -179,6 +164,31 @@ export default {
                 .duration(5000)
                 .ease(d3.easeLinear)
                 .attr("stroke-dashoffset", 0); // this is the final value.
+
+            if(label) {
+                // use the last value of data as the position for text.
+                const lastData = data[data.length - 1];
+                vm.linesGroup.append("text")
+                  // use the ending value 
+                  // we don't really need the datum for this one.
+                  //.datum({name: label, value: data[data.length - 1]})
+                  //.attr("transform", function(d) {
+                  //    console.log(d);
+                  //    return "translate(" + vm.xRange(new Date(d.value.date)) + "," +
+                  //        vm.yRange(+d.value.temperature) + ")";
+                  //})
+
+                  // we could just use the data directly.
+                  .attr("transform", "translate(" + vm.xRange( new Date(lastData.date) ) +
+                      "," + vm.yRange(+lastData.temperature) + ")")
+                  .attr("x", 3)
+                  .attr("dy", "0.35em")
+                  // the color of text is set with the fill property.
+                  .attr("fill", stroke.color)
+                  .style("font", "bold 10px sans-serif")
+                  //.text(function(d) { return d.name; });
+                  .text(label);
+            }
         },
 
         /**
