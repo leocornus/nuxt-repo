@@ -35,7 +35,7 @@ export default {
             // margin will be used to draw axes.
             chartMargin: {
                 top: 20,
-                right: 20,
+                right: 70,
                 bottom: 30,
                 left: 50
             },
@@ -130,7 +130,7 @@ export default {
                 vm.cities.forEach( city => {
 
                     if(vm.selectedCities.includes( city.name ))
-                        vm.drawPath(city.values, city.stroke);
+                        vm.drawPath(city.values, city.stroke, city.name);
                 });
             });
         },
@@ -138,7 +138,7 @@ export default {
         /**
          * draw path from the given data.
          */
-        drawPath(data, stroke) {
+        drawPath(data, stroke, label) {
 
             let vm = this;
 
@@ -151,6 +151,21 @@ export default {
               .attr("stroke-linecap", "miter")
               .attr("stroke-width", stroke.width)
               .attr("d", vm.lineFunc);
+
+            if(label) {
+                vm.linesGroup.append("text")
+                  // use the ending value 
+                  .datum({name: label, value: data[data.length - 1]})
+                  .attr("transform", function(d) {
+                      console.log(d);
+                      return "translate(" + vm.xRange(new Date(d.value.date)) + "," +
+                          vm.yRange(+d.value.temperature) + ")";
+                  })
+                  .attr("x", 3)
+                  .attr("dy", "0.35em")
+                  .style("font", "10px sans-serif")
+                  .text(function(d) { return d.name; });
+            }
 
             // get total nodes for transition.
             let totalLength = path.node().getTotalLength();
