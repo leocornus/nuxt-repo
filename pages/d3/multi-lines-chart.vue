@@ -178,6 +178,7 @@ export default {
                   //        vm.yRange(+d.value.temperature) + ")";
                   //})
 
+                  .transition().delay(5000)
                   // we could just use the data directly.
                   .attr("transform", "translate(" + vm.xRange( new Date(lastData.date) ) +
                       "," + vm.yRange(+lastData.temperature) + ")")
