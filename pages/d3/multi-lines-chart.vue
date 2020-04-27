@@ -178,10 +178,16 @@ export default {
                   //        vm.yRange(+d.value.temperature) + ")";
                   //})
 
-                  .transition().delay(5000)
+                  .datum(data)
+                  //.transition().duration(5000)
+                  .transition().delay(3000)
                   // we could just use the data directly.
                   .attr("transform", "translate(" + vm.xRange( new Date(lastData.date) ) +
                       "," + vm.yRange(+lastData.temperature) + ")")
+                  //.attrTween("transform", function(d) {
+                  //    return "translate(" + vm.xRange( new Date(d.date) ) +
+                  //        "," + vm.yRange(+d.temperature) + ")";
+                  //})
                   .attr("x", 3)
                   .attr("dy", "0.35em")
                   // the color of text is set with the fill property.
