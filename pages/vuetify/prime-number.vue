@@ -14,6 +14,7 @@ v-container( grid-list-xs )
               v-model='inputNumber' 
               label="Give me a number:"
               :loading='loading'
+              clearable
             )
         v-card-text
           strong( :class="msgColor" )
