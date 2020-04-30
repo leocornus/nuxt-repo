@@ -6,21 +6,21 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "axios": "^0.19.1",
-    "countup.js": "^2.0.4",
-    "d3": "^5.15.1",
+    "axios": "^0.19.2",
+    "countup.js": "^2.0.5",
+    "d3": "^5.16.0",
     "md5": "^2.2.1",
-    "nuxt": "^2.10.2"
+    "nuxt": "^2.12.2"
   },
   "devDependencies": {
-    "@nuxtjs/auth": "^4.8.5",
-    "@nuxtjs/axios": "^5.9.3",
-    "@nuxtjs/vuetify": "^1.9.1",
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/axios": "^5.10.2",
+    "@nuxtjs/vuetify": "^1.11.2",
     "coffee-loader": "^0.9.0",
-    "coffeescript": "^2.4.1",
-    "node-sass": "^4.13.1",
-    "pug": "^2.0.3",
+    "coffeescript": "^2.5.1",
+    "node-sass": "^4.14.0",
+    "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^8.0.2"
   }
 }
