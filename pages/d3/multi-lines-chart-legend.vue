@@ -137,12 +137,16 @@ export default {
                 };
 
                 // draw path.
-                vm.cities.forEach( city => {
+                vm.cities.forEach( (city, index) => {
 
                     if(vm.selectedCities.includes( city.name )) {
                         vm.drawPath(city.values, city.stroke, city.name);
-                        vm.drawLegend(city.name, city.stroke.color);
+                        city.disabled = false;
+                    } else {
+                        city.disabled = true;
                     }
+
+                    vm.drawLegend(city, index);
                 });
             });
         },
@@ -150,20 +154,32 @@ export default {
         /**
          * draw legend
          */
-        drawLegend(name, color) {
+        drawLegend(city, index) {
 
             let vm = this;
 
-            let legend = vm.linesGroup.append("circle")
-                .style('fill', color)
-                .style('stroke', color)
-                .attr('r', 5);
+            let oneLegend = vm.legendGroup.append("g");
 
+            // decide the fill color for the circle.
+            let circleFill = city.disabled ? 'none' : city.stroke.color;
+            oneLegend.append("circle")
+                .style('fill', circleFill)
+                .style('stroke', city.stroke.color)
+                .attr('r', 5);
             // add the name as legend.
-            vm.linesGroup.append("text")
-                .text(name)
+            oneLegend.append("text")
+                .text(city.name)
+                .attr('fill', city.stroke.color)
                 .attr('dy', '.32em')
                 .attr('dx', '8');
+            
+            // set the transform based on the 
+            let xpos = 30, ypos = 15;
+            if( index > 0 ) {
+                xpos = 30 * index * 5;
+            }
+
+            oneLegend.attr("transform", 'translate(' + xpos + "," + ypos + ')');
         },
 
         /**
@@ -264,6 +280,8 @@ export default {
             // the element group for lines.
             vm.linesGroup = vm.svg.append("g")
                 .attr("transform", "translate(" + vm.chartMargin.left + "," + vm.chartMargin.top + ")");
+            // the element group for legend.
+            vm.legendGroup = vm.linesGroup.append("g");
 
             // set scale range for x and y.
             vm.xRange = d3.scaleTime().rangeRound([0, vm.chartWidth]);
