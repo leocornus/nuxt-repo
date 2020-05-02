@@ -8,6 +8,8 @@ v-container(grid-list-md text-center)
     v-list-item
       n-link( to="/d3/multi-lines-chart" ) Multiple Lines Chart
     v-list-item
+      n-link( to="/d3/multi-lines-chart-legend" ) Multiple Lines Chart with legend
+    v-list-item
       n-link( to="/d3/color-scale" ) Color Scale 
 </template>
 
