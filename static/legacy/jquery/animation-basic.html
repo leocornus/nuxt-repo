@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>animate demo</title>
+  <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+  <link rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css'/>
+
+  <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+  <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+
+  <script src='/bower_components/angular/angular.min.js'></script>
+
+  <style>
+  div.block {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="page-header"><h1>Animation Demo</h1></div>
+
+  <div>
+  <button id="left">&laquo;</button>
+  <button id="right">&raquo;</button>
+  <button id="up">up</button>
+  <button id="down">down</button>
+  </div>
+  
+  <p>
+    <div class="block bg-info">
+<!-- we need this initial style to make the  -->
+<!-- syntax +=50px working at begining. -->
+<span class="fa-stack bg-danger text-success" 
+      style="top: 0px; left: 0px">
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-twitter fa-stack-1x"></i>
+</span>
+    </div>
+  </p>
+
+</div>
+ 
+<script>
+$( "#right" ).click(function() {
+  $( "span.fa-stack" ).animate({ "left": "+=50px" }, "slow" );
+});
+ 
+$( "#left" ).click(function(){
+  $( "span.fa-stack" ).animate({ "left": "-=50px" }, "slow" );
+});
+$( "#up" ).click(function(){
+  $( "span.fa-stack" ).animate({ "top": "-=50px" }, "slow" );
+});
+$( "#down" ).click(function(){
+  $( "span.fa-stack" ).animate({ "top": "+=50px" }, "fast" );
+});
+
+$('body').keydown(function(event) {
+
+    var $theBox = $("span.fa-stack");
+    var position = $theBox.position();
+    var width = $theBox.width();
+    var height = $theBox.height();
+    console.log(event);
+
+    switch(event.keyCode) {
+        case 74:
+            // the j key going down
+            if((position.top + height) < 280) {
+                //$theBox.animate({ "top": "+=50px" }, "fast" );
+                $theBox.css({ "top": "+=14px"});
+            }
+            break;
+        case 75:
+            // the k key going up
+            if(position.top > 0) {
+                //$theBox.animate({ "top": "-=50px" }, "fast" );
+                $theBox.css({ "top": "-=14px"});
+            }
+            break;
+        case 72:
+            // the h key going left
+            if(position.left > 0) {
+                //$theBox.animate({ "left": "-=50px" }, "fast" );
+                $theBox.css({"left": "-=14px"});
+            }
+            break;
+        case 76:
+            // the l key going right
+            if((position.left + width) < 280) {
+                //$theBox.animate({ "left": "+=50px" }, "fast" );
+                $theBox.css({"left": "+=14px"});
+            }
+            break;
+        default:
+            console.log(event.keyCode);
+            break;
+    }
+});
+
+</script>
+ 
+</body>
+</html>

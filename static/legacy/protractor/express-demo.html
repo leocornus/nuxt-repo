@@ -1,0 +1,66 @@
+<html ng-app="expressDemo">
+  <head>
+    <title>Express Demo</title>
+
+    <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+    <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+    <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+    <script src='/bower_components/angular/angular.min.js'></script>
+    <script>
+// this will replace the code in controller.js
+var expressDEmo = angular.module('expressDemo', []);
+
+jQuery(document).ready(function() {
+    jQuery('#hello-btn').click(function(event) {
+
+        jQuery.get('/hello', function(data) {
+
+            jQuery('#hello-div').html(data);
+        });
+    });
+
+    jQuery("#echo-btn").click(function(event) {
+
+        var action = {
+            'a':'abc',
+            'b':'bcdef'
+        };
+
+        jQuery.get('/echo', action).done(function(data) {
+
+            jQuery('#echo-div').html(JSON.stringify(data));
+        });
+    });
+
+    jQuery("#api-btn").click(function(event) {
+
+        var title = jQuery('#api-title').val();
+        var params = {
+            'action' : 'parse',
+            'page' : title,
+            'prop': 'text'
+        };
+
+        jQuery.get('/wiki/api.php', params).done(function(data) {
+            jQuery('#api-div').html(data.parse.text['*']);
+        });
+    });
+});
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header"><h1>Hello Web Server</h1></div>
+
+      <p><div id="hello-div">none</div></p>
+      <p><button id="hello-btn">Click Me</button></p>
+
+      <p><div id="echo-div">none</div></p>
+      <p><button id="echo-btn">Click Me</button></p>
+
+      <p><input type='text' id="api-title"/></p>
+      <p><div id="api-div">none</div></p>
+      <p><button id="api-btn">test api</button></p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CSV to JSON demo</title>
+  <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+  <link rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css'/>
+
+  <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+  <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+
+  <div class="page-header"><h1>CSV to JSON Demo</h1></div>
+
+  <div>
+    <div class="input-group input-group-lg"
+         role="group" aria-label="...">
+      <span class="input-group-addon">
+        <i class="fa fa-search text-primary"></i>
+        Path to CSV file:
+      </span>
+      <div class="form-group form-group-lg has-feedback has-clear">
+        <input type="text" class="form-control"
+               value="data/intranet-size.txt"
+               placeholder="Find Acronyms"
+               id="source-file"
+               aria-describedby="sizing-addon"/>
+        <span class="form-control-clear text-primary
+                     glyphicon glyphicon-remove
+                     form-control-feedback hidden"></span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row" id="search-bar">
+    <div class="col-md-5">
+    Source CSV:<br/>
+    <textarea style="width:100%" id="csvstring" rows="30"></textarea>
+    </div>
+
+    <div class="col-md-2">
+      <button id="load">Load</button><br/>
+      <button id="convert">2 JSON</button><br/>
+      <button id="toarray">JSON Array</button><br/>
+      <button id="addgroup">Add Group</button><br/>
+      <input type="text" id="year"/>
+      <button id="toyeararray">To Array</button><br/>
+      <button id="merge">Merge</button><br/>
+    </div>
+
+    <div class="col-md-5">
+    JSON:<br/>
+    <textarea style="width:100%" id="jsonstring" rows="30"></textarea>
+    </div>
+  </div>
+</div>
+ 
+<script>
+
+jQuery(document).ready(function($) {
+
+    // just load the csv from source file.
+    $('#load').on('click', function() {
+
+        //alert('loading');
+        var source = $('#source-file').val();
+        $.ajax({
+            type: "GET",
+            url: source,
+            dataType: "text",
+            success: function(data) {
+                $('#csvstring').val(data);
+            }
+        });
+    });
+
+    $('#addgroup').on('click', function() {
+
+        var source = $('#source-file').val();
+        $.ajax({
+            type: "GET",
+            url: source,
+            dataType: "json",
+            success: function(data) {
+                var sites = data;
+                sites = groupSites(sites);
+                //for(var i = 0; i < sites.length; i++) {
+                //    var site = sites[i];
+                //    var name = site[1];
+                //    if(name.startsWith('mnr') || 
+                //       name.startsWith('natural')) {
+                //        site.push('MNRF');
+                //    }else if(name.startsWith('mgcs') || 
+                //       name.startsWith('serviceontario')) {
+                //        site.push('MGCS');
+                //    }else if(name.startsWith('cac') || 
+                //       name.startsWith('cyssc') ||
+                //       name.startsWith('its') ||
+                //       name.startsWith('gsic') ||
+                //       name.startsWith('iit')) {
+                //        site.push('Clusters');
+                //    }else if(name.startsWith('omafra') || 
+                //       name.startsWith('digitalomafra')) {
+                //        site.push('OMAFRA');
+                //    }else if(name.startsWith('fin') || 
+                //       name.startsWith('rev') ||
+                //       name.startsWith('stevecheng')) {
+                //        site.push('MOF');
+                //    } else if(name.startsWith('mag')) {
+                //        site.push('MAG');
+                //    } else if(name.startsWith('moh')) {
+                //        site.push('MOHLTC');
+                //    } else if(name.startsWith('mcscs') ||
+                //              name.startsWith('MCSCS')) {
+                //        site.push('MCSCS');
+                //    } else if(name.startsWith('tbs')) {
+                //        site.push('TBS');
+                //    } else if(name.startsWith('mcss')) {
+                //        site.push('MCSS');
+                //    } else if(name.startsWith('mcys')) {
+                //        site.push('MCYS');
+                //    } else {
+                //        site.push('Personal');
+                //    }
+                //}
+                $('#jsonstring').html(JSON.stringify(sites, null, 2));
+            }
+        });
+    });
+
+    $('#toarray').on('click', function() {
+        // read the csv from the source.
+        var origin = $('#csvstring').val();
+        // split new lines.
+        var originLines = origin.split(/\r\n|\n/);
+        var rows = [];
+        for(var i = 0; i < originLines.length; i++) {
+            var row = originLines[i].split(',');
+            // skip the empty row.
+            if(row.length <= 1) continue;
+            var id = parseInt(row[1].trim());
+            //var id = row[1].trim();
+            //var path = row[1].trim().slice(0, -1);
+            var size = parseInt(row[0].trim());
+            rows.push({id: id, size: size});
+        }
+
+        $('#jsonstring').html(JSON.stringify(rows, null, 2));
+    });
+
+    $('#toyeararray').on('click', function() {
+        // read the csv from the source.
+        var origin = $('#csvstring').val();
+        var year = $('#year').val();
+        // split new lines.
+        var originLines = origin.split(/\r\n|\n/);
+        var rows = [];
+        for(var i = 0; i < originLines.length; i++) {
+            if(originLines[i].indexOf('-' + year) < 0) {
+                // skip the row which NOT match the year.
+                continue;
+            }
+            var row = originLines[i].split('=');
+            // skip the empty row.
+            if(row.length <= 1) continue;
+
+            var size = parseInt(row[1].trim());
+            // skip those empty folder.
+            //if(size < 40) continue;
+            //var id = row[1].trim();
+            //var path = row[1].trim().slice(0, -1);
+            var idYear = row[0].trim().split('-');
+            var id = parseInt(idYear[0].trim());
+            rows.push([id, size]);
+        }
+
+        $('#jsonstring').html(JSON.stringify(rows, null, 2));
+    });
+
+    /**
+     */
+    $('#merge').on('click', function() {
+
+        var formidable, group, sizes;
+        // read the csv from the source
+        $.when(
+            // get the list name.
+            $.ajax({
+                type: "GET",
+                url: 'data/intranet-size-formidable.json',
+                dataType: "json",
+                success: function(data) {
+                    //console.log(data.length);
+                    formidable = data;
+                }
+            }),
+            // get the rules for group.
+            $.ajax({
+                type: "GET",
+                url: 'data/intranet-size-group.json',
+                dataType: "json",
+                success: function(data) {
+                    //console.log(data);
+                    group = data;
+                }
+            }),
+            // load the size.
+            $.ajax({
+                type: "GET",
+                url: 'data/intranet-size-2017.json',
+                dataType: "json",
+                success: function(data) {
+                    //console.log(data.length);
+                    sizes = data;
+                }
+            })
+        ).then(function() {
+            //console.log(formidable);
+            $.each(sizes, function(index, size) {
+                var id = size[0];
+                var theSize = size[1];
+                console.log(id + ' - ' + theSize);
+                var i = -1;
+                // looking for formidable.
+                i = formidable.findIndex(function(one) {
+                    return one[0] === id;
+                });
+                if(i > -1) {
+                    // add the size from formidable.
+                    theSize += formidable[i][1];
+                    console.log(id + ' - formidable - ' + theSize);
+                }
+                // looking for group
+                i = -1;
+                i = group.findIndex(function(one) {
+                    return one[0] === id;
+                });
+                if(i > -1) {
+                    // add the size from group.
+                    theSize += group[i][1];
+                    console.log(id + ' - group - ' + theSize);
+                }
+                sizes[index][1] = theSize;
+            });
+            $('#jsonstring').html(JSON.stringify(sizes, null, 2));
+        });
+    });
+
+    // convert the CSV string to zoomable circle json format.
+    $('#convert').on('click', function() {
+
+        // read the csv.
+        var origin = $('#csvstring').val();
+        var originLines = origin.split(/\r\n|\n/);
+        // array for each circle:
+        var circles = [];
+        var color = d3.scale.linear().domain([0, originLines.length])
+            .range(["blue", "yellow"])
+            .interpolate(d3.interpolateHcl);
+        //alert(originLines.length);
+        for(var i = 0; i < originLines.length; i++) {
+            var row = originLines[i].split(',');
+            var size = parseInt(row[0].trim());
+            // set name to empty if size is too small
+            // less than 200MB.
+            var name = size > 200000 ? row[1] : '';
+            var circle = {
+              "name": name,
+              "children":[{
+                "name": row[1] + '-' + size,
+                "size": size,
+                "leafFill": color(i),
+                "imgUrl": ''
+              }]
+            };
+
+            circles.push(circle);
+        }
+
+        var jsonData = {
+          "attributes": {
+            "title": "3 Equal size circles",
+            "description": "Data example to show the data structure",
+            "colorRange": [
+              "white"
+            ],
+            "leafFill": "green"
+          },
+          "data": {
+            "name":"This will NOT show anywhere!",
+            "children": circles
+          }
+        };
+
+        $('#jsonstring').html(JSON.stringify(jsonData, null, 2));
+    });
+});
+
+function groupSites(sites) {
+
+    var rules = [ 
+      [/^mnr/, 'MNRF'], 
+      [/^natural/, 'MNRF'], 
+      [/^fin/, 'MOF'], 
+      [/^rev/, 'MOF'], 
+      [/^stevecheng/, 'MOF'], 
+      [/^mgcs/, 'MGCS'], 
+      [/^serviceontario/, 'MGCS'], 
+      [/^omafra/, 'OMAFRA'], 
+      [/^digitalomafra/, 'OMAFRA'], 
+      [/^mag/, 'MAG'], 
+      [/^moh/, 'MOHLTC'], 
+      [/^mcscs/, 'MCSCS'], 
+      [/^MCSCS/, 'MCSCS'], 
+      [/^mcys/, 'MCYS'], 
+      [/^mcss/, 'MCSS'], 
+      [/^tbs/, 'TBS'], 
+      [/^cac/, 'Cluster'], 
+      [/^its/, 'Cluster'], 
+      [/^cyssc/, 'Cluster'], 
+      [/^gsic/, 'Cluster'], 
+      [/^iit/, 'Cluster'], 
+      [/^its/, 'Cluster'] 
+    ];
+
+    for(var i = 0; i < sites.length; i ++) {
+        var site = sites[i];
+        var name = site[1];
+        // set the default group
+        var group = 'Personal';
+        for( var n = 0; n < rules.length; n ++) {
+            var rule = rules[n];
+            if(rule[0].test(name)) {
+                group = rule[1];
+                break;
+            }
+        }
+        site.push(group);
+    }
+
+    return sites;
+}
+
+</script>
+ 
+</body>
+</html>

@@ -1,0 +1,179 @@
+<html>
+<head>
+  <title>Demo D3 Preview Plugin</title>
+
+  <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+  <link rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css'/>
+  <link rel='stylesheet' href='/bower_components/video.js/dist/video-js.css'/>
+
+  <link href="/bower_components/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+
+  <script src="/bower_components/jsoneditor/dist/jsoneditor.min.js"></script>
+  <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+  <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+  <script src='/bower_components/d3/d3.js'></script>
+  <script src='/bower_components/d3-cloud/build/d3.layout.cloud.js'></script>
+
+  <script src='/src/d3/d3-preview.js'></script>
+<script>
+jQuery(document).ready(function($) {
+
+    // create the JSON editor
+    var container = document.getElementById("jsoneditor");
+    var options = {};
+    var editor = new JSONEditor(container, options);
+
+    // get ready a list of words as the initial data.
+    var theWords = [
+        "Hello", "world", "normally", "you", "want", 
+        "more", "words", "than", "this", "apple", 'peach', 
+        "pear", "cat", "ant", "mouse", "does", "that", 
+        "enough", "how", "many"]
+        // what does the map function do?
+        .map(function(d) {
+            return {
+                text: d, 
+                // the range of Math.random is between 0 (inclusive)
+                // and 1 (exclusive).
+                size: 5 + Math.random() * 45, 
+                test: "haha"
+            };
+        });
+
+    // set initial data to JSON editor.
+    editor.set(theWords);
+
+    // fill color?
+    var fill = d3.scale.category20();
+    // orientation, direction
+    var orientations = 8;
+
+    var layout = d3.layout.cloud()
+        .size([553, 286])
+        .words(theWords)
+        // numerical padding for each word.
+        // What's the unit for padding?
+        // less padding will fit in more words.
+        .padding(1)
+        .rotate(function() { return ~~(Math.random() * orientations) * 45; })
+        .font("Impact")
+        .fontSize(function(d) { return d.size; })
+        .on("end", draw);
+    
+    layout.start();
+    
+    function draw(words) {
+      d3.select("#d3preview").append("svg")
+          .attr("width", layout.size()[0])
+          .attr("height", layout.size()[1])
+        .append("g")
+          .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+        .selectAll("text")
+          .data(words)
+        .enter().append("text")
+          .style("font-size", function(d) { return d.size + "px"; })
+          .style("font-family", "Impact")
+          .style("fill", function(d, i) { return fill(i); })
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          })
+          .text(function(d) { return d.text; });
+    }
+
+});
+</script>
+</head>
+
+<body>
+<div class="container">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-md-7">
+        <h1 class="">D3 preview jQuery Plugin Demo Page</h1> 
+      </div>
+    </div>
+  </div>
+
+  <!-- nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#previewtab" aria-controls="previewtab" role="tab"
+         data-toggle="tab"
+      >Preview</a>
+    </li>
+    <li role="presentation">
+      <a href="#embedcode" aria-controls="embedcode" role="tab"
+         data-toggle="tab"
+      >Embed Code</a>
+    </li>
+    <li role="presentation">
+      <a href="#memos" aria-controls="memos" role="tab"
+         data-toggle="tab"
+      >Memos</a>
+    </li>
+  </ul>
+
+  <!-- tab panes -->
+<div class="tab-content">
+
+  <div class="row tab-pane active" id="previewtab" role="tabpanel">
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Data in JSON format
+        </div>
+        <!-- data in JSON Editor -->
+        <div id="jsoneditor" style="height:460px"></div>
+        <div class="panel-footer">
+          <button id="updatePreview">Preview</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          D3 Visual Data
+        </div>
+        <div class="no-panel-body" id="d3preview">
+        </div>
+      </div>
+    </div>
+  </div> <!-- end of row previewtab -->
+
+  <div class="tab-pane" id="embedcode" role="tabpanel">
+    <div>
+    <h2>Embed Code:</h2>
+    <pre><code id="embed-code"></code></pre>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="memos" role="tabpanel">
+    <div>
+    <h2>Design and Development Memos</h2>
+    <div class="panel panel-info">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-warning">
+          <strong>Dependences</strong>: d3, d3-cloud, jQuery
+          <br/>
+          Bootstrap is optional.
+        </li>
+        <li class="list-group-item">
+          Math.random will return range between 0 and 1.
+          It will include 0 but NOT include 1.
+        </li>
+        <li class="list-group-item list-group-item-danger">
+          Q: what is the effecient way to control the size of 
+          the word cloud?
+        </li>
+      </ul>
+    </div>
+    </div>
+  </div>
+</div> <!-- end of tab-content->
+
+</div>
+</body>
+
+</html>

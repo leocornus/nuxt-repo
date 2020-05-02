@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello Analytics Reporting API V4</title>
+  <meta name="google-signin-client_id" content="279696884112-r02aupomgt1o91mfrg1fltj5ls6nvbhf.apps.googleusercontent.com">
+  <meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly">
+  <!-- Load the JavaScript API client and Sign-in library. -->
+  <script src="https://apis.google.com/js/client:platform.js"></script>
+
+  <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+  <link rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css'/>
+
+  <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+  <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+
+  <script src='/bower_components/d3/d3.js'></script>
+  <script type="text/javascript" src="/src/google/report-demo.js"></script>
+</head>
+
+<body>
+<div class="container">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-md-7">
+        <h1>Hello Analytics Reporting API V4
+          <!-- The Sign-in button. This will run `queryReports()` on success. -->
+          <span class="g-signin2" data-onsuccess="showMessage"></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#controltab" aria-controls="controltab" role="tab"
+         data-toggle="tab"
+      >Preview</a>
+    </li>
+    <li role="presentation">
+      <a href="#memos" aria-controls="memos" role="tab"
+         data-toggle="tab"
+      >Memos</a>
+    </li>
+  </ul>
+
+  <!-- tab panes -->
+  <div class="tab-content">
+    <!-- the preview pane -->
+    <div class="tab-pane active" id="controltab" role="tabpanel">
+<div class="row">
+  <div class="col-md-4">
+    <h3>Load Google Analytics Data</h3>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="view-id" 
+               class="col-sm-4 control-label">View ID:</label>
+        <div class="col-sm-8">
+          <input id="view-id" type="text" value="41055556"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="page-path-exp" 
+               class="col-sm-4 control-label">Page Path:</label>
+        <div class="col-sm-8">
+          <input id="page-path-exp" type="text" value=""/>
+        </div>
+      </div>
+
+      <div>Set the date range. All dates are inclusive.</div>
+      <div class="form-group">
+        <label for="start-date" 
+               class="col-sm-4 control-label">Start Date:</label>
+        <div class="col-sm-8">
+          <input id="start-date" type="text" value="2017-03-18"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="end-date" 
+               class="col-sm-4 control-label">End Date:</label>
+        <div class="col-sm-8">
+          <input id="end-date" type="text" value="2017-03-18"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="page-token" 
+               class="col-sm-4 control-label">Page Token:</label>
+        <div class="col-sm-8">
+          <input id="page-token" type="text" value="0"/><br/>
+        </div>
+      </div>
+    </form>
+
+    <div>
+      <button type="button" id="query" 
+              class="btn btn-primary">Query</button><br/>
+      <button id="convert-treemap" type="button"
+              class="btn btn-success">Convert to Treemap</button>
+      <button id="create-summary" type="button"
+              class="btn btn-success">Create Summary</button>
+    </div>
+
+    <!-- The API response will be printed here. -->
+    <div class="form-group">
+      <label for="query-output" 
+             class="col-sm-12 control-label">Query Output:</label>
+      <div class="col-sm-12">
+        <textarea cols="40" rows="5" id="query-output"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="jsonstring" 
+             class="col-sm-12 control-label">JSON String:</label>
+      <div class="col-sm-12">
+        <textarea cols="35" rows="5" id="jsonstring"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="summary" 
+             class="col-sm-12 control-label">HTML Summary:</label>
+      <div class="col-sm-12">
+        <textarea cols="35" rows="5" id="summary"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+  Preview
+    <div id="summary-div">
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- the memo pane -->
+    <div class="tab-pane" id="memos" role="tabpanel">
+      Memo
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

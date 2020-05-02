@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- viewport is important for responsive view -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Get started Vue.js</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.4.1/dist/bootstrap-toc.min.css">
+
+  <!-- load Vue.js development version -->
+  <script src="https://unpkg.com/vue"></script>
+
+  <style>
+    /* Show it is fixed to the top */
+    body {
+      min-height: 75rem;
+      padding-top: 4.5rem;
+    }
+
+nav[data-toggle='toc'] {
+  margin-top: 30px;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+  /* override the Affix plugin so that the navigation isn't sticky */
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+  /* PICK ONE */
+  /* don't expand nested items, which pushes down the rest of the page when navigating */
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+  /* alternatively, if you *do* want the second-level navigation to be shown (as seen on this page on mobile), use this */
+  nav[data-toggle='toc'] .nav .nav {
+    display: block;
+  }
+}
+  </style>
+
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Vue.js get started</a>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<div class="container"><div class="row">
+
+  <div class="col-sm-3">
+    <nav id="toc" data-spy="affix" data-toggle="toc" class="affix"></nav>
+  </div>
+
+  <div class="col-sm-9">
+
+    <h1>Vue.js Get Started</h1>
+    <p>Get started to learn Vue.js</p>
+
+    <h3>Some notes to get started</h3>
+    <p>
+      <ul>
+        <li>Do we have to use div for Vue.js application?</li>
+      </ul>
+    </p>
+
+    <h3>The simple template syntax</h3>
+    <p>
+    <div id="app">
+      <div>{{ staticMessage }}</div>
+      <div class="badge badge-success" v-text="dynamicMessage">
+      everything here will be replaced with v-text
+      </div>
+    </div>
+    </p>
+
+    <h3>v-bind directive, shortcode :</h3>
+    <p>
+    <div id="app-2">
+      <span :title="title">
+        Mouse hover over this line to see the dynamically bound title!
+      </span>
+    </div>
+    </p>
+    
+    <h3>v-for directive</h3>
+    <p>
+    <div id="app-for">
+      <ul>
+        <li v-for="todo in todos">
+          {{todo.text}}
+        </li>
+      </ul>
+    </div>
+    </p>
+
+    <h3>v-on directive, shortcode @</h3>
+    <p>
+    <div id="app-on">
+      <span class="badge badge-info">{{theWord}}</span>
+      <button class="btn btn-outline-warning" v-on:click="reverseMessage">Click me to reverse...</button>
+    </div>
+    </p>
+    
+    <h3>v-if and v-else directive</h3>
+    <p>
+    <div id="app-if">
+      <span class="badge badge-danger" v-if="seen">testing v-if seen</span>
+      <span class="badge badge-info" v-else>I am showing because of v-else</span>
+      <button class="btn btn-outline-warning" @click="onAndOff">Click me to show and hide</button>
+    </div>
+    </p>
+
+    <h3>v-model directive</h3>
+    <p>
+    <div id="app-model">
+      <div class="text-success">{{theInput}}</div>
+      <input v-model="theInput">
+    </div>
+    </p>
+
+    <h3>Vue component</h3>
+    <p>
+    <div id="app-component">
+      <ul>
+        <todo-item v-for='item in someList'
+          :todo="item" v-bind:key="item.id"
+          comment="we need a unique key here to avoid many tricky issues for a complex app"
+        >
+        everything here will be gone!
+        </todo-item>
+      </ul>
+    </div>
+    </p>
+
+  </div>
+
+</div></div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+<!-- the js file has to be at the bottom. -->
+<script src="hello-vue.js"></script>
+</body>
+</html>
