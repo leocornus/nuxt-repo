@@ -62,6 +62,7 @@ export default {
             selection.enter()
               .append("div").attr("class", "bar")
               .style("height", function(d){ 
+                  console.log("entering div:", d);
                   return d + "px"; 
               })
               .style("margin-top", function(d){ 
