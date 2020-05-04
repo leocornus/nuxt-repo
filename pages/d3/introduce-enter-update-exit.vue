@@ -12,7 +12,10 @@ v-container(grid-list-md)
 
   div( id="dataset" )
 
-  v-btn( id="add-btn" ) Add Element
+  v-btn(
+    id="add-btn"
+    @click="handleAddElement"
+  ) Add Element
 </template>
 
 <script>
@@ -45,11 +48,12 @@ export default {
             // DOM elements with data bound to them.
             var selection = d3.select("#chart")
               .selectAll(".bar").data(self.dataset)
-              .style("height", function(d){ 
-                  return d; 
+              .style("height", function(d) { 
+                  console.log("existing div:", d);
+                  return d + "px"; 
               })
               .style("margin-top", function(d){ 
-                  return self.maxHeight - d; 
+                  return self.maxHeight - d + "px"; 
               });
 
             // Enter selection: Create new DOM elements for added 
@@ -58,10 +62,10 @@ export default {
             selection.enter()
               .append("div").attr("class", "bar")
               .style("height", function(d){ 
-                  return d; 
+                  return d + "px"; 
               })
               .style("margin-top", function(d){ 
-                  return self.maxHeight - d; 
+                  return self.maxHeight - d + "px";
               })
               .on("click", function(e, i){
                   self.dataset.splice(i, 1);
@@ -73,25 +77,44 @@ export default {
 
               // Print underlying data array
               d3.select("#dataset").text(self.dataset);
+        },
+
+        handleAddElement() {
+
+            let self = this;
+            if(self.dataset.length < 10) 
+                this.dataset.push(Math.round(Math.random() * self.maxHeight));
+
+            self.update();
         }
     }
 }
 </script>
 
-<style lang="css">
-.bar {
-  width: 25px;
-  margin-right: 5px;
-  background-color: #C1ADC4;
-  float: left;
-  cursor: pointer;
-}
-  
-.bar:last-child {
-  margin-right: 0;
-}
+<style lang="sass">
+#chart
+  width: 315px
+  height: 100px
+  background-color: #f6f6f6
+  margin-bottom: 20px
 
-.bar:hover{
-  background-color: #927A94;
-}
+#dataset
+  padding: 10px
+  width: 315px
+  background-color: #f6f6f6
+  margin-bottom: 20px
+  font-family: "Inconsolata", sans-serif
+
+.bar 
+  width: 25px
+  margin-right: 5px
+  background-color: #C1ADC4
+  float: left
+  cursor: pointer
+  
+.bar:last-child 
+  margin-right: 0
+
+.bar:hover
+  background-color: #927A94
 </style>
