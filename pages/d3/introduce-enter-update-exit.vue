@@ -3,7 +3,7 @@ v-container(grid-list-md)
   h1 D3 introduction: Enter, Update, Exit.
   p A simple way to get understood D3 enter, update and exit.
   h2 Credit
-  p This is based on the great post:
+  p This is based on the great post: 
     a( href="https://medium.com/@c_behrens/enter-update-exit-6cafc6014c36" )
       | Enter, Update, Exit
       | An Introduction to D3.js, The Web’s Most Popular Visualization Toolkit
@@ -91,7 +91,8 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" >
+// TODO: scoped is not working!
 #chart
   width: 315px
   height: 100px
