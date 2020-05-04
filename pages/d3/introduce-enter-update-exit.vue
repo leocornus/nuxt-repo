@@ -48,10 +48,7 @@ export default {
             // DOM elements with data bound to them.
             var selection = d3.select("#chart")
               .selectAll(".bar").data(self.dataset)
-              .style("height", function(d) { 
-                  console.log("existing div:", d);
-                  return d + "px"; 
-              })
+              .style("height", self.calcHeight)
               .style("margin-top", function(d){ 
                   return self.maxHeight - d + "px"; 
               });
@@ -59,12 +56,11 @@ export default {
             // Enter selection: Create new DOM elements for added 
             // data items, resize and position them and attach a 
             // mouse click handler.
+            // At beginning (initialize phase), the enter will be called.
             selection.enter()
               .append("div").attr("class", "bar")
-              .style("height", function(d){ 
-                  console.log("entering div:", d);
-                  return d + "px"; 
-              })
+              // the entering event.
+              .style("height", self.calcHeight)
               .style("margin-top", function(d){ 
                   return self.maxHeight - d + "px";
               })
@@ -78,6 +74,15 @@ export default {
 
               // Print underlying data array
               d3.select("#dataset").text(self.dataset);
+        },
+
+        /**
+         * set the height for the give item.
+         */
+        calcHeight(item) {
+
+             console.log("existing div:", item);
+             return item + "px"; 
         },
 
         handleAddElement() {
