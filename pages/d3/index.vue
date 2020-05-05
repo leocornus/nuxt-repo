@@ -2,6 +2,8 @@
 v-container(grid-list-md text-center)
   v-list
     v-list-item
+      n-link( to="/d3/introduce-update-enter-exit" ) D3 introduction update enter exit
+    v-list-item
       n-link( to="/d3/simple-line-chart" ) Simple Line Chart
     v-list-item
       n-link( to="/d3/line-chart" ) Line Chart with x, y axes and simple animation
