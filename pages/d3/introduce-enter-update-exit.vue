@@ -55,6 +55,7 @@ export default {
             // data items, resize and position them and attach a 
             // mouse click handler.
             // At beginning (initialize phase), the enter will be called.
+            //let newSelection = selection.enter()
             selection.enter()
               .append("div").attr("class", "bar")
               // the entering event.
@@ -86,7 +87,7 @@ export default {
                 .style("margin-top", item => self.maxHeight - item + "px")
                 .style("width", "25px")
                 .style("margin-right", "5px")
-                .style("background-color", "#C1ADC4")
+                //.style("background-color", "#C1ADC4")
                 .style("float", "left")
                 .style("cursor", "pointer");
         },
@@ -117,6 +118,9 @@ export default {
   background-color: #f6f6f6
   margin-bottom: 20px
   font-family: "Inconsolata", sans-serif
+
+.bar
+  background-color: #C1ADC4
 
 .bar:last-child 
   margin-right: 0
