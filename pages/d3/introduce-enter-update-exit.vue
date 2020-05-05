@@ -63,6 +63,12 @@ export default {
                   self.dataset.splice(i, 1);
                   self.update();
               })
+              .on("mouseover", function(d, i) {
+                  self.handleMouseover(this, d, i);
+              })
+              .on("mouseout", function(d, i) {
+                  self.handleMouseout(this, d, i);
+              })
               // the call function will add itself as the first parameter
               .call(self.calcStyle);
             //self.calcStyle(newSelection);
@@ -87,9 +93,25 @@ export default {
                 .style("margin-top", item => self.maxHeight - item + "px")
                 .style("width", "25px")
                 .style("margin-right", "5px")
-                //.style("background-color", "#C1ADC4")
+                .style("background-color", "#C1ADC4")
                 .style("float", "left")
                 .style("cursor", "pointer");
+        },
+
+        /**
+         * handle mouse over.
+         */
+        handleMouseover(element, item, index) {
+
+            d3.select(element).style('background-color', "#927A94");
+        },
+
+        /**
+         * handle mouseout.
+         */
+        handleMouseout(element, item, index) {
+
+            d3.select(element).style('background-color', "#C1ADC4");
         },
 
         handleAddElement() {
@@ -107,7 +129,7 @@ export default {
 <style lang="sass" >
 // TODO: scoped is not working!
 #chart
-  width: 315px
+  width: 300px
   height: 100px
   background-color: #f6f6f6
   margin-bottom: 20px
@@ -119,12 +141,6 @@ export default {
   margin-bottom: 20px
   font-family: "Inconsolata", sans-serif
 
-.bar
-  background-color: #C1ADC4
-
 .bar:last-child 
   margin-right: 0
-
-.bar:hover
-  background-color: #927A94
 </style>
