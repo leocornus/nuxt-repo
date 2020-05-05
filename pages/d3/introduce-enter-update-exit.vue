@@ -48,27 +48,29 @@ export default {
             // DOM elements with data bound to them.
             var selection = d3.select("#chart")
               .selectAll(".bar").data(self.dataset)
-            self.calcStyle(selection);
+              .call(self.calcStyle);
+            //self.calcStyle(selection);
 
             // Enter selection: Create new DOM elements for added 
             // data items, resize and position them and attach a 
             // mouse click handler.
             // At beginning (initialize phase), the enter will be called.
-            let newSelection = selection.enter()
+            selection.enter()
               .append("div").attr("class", "bar")
               // the entering event.
               .on("click", function(e, i){
                   self.dataset.splice(i, 1);
                   self.update();
-              });
+              })
+              // the call function will add itself as the first parameter
+              .call(self.calcStyle);
+            //self.calcStyle(newSelection);
 
-            self.calcStyle(newSelection);
+            // Exit selection: Remove elements without data from the DOM
+            selection.exit().remove();
 
-              // Exit selection: Remove elements without data from the DOM
-              selection.exit().remove();
-
-              // Print underlying data array
-              d3.select("#dataset").text(self.dataset);
+            // Print underlying data array
+            d3.select("#dataset").text(self.dataset);
         },
 
         /**
@@ -81,7 +83,12 @@ export default {
             console.log("existing div:");
 
             selection.style("height", item => item + "px")
-                .style("margin-top", item => self.maxHeight - item + "px");
+                .style("margin-top", item => self.maxHeight - item + "px")
+                .style("width", "25px")
+                .style("margin-right", "5px")
+                .style("background-color", "#C1ADC4")
+                .style("float", "left")
+                .style("cursor", "pointer");
         },
 
         handleAddElement() {
@@ -111,13 +118,6 @@ export default {
   margin-bottom: 20px
   font-family: "Inconsolata", sans-serif
 
-.bar 
-  width: 25px
-  margin-right: 5px
-  background-color: #C1ADC4
-  float: left
-  cursor: pointer
-  
 .bar:last-child 
   margin-right: 0
 
