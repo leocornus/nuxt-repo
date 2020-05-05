@@ -48,26 +48,21 @@ export default {
             // DOM elements with data bound to them.
             var selection = d3.select("#chart")
               .selectAll(".bar").data(self.dataset)
-              .style("height", self.calcHeight)
-              .style("margin-top", function(d){ 
-                  return self.maxHeight - d + "px"; 
-              });
+            self.calcStyle(selection);
 
             // Enter selection: Create new DOM elements for added 
             // data items, resize and position them and attach a 
             // mouse click handler.
             // At beginning (initialize phase), the enter will be called.
-            selection.enter()
+            let newSelection = selection.enter()
               .append("div").attr("class", "bar")
               // the entering event.
-              .style("height", self.calcHeight)
-              .style("margin-top", function(d){ 
-                  return self.maxHeight - d + "px";
-              })
               .on("click", function(e, i){
                   self.dataset.splice(i, 1);
                   self.update();
               });
+
+            self.calcStyle(newSelection);
 
               // Exit selection: Remove elements without data from the DOM
               selection.exit().remove();
@@ -79,10 +74,14 @@ export default {
         /**
          * set the height for the give item.
          */
-        calcHeight(item) {
+        calcStyle(selection) {
 
-             console.log("existing div:", item);
-             return item + "px"; 
+            let self = this;
+
+            console.log("existing div:");
+
+            selection.style("height", item => item + "px")
+                .style("margin-top", item => self.maxHeight - item + "px");
         },
 
         handleAddElement() {
