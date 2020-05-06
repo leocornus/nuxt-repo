@@ -30,11 +30,15 @@ export default {
     data() {
         return {
             dataset: [15,9,34,28,59],
-            maxHeight: 100
+            maxHeight: 100,
+            //colors: d3.scaleOrdinal( d3.schemeCategory10 ).domain([...Array(10).keys()])
+            colors: d3.scaleOrdinal( d3.schemeCategory10 )
         };
     },
 
     mounted() {
+
+        this.colors.domain(this.dataset);
         this.update();
     },
 
@@ -87,13 +91,14 @@ export default {
 
             let self = this;
 
-            console.log("existing div:");
+            console.log("existing div:", selection);
 
             selection.style("height", item => item + "px")
                 .style("margin-top", item => self.maxHeight - item + "px")
                 .style("width", "25px")
                 .style("margin-right", "5px")
-                .style("background-color", "#C1ADC4")
+                //.style("background-color", "#C1ADC4")
+                .style("background-color", item => self.colors(item) )
                 .style("float", "left")
                 .style("cursor", "pointer");
         },
@@ -111,14 +116,21 @@ export default {
          */
         handleMouseout(element, item, index) {
 
-            d3.select(element).style('background-color', "#C1ADC4");
+            let self = this;
+
+            d3.select(element)
+                //.style('background-color', "#C1ADC4");
+                .style('background-color', item => self.colors(item));
         },
 
         handleAddElement() {
 
             let self = this;
+
             if(self.dataset.length < 10) 
-                this.dataset.push(Math.round(Math.random() * self.maxHeight));
+                self.dataset.push(Math.round(Math.random() * self.maxHeight));
+
+            self.colors.domain( self.dataset );
 
             self.update();
         }
