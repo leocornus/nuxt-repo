@@ -46,8 +46,10 @@ export default {
 
         selectedPage: function(page) {
 
-            //console.log('selected page:', page);
-            window.location.href=page.split("/")[1];
+            console.log('selected page:', page);
+            //window.location.href=page.split("/")[1];
+            // this will not reload page every time.
+            this.$router.replace(page);
         }
     },
 
