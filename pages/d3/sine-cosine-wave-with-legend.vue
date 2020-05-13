@@ -4,9 +4,14 @@ v-container(grid-list-md)
   p This is a example to show the sine and cosine waves in one chart.
 
   v-row
-    v-col( cols="12" )
-      div( id="linechart" )
-        svg( style="border: black 1px solid" )
+    v-col( cols="3" )
+    v-col( cols="9" )
+      // set the chart-container class to calculate width and 
+      // height of the chart.
+      v-row.chart-container
+        v-col( cols="12").pa-0
+          svg( style="border: black 1px solid"
+          )
 </template>
 
 <script>
@@ -35,8 +40,10 @@ export default {
 
         /**
          * calculate the chart width.
+         * will use the full width of the chart-container
          */
         chartWidth() {
+
         },
 
         /**
