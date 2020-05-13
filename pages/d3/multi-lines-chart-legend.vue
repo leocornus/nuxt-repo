@@ -271,6 +271,8 @@ export default {
             
             // calculate the dimention of the chart.
             // +vm.svg.attr("innerWidth")
+            // bounding client rect returns DOMRect, which will include padding,
+            // but NOT include margin
             vm.svgRect = vm.svg.node().getBoundingClientRect();
             vm.chartWidth = vm.svgRect.width - vm.chartMargin.left - vm.chartMargin.right;
             // +vm.svg.style("height")
@@ -281,7 +283,8 @@ export default {
             vm.linesGroup = vm.svg.append("g")
                 .attr("transform", "translate(" + vm.chartMargin.left + "," + vm.chartMargin.top + ")");
             // the element group for legend.
-            vm.legendGroup = vm.linesGroup.append("g");
+            vm.legendGroup = vm.linesGroup.append("g")
+                .attr("fill", "white");
 
             // set scale range for x and y.
             vm.xRange = d3.scaleTime().rangeRound([0, vm.chartWidth]);
