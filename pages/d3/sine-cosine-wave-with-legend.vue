@@ -20,7 +20,7 @@ import * as d3 from "d3";
 export default {
 
     layout: 'vuetify',
-    name: 'multi-lines-chart-legend',
+    name: 'sine-consine-waves-legend',
     auth: false,
 
     data() {
@@ -36,14 +36,37 @@ export default {
         }
     },
 
-    methods: {
+    /**
+     * the DOM is ready.
+     */
+    mounted() {
 
+        d3.select('svg')
+          .attr('width', this.chartWidth())
+          .attr('height', this.chartHeight());
+    },
+
+    methods: {
         /**
          * calculate the chart width.
          * will use the full width of the chart-container
          */
         chartWidth() {
 
+            const containerSize = d3.select('.chart-container').node().getBoundingClientRect();
+
+            return containerSize.width;
+        },
+
+        /**
+         *
+         */
+        chartHeight() {
+
+            const wrapSize = d3.select('.v-content__wrap').node().getBoundingClientRect();
+            const containerSize = d3.select('.chart-container').node().getBoundingClientRect();
+
+            return wrapSize.height - containerSize.top;
         },
 
         /**
