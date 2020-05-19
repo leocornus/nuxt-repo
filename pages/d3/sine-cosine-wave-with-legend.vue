@@ -41,9 +41,21 @@ export default {
      */
     mounted() {
 
+        let self = this;
+
+        // next tick will make sure the full page DOM is loaded, 
+        // including all components
+        this.$nextTick( function() {
+            window.addEventListener('resize', function() {
+                d3.select('svg')
+                  .attr('width', self.chartWidth())
+                  .attr('height', self.chartHeight());
+            });
+        });
+
         d3.select('svg')
-          .attr('width', this.chartWidth())
-          .attr('height', this.chartHeight());
+          .attr('width', self.chartWidth())
+          .attr('height', self.chartHeight());
     },
 
     methods: {
