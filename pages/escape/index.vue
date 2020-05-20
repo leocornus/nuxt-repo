@@ -1,5 +1,5 @@
 <template lang="pug">
-v-container(grid-list-md text-center)
+v-container(grid-list-md)
   v-stepper( v-model="e1" )
     v-stepper-header
       v-stepper-step( :complete="e1 > 1" step="1" ) Step One
@@ -11,7 +11,21 @@ v-container(grid-list-md text-center)
     v-stepper-items
       v-stepper-content( step="1" )
         v-card( color="grey lighten-1" height="400px" ).mb-12
-          h3 Step One
+          h2 Step One
+          p Solve the following puzzle and fill out the box to move forward.
+          v-row( justify="center" )
+            v-col(cols="4")
+              v-row( justify="center")
+                v-col(cols="2")
+                  v-text-field(solo dense)
+                v-col(cols="2")
+                  v-text-field(solo dense)
+                v-col(cols="2")
+                  v-text-field(solo dense)
+                v-col(cols="2")
+                  v-text-field(solo dense)
+                v-col(cols="2")
+                  v-text-field(solo dense)
         v-btn( color="primary" @click="e1 = 2" ) Continue
 
       v-stepper-content( step="2" )
