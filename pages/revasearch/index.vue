@@ -5,28 +5,33 @@ v-container( grid-list-xs )
   v-card( class="d-flex flex-row" flat tile )
     // need use dense to align the size with buttons.
     v-text-field( 
-      dense
+      outlined
       id='input-number'
       autocomplete="off"
       v-model='query' 
       label="Type your query here"
+      clearable
+      append-icon="mdi-magnify"
+      @click:append="handleSearchButton"
+      append-outer-icon="mdi-cog-outline"
+      @click:append-outer="settingsDialog = true"
     )
     // search button
-    v-btn( 
+    //v-btn( 
       color="warning" 
       dark icon
       class="pa-2"
       @click="handleSearchButton"
-    )
+    //)
       v-icon mdi-magnify
       | search
     // setting button
-    v-btn(
+    //v-btn(
       color="success darken-1"
       dark icon
       class="pa-2"
       @click.stop="settingsDialog = true"
-    )
+    //)
       v-icon mdi-cog-outline
       | settings
 
@@ -276,7 +281,15 @@ export default {
             collectionLabel: "Collection: ",
 
             // all available fields, get from solr schema.
-            allFields: ["abc","cde"],
+            allFields: [
+              "table",
+              "residencetype",
+              "days_on_market",
+              "neighbourhoodname",
+              "agentname",
+              "brokername",
+              "city"
+            ],
             // default facet field is empty.
             facetFields: [],
             // facet input.
