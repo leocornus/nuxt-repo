@@ -42,7 +42,9 @@ v-container( grid-list-xs )
         v-tab
           v-icon( left ) mdi-cog-outline
           | Settings
-        v-tab
+        v-tab(
+          v-if="$auth.loggedIn"
+        )
           v-icon( left ) mdi-account
           | Profiles
 
@@ -52,7 +54,9 @@ v-container( grid-list-xs )
             v-card-text
               v-form( v-model="valid" )
                 // the collection row.
-                v-row
+                v-row(
+                  v-if="$auth.loggedIn"
+                )
                   v-col( cols="12" md="10" )
                     v-autocomplete(
                       v-model="profileId"
@@ -241,7 +245,7 @@ import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 
 export default {
 
-    auth: true,
+    auth: false,
 
     components: {
     //    'card-settings': SettingsCard
@@ -292,7 +296,7 @@ export default {
             filterQuery: "",
 
             // set the default sort
-            sort: "",
+            sort: "_modified_ desc",
 
             // set default field list to empty, which will return all fields.
             fieldList: "",
