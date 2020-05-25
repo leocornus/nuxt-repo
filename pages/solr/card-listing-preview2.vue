@@ -96,7 +96,8 @@ export default {
 
             return [this.doc.title,
                 this.doc.neighbourhoodname,
-                this.doc.city].join(" | ");
+                this.doc.city].join(" | ") + " ---- " +
+                this.doc.days_on_market + " Days on market";
         },
 
         /**
