@@ -296,7 +296,9 @@ export default {
             facetInput: null,
 
             // autocomplete for citeis.
-            allCities: ["Toronto", "Markham"],
+            allCities: ["Toronto", "Markham", "Ajax",
+                "Richmond Hill", "Oakville", "London"
+            ],
             cities: ["Toronto", "Markham"],
             cityInput: null,
 
