@@ -288,11 +288,10 @@ export default {
               "days_on_market",
               "neighbourhoodname",
               "agentname",
-              "brokername",
-              "city"
+              "brokername"
             ],
             // default facet field is empty.
-            facetFields: [],
+            facetFields: ["residencetype"],
             // facet input.
             facetInput: null,
 
