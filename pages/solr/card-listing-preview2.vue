@@ -9,7 +9,11 @@ v-card(
     @click.stop="showCarousels = true"
     class="align-end"
   )
-    v-card-title {{previewType}}
+    v-card-title
+      span(
+        class="indigo lighten-5"
+        style="opacity: 80%"
+      ) {{previewType}}
   v-card-title.headline {{previewTitle}}
   v-card-subtitle {{previewAddress}}
   v-card-text {{previewDesc}}
