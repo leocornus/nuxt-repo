@@ -205,12 +205,11 @@ v-container( grid-list-xs )
           @click="settingsOk"
         ) Ok
 
-  // the carousel dialog.
-
   // search result list with facet filters on the left side.
   v-layout( row wrap )
     // the search result list.
     v-row
+      // filter column
       v-col( cols="12" md="3" )
         // the filters card.
         query-filters( :filters="filters"
@@ -220,6 +219,7 @@ v-container( grid-list-xs )
           v-on:bucket-select="handleBucketSelect"
         )
 
+      // result items
       v-col( cols="12" md="9" )
         h3 {{resultSummary}}
         v-pagination( v-model="currentPage" :length="totalPages" total-visible="10"
@@ -244,7 +244,8 @@ import axios from 'axios';
 import config from '@/libs/config';
 // import other vue component
 //import SettingsCard from '@/pages/solr/card-settings.vue';
-import ListingPreviewCard from '@/pages/solr/card-listing-preview.vue';
+//import ListingPreviewCard from '@/pages/solr/card-listing-preview.vue';
+import ListingPreviewCard from '@/pages/solr/card-listing-preview2.vue';
 import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
 import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
 
