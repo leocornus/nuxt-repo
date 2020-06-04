@@ -8,6 +8,6 @@ export default {
 
     layout: 'zero',
     auth: false,
-    name: 'Zero Theme demo page'
+    name: 'ZeroHome'
 }
 </script>
