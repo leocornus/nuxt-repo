@@ -23,6 +23,7 @@ div
 
     v-spacer
 
+    // hide when in sm screen / device
     div
       v-tabs(
         optional
@@ -39,14 +40,32 @@ div
           min-width="96"
           text
         ) {{ name }}
+
+    // hide when the screen is md and up
+    v-app-bar-nav-icon(
+      class="hidden-md-and-up"
+      @click="drawer = !drawer"
+    )
+
+  // the drawer for sm screen.
+  zero-drawer(
+    v-model='drawer'
+    :items="items"
+  )
 </template>
 
 <script>
-  export default {
+export default {
+
     name: 'ZeroAppBar',
+
+    components: {
+        ZeroDrawer: () => import('./Drawer')
+    },
 
     data: () => ({
       drawer: null,
+
       items: [
         'Home',
         //'About',
@@ -54,5 +73,5 @@ div
         //'Pro',
       ],
     }),
-  }
+}
 </script>
