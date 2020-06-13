@@ -13,7 +13,7 @@ section(id="hero")
         max-width="700"
         width="100%"
       )
-        //zero-base-heading(title="PROMOTE YOUR BUSINESS WITH ZERO")
+        zero-base-heading(title="PROMOTE YOUR BUSINESS WITH ZERO")
 
         zreo-base-body
           | Infographic hypotheses influencer user experience Long madel ture gen-z paradigm shift client partner network product seilans solve management influencer analytics leverage virality.
