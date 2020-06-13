@@ -15,10 +15,10 @@ section(id="hero")
       )
         //zero-base-heading(title="PROMOTE YOUR BUSINESS WITH ZERO")
 
-        //zreo-base-body
-          Infographic hypotheses influencer user experience Long madel ture gen-z paradigm shift client partner network product seilans solve management influencer analytics leverage virality.
-          incubator seed round massmarket.
-          buyer agile development growth hacking business-to-consumer ecosystem
+        zreo-base-body
+          | Infographic hypotheses influencer user experience Long madel ture gen-z paradigm shift client partner network product seilans solve management influencer analytics leverage virality.
+          | incubator seed round massmarket.
+          | buyer agile development growth hacking business-to-consumer ecosystem
 
         div(
           :class="$vuetify.breakpoint.smAndDown ? 'flex-column align-start' : 'align-center'"
