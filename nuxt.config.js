@@ -22,6 +22,14 @@ export default {
     ],
 
     /**
+     * load plugins.
+     * some global components.
+     */
+    plugins: [
+        '~/plugins/index'
+    ],
+
+    /**
      * options for auth module.
      */
     auth: {
