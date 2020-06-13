@@ -8,7 +8,7 @@ div
     height="80"
   )
     v-img(
-      :src="require('@/assets/logo.svg')"
+      :src="require('@/assets/zero-logo.svg')"
       class="mr-3 hidden-xs-only"
       contain
       max-width="52"
