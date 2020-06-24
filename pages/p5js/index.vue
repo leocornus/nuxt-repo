@@ -1,8 +1,11 @@
 <template lang="pug">
+div.container.boder
+  div(id="p5Canvas").d-flex.justify-content-center
 </template>
 
 <script>
 export default {
+
     name: "p5 circles",
     auth: false,
 
@@ -18,12 +21,13 @@ export default {
 
         const script = function (p5) {    
 
-            var speed = 2;    
+            var speed = 3;    
             var posX = 0;
 
             // NOTE: Set up is here   
             p5.setup = _ => {      
-                p5.createCanvas(500, 500);      
+                let canvas = p5.createCanvas(500, 500);      
+                canvas.parent("p5Canvas");
                 p5.ellipse(p5.width / 2, p5.height / 2, 500, 500);    
             }
             // NOTE: Draw is here
