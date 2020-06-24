@@ -17,6 +17,7 @@ v-app( light )
 <script>
 export default {
     name: "homepage",
+    auth: false,
     data() {
         return {
         }
