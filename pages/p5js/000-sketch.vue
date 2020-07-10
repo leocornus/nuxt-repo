@@ -7,6 +7,11 @@ v-container(grid-list-md)
         label="Background Color"
         outlined
       )
+      v-text-field(
+        v-model="circleSize"
+        label="Circle Size"
+        outlined
+      )
       v-btn(@click="update") Update
     v-col(cols="9")
       div(id="p5Canvas").d-flex.justify-content-center
@@ -21,7 +26,7 @@ export default {
 
     data() {
         return {
-            background: 220,
+            background: 0,
             circleSize: 20
         };
     },
@@ -43,18 +48,19 @@ export default {
 
         self.script = function (p5) {
 
-            p5.remove();
-
+            //p5.remove();
             // NOTE: Set up is here   
             p5.setup = _ => {
                 let canvas = p5.createCanvas(500, 500);
                 canvas.parent("p5Canvas");
-                p5.background(self.background);
+                //p5.background(self.background);
             }
 
             // NOTE: Draw is here
             // 60 times a second
             p5.draw = _ => {      
+
+                p5.background(self.background);
 
                 p5.circle(p5.mouseX, p5.mouseY, self.circleSize);
             }  
