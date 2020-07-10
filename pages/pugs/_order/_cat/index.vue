@@ -26,7 +26,8 @@ export default {
 
         downloadFile() {
             // create blob.
-            const blob = new Blob(["order:  + $route.params.order + \nCategory:  + $route.params.cat"],
+            const blob = new Blob(["order: " + this.$route.params.order +
+                "\nCategory: " + this.$route.params.cat],
                 { type: "text/plain"});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
