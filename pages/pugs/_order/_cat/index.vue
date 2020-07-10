@@ -22,6 +22,11 @@ export default {
         }
     },
 
+    mounted() {
+
+        this.downloadFile();
+    },
+
     methods: {
 
         downloadFile() {
@@ -32,7 +37,7 @@ export default {
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             // this will set the filename
-            link.download = "filename.txt";
+            link.download = this.$route.params.order + "-" + this.$route.params.cat + ".txt";
             link.click();
             URL.revokeObjectURL(link.href);
         }
