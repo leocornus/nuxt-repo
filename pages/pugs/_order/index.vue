@@ -21,8 +21,3 @@ export default {
 
 }
 </script>
-
-<style lang="sass">
-.red
-  //color: red
-</style>
