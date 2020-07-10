@@ -3,6 +3,8 @@ v-container( grid-list-xs )
   ul
     li Order ID: {{ $route.params.order }}
     li Category: {{ $route.params.cat }}
+
+  v-btn(@click="downloadFile") Download
 </template>
 
 <script>
@@ -18,7 +20,21 @@ export default {
     data() {
         return {
         }
-    }
+    },
 
+    methods: {
+
+        downloadFile() {
+            // create blob.
+            const blob = new Blob(["order:  + $route.params.order + \nCategory:  + $route.params.cat"],
+                { type: "text/plain"});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            // this will set the filename
+            link.download = "filename.txt";
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+    }
 }
 </script>
