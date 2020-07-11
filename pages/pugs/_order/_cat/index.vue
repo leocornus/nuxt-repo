@@ -11,7 +11,7 @@ v-container( grid-list-xs )
 
 export default {
 
-    name: 'DynamicOrder',
+    name: 'DynamicOrderCat',
 
     auth: false,
 
