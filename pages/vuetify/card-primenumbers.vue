@@ -23,7 +23,7 @@ v-flex( xs12 sm8 )
 
 <script>
 
-import PrimeNumber from '@/libs/PrimeNumber';
+import PrimeNumber from '@/libs/math/PrimeNumber';
 
 export default {
     name: "card-pns",
