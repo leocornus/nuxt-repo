@@ -16,7 +16,8 @@ export default {
 
     data() {
         return {
-            name: 'Pug World'
+            name: 'Pug World',
+            clientIp: 'testing'
         }
     },
 
