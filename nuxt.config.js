@@ -4,7 +4,9 @@
 export default {
 
     // set to Single Page application mode.
-    mode: 'spa',
+    //mode: 'spa', --- deprecated! replace with ssr
+    // set to false for spa mode.
+    ssr: false,
 
     server: {
         //port: 80, // default is 3000
