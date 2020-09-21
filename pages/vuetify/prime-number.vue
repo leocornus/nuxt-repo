@@ -29,7 +29,7 @@ v-container( grid-list-xs )
 </template>
 
 <script>
-import PrimeNumber from '@/libs/PrimeNumber';
+import PrimeNumber from '@/libs/math/PrimeNumber';
 
 import CardPrimeNumbers from '@/pages/vuetify/card-primenumbers.vue';
 
