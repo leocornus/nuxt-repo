@@ -14,7 +14,8 @@ let nod = {
         for( let number = fromNumber; number <= toNumber; number ++) {
 
             // get the string format off the number.
-            const numberStr = number.toString();
+            // We should NOT use const here!
+            let numberStr = number.toString();
             for( let i = 0; i < numberStr.length; i++ ) {
                 total += numberStr.charAt( i ) === digit.toString() ? 1 : 0;
             }
