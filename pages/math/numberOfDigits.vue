@@ -40,6 +40,8 @@ v-container( grid-list-xs )
 
 <script>
 
+import NumberOfDigits from '@/libs/math/NumberOfDigits';
+
 export default {
     auth: false,
 
@@ -61,13 +63,18 @@ export default {
 
         resultMessage: function() {
 
-            if(this.fromNumber === null || this.fromNumber === "") {
+            if( (this.fromNumber === null || this.fromNumber === "") ||
+                (this.toNumber === null || this.toNumber === "") ||
+                (this.digitNumber === null || this.digitNumber === "")
+            ) {
 
                 this.msgColor = "primary--text";
-                this.factorDisplay = "d-none";
                 return "Waiting for the numbers...";
             } else {
 
+                let total = NumberOfDigits.calcNumberOfDigits( this.fromNumber, this.toNumber,
+                    this.digitNumber);
+                return "Total Occurrences: " + total;
             }
         }
     },
