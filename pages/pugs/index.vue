@@ -6,7 +6,7 @@ v-container( grid-list-xs )
 
 <script>
 
-import axios from 'axios';
+//import axios from 'axios';
 
 export default {
 
@@ -17,18 +17,24 @@ export default {
     data() {
         return {
             name: 'Pug World',
-            clientIp: 'testing'
+            //clientIp: 'testing'
         }
     },
 
-    asyncData() {
+    //asyncData() {
 
-        return axios.get('https://www.cloudflare.com/cdn-cgi/trace')
-            .then(function(res) {
-                //console.log(res);
-                let all = res.data.split("\n")[2];
-                return {clientIp: all.split("=")[1]};
-            });
+    //    return axios.get('https://www.cloudflare.com/cdn-cgi/trace')
+    //        .then(function(res) {
+    //            //console.log(res);
+    //            let all = res.data.split("\n")[2];
+    //            return {clientIp: all.split("=")[1]};
+    //        });
+    //},
+
+    async asyncData({$axios}) {
+
+        const ip = await $axios.$get('http://icanhazip.com')
+        return {clientIp: ip}
     }
 }
 </script>
