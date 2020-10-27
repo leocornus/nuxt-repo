@@ -11,10 +11,12 @@ v-container( grid-list-xs )
       v-model='query' 
       label="Type your query here"
       clearable
+      @click:clear="handleSearchButton"
       append-icon="mdi-magnify"
       @click:append="handleSearchButton"
       append-outer-icon="mdi-cog-outline"
       @click:append-outer="settingsDialog = true"
+      v-on:keydown.enter="handleSearchButton"
     )
 
   // the settings dialog.
