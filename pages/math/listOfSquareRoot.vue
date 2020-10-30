@@ -53,7 +53,7 @@ export default {
 
                 let root = [];
                 for ( let n = 1; n <= this.upToNumber; n++) {
-                    root.push(Math.sqrt(n));
+                    root.push('Square root of ' + n + ": " + Math.sqrt(n));
                 }
 
                 return root.join("<br/>");
