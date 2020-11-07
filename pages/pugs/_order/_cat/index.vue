@@ -8,7 +8,15 @@ v-container( grid-list-xs )
 </template>
 
 <script>
-
+/**
+ * exploring the dynamic routes, 2 level dynamic parameters.
+ * 
+ * Test scenario:
+ * We will get order id and category from the URL, dynamic parameters.
+ * Then the Blob object will be used to get ready the content and download link.
+ * The download link will be in DOM memory.
+ * The download button will triger the download behavior
+ */
 export default {
 
     name: 'DynamicOrderCat',
@@ -24,11 +32,14 @@ export default {
 
     mounted() {
 
-        this.downloadFile();
+        //this.downloadFile();
     },
 
     methods: {
 
+        /**
+         * quick test to download file using the Blob object.
+         */
         downloadFile() {
             // create blob.
             const blob = new Blob(["order: " + this.$route.params.order +
@@ -39,6 +50,7 @@ export default {
             // this will set the filename
             link.download = this.$route.params.order + "-" + this.$route.params.cat + ".txt";
             link.click();
+            console.log(link);
             URL.revokeObjectURL(link.href);
         }
     }
