@@ -54,6 +54,16 @@ export default {
         }
     },
 
+    /**
+     * configuration for axios moudle.
+     */
+    axios: {
+        // local development environment
+        baseURL: 'http://192.168.0.25:3005'
+        // lambda dev stage.
+        //baseURL: 'https://qr438bst2l.execute-api.us-east-1.amazonaws.com/latest'
+    },
+
     router: {
         // tweak the base, if we plan to deploy on a subfolder
         // /demo/nuxt
