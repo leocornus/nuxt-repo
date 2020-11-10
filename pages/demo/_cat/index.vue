@@ -5,29 +5,30 @@ v-container(
 )
   h1 {{ $route.params.cat }}
   v-row()
-    template(
+    v-col(
       v-for="(member, index) in members"
+      :key="member" 
+      class="d-flex child-flex"
     )
-      v-col( :key="member" )
-        v-card
-          async-img(
-            :imageId="member"
-            size="250"
-            height="250"
-          )
-          v-card-actions
-            v-spacer
-            v-btn( icon )
-              v-icon mdi-heart
-            v-btn( icon )
-              v-icon mdi-bookmark
-            v-btn( icon )
-              v-icon mdi-share-variant
+      v-card
+        async-img(
+          :imageId="member"
+          size="250"
+          height="250"
+        )
+        v-card-actions
+          v-spacer
+          v-btn( icon )
+            v-icon mdi-heart
+          v-btn( icon )
+            v-icon mdi-bookmark
+          v-btn( icon )
+            v-icon mdi-share-variant
 
-      v-responsive(
-        v-if="((index + 1) % 4) === 0"
-        :key="`width-${index}`"
-      )
+    v-responsive(
+      v-if="((index + 1) % 4) === 0"
+      :key="`width-${index}`"
+    )
 </template>
 
 <script>
