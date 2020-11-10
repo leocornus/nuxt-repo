@@ -1,10 +1,10 @@
 <template lang="pug">
-// ====
-
 v-img(
   v-bind="$attrs"
   v-on="$listeners"
   :src="imageSrc"
+  :height="height"
+  contain
 )
   // using placeholder slot to show the 
   // circular progress
@@ -17,7 +17,7 @@ v-img(
     )
       v-progress-circular(
         indeterminate
-        color="grey lighten-5"
+        color="grey darken-5"
       )
   slot
   // this following is for debuging.
@@ -32,12 +32,16 @@ export default {
 
     props: {
         imageId: {
-            type: String
+            type: Number,
         },
         // basically the width, in pixel
         size: {
-            type: Number,
-            default: 200
+            type: String,
+            default: "200"
+        },
+        height: {
+            type: String,
+            default: "200"
         },
     },
 
