@@ -24,11 +24,6 @@ v-container(
             v-icon mdi-bookmark
           v-btn( icon )
             v-icon mdi-share-variant
-
-    v-responsive(
-      v-if="((index + 1) % 4) === 0"
-      :key="`width-${index}`"
-    )
 </template>
 
 <script>
