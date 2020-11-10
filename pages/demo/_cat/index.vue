@@ -1,15 +1,28 @@
 <template lang="pug">
-v-container( grid-list-xs )
+v-container(
+  justify="center"
+  class="fill-height fill-width"
+)
   h1 {{ $route.params.cat }}
   v-row()
     template(
       v-for="(member, index) in members"
     )
       v-col( :key="member" )
-        async-img(
-          :imageId="member"
-          size=200
-        )
+        v-card
+          async-img(
+            :imageId="member"
+            size="250"
+            height="250"
+          )
+          v-card-actions
+            v-spacer
+            v-btn( icon )
+              v-icon mdi-heart
+            v-btn( icon )
+              v-icon mdi-bookmark
+            v-btn( icon )
+              v-icon mdi-share-variant
 
       v-responsive(
         v-if="((index + 1) % 4) === 0"
