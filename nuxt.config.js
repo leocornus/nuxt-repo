@@ -60,8 +60,6 @@ export default {
     axios: {
         // local development environment
         baseURL: 'http://192.168.0.25:3005'
-        // lambda dev stage.
-        //baseURL: 'https://qr438bst2l.execute-api.us-east-1.amazonaws.com/latest'
     },
 
     router: {
