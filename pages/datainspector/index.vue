@@ -14,6 +14,7 @@ v-container
       v-btn(
         color="success"
         justify-end
+        @click="sendRequest"
       ) Send Request
       v-spacer
       v-span Payload / Parameters:
@@ -36,6 +37,8 @@ v-container
 </template>
 
 <script>
+
+import axios from 'axios';
 
 import JSONEditor from '@/components/jsoneditor';
 
@@ -70,6 +73,27 @@ export default {
 			    mode: 'code'
 			}
 		};
-	}
+	},
+
+    methods: {
+        /**
+         */
+        sendRequest() {
+
+            let self = this;
+
+            axios.request({
+                url: self.requestUrl,
+                method: self.requestMethod,
+                params: self.jsonRequest
+            }).then( res => {
+
+                self.jsonResponse = res;
+            }).catch( err => {
+
+                self.jsonResponse = err;
+            });
+        }
+    }
 }
 </script>
