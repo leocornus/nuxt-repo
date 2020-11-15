@@ -3,7 +3,7 @@
 v-app
   v-app-bar(color='indigo' dark fixed app dense)
     v-app-bar-nav-icon/
-    v-toolbar-title Leocornus Development
+    v-toolbar-title Leocornus Sandbox
     v-spacer
     v-btn(icon to="/d3" nuxt)
       v-icon mdi-home-analytics
