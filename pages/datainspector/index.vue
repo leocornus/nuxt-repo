@@ -1,10 +1,19 @@
 <template lang="pug">
 v-container
-  v-jsoneditor(
-    v-model="json"
-	:options="options"
-  )
-  p {{ json }}
+  v-row
+    v-col(cols="6")
+      v-jsoneditor(
+	    ref="requesteditor"
+        v-model="jsonRequest"
+        :options="options"
+      )
+    v-col(cols="6")
+      v-jsoneditor(
+	    ref="responseeditor"
+        v-model="jsonResponse"
+        :options="options"
+      )
+    p {{ jsonResponse }}
 </template>
 
 <script>
@@ -23,7 +32,10 @@ export default {
 
 	data() {
 	    return {
-		    json: {'test': "test value"},
+
+		    jsonRequest: {'test': "test value"},
+		    jsonResponse: {'json': "Response"},
+
 			options: {
 			    mode: 'code'
 			}
