@@ -158,7 +158,7 @@ export default {
   color: #fff;
   width: 24px;
   height: 24px;
-  background: rgba(0, 0, 0, 0) url(./../assets/plus.svg) no-repeat;
+  background: rgba(0, 0, 0, 0) url(./assets/plus.svg) no-repeat;
   background-position: 3px;
   border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 3px;
