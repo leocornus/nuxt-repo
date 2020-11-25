@@ -33,7 +33,7 @@ v-container
         :options="options"
         height="576px"
       )
-    p {{ jsonResponse }}
+    //p {{ jsonResponse }}
 </template>
 
 <script>
