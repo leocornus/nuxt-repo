@@ -1,5 +1,7 @@
 <template lang="pug">
 v-container(grid-list-md)
+  h2 Source object will OVERRIDE Target object and return the merged Target object
+  h2 There is NO recursive override!
   v-row
     v-col( col="4" )
       v-card
