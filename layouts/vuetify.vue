@@ -15,8 +15,7 @@ v-app
       color='indigo'
       depressed
       @click="login"
-    )
-      | Sign In
+    ) Sign In
     v-menu(
       v-if="$auth.loggedIn"
       left bottom offset-y transition="scale-transition"
@@ -32,7 +31,7 @@ v-app
             size="32"
           )
             img(:src="$auth.user.picture")
-            v-icon mdi-menu-down
+          v-icon mdi-menu-down
       v-card
         v-list
           v-list-item
