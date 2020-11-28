@@ -10,7 +10,7 @@ v-container(grid-list-md text-center)
         v-card
           v-card-text
             nuxt-link( :to="$route.path + '/' + page" ) {{ page }}
-      // set to two columns for each row.
+      // set to 5 columns for each row.
       v-responsive(
         v-if="((index + 1) % 5) === 0"
         :key="`width-${index}`"
@@ -42,16 +42,18 @@ export default {
         let pages = require.context('./', true, /\.vue$/);
         //console.log(pages);
 
-        this.pages = pages.keys().map( page => {
+        // using reduce to do filter and map at the same time.
+        this.pages = pages.keys().reduce( (result, page) => {
 
-            if( page === './index.vue' )
-                return;
+            // skip the index page.
+            if( page !== './index.vue' )
+                result.push( page
+                    .replace(/\.vue/, '')
+                    .replace(/^\.\//, '') );
 
-            return page
-                .replace(/index.vue/, '')
-                .replace(/\.vue/, '')
-                .replace(/^\.\//, '');
-        } );
+            // need return the result.
+            return result;
+        }, [] );
     },
 }
 </script>
