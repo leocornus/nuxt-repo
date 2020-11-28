@@ -5,10 +5,27 @@ v-app
     v-app-bar-nav-icon/
     v-toolbar-title Leocornus Sandbox
     v-spacer
-    v-btn(icon to="/d3" nuxt)
-      v-icon mdi-home-analytics
-    v-btn(icon to="/" nuxt)
+    v-btn(
+      to="/" nuxt
+      color='indigo'
+      depressed
+    )
       v-icon mdi-home
+      | Home
+    v-btn(
+      to="/d3" nuxt
+      color='indigo'
+      depressed
+    )
+      v-icon mdi-home-analytics
+      | D3
+    v-btn(
+      to="/math" nuxt
+      color='indigo'
+      depressed
+    )
+      v-icon mdi-home-analytics
+      | Math 
     // sign in button for not logged in user.
     v-btn(
       v-if="!$auth.loggedIn" 
