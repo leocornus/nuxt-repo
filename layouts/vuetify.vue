@@ -24,7 +24,7 @@ v-app
       color='indigo'
       depressed
     )
-      v-icon mdi-home-analytics
+      v-icon mdi-math-integral-box
       | Math 
     // sign in button for not logged in user.
     v-btn(
