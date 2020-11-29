@@ -14,7 +14,6 @@ v-container( grid-list-xs )
               autocomplete="off"
               v-model='fromNumber' 
               label="From number:"
-              :loading='loading'
               clearable
             )
             v-text-field( 
@@ -22,7 +21,6 @@ v-container( grid-list-xs )
               autocomplete="off"
               v-model='toNumber' 
               label="To number:"
-              :loading='loading'
               clearable
             )
             v-text-field( 
@@ -30,7 +28,6 @@ v-container( grid-list-xs )
               autocomplete="off"
               v-model='digitNumber'
               label="Looking for digit:"
-              :loading='loading'
               clearable
             )
         v-card-text

@@ -14,7 +14,6 @@ v-container( grid-list-xs )
               autocomplete="off"
               v-model='upToNumber' 
               label="Up to number:"
-              :loading='loading'
               clearable
             )
         v-card-text
