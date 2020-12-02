@@ -1,24 +1,11 @@
 <template lang="pug">
 v-container(grid-list-md text-center)
-  v-row
-    template(
-      v-for="(page, index) in pages"
-    )
-      v-col(
-        :key="index"
-      )
-        v-card
-          v-card-text
-            nuxt-link( :to="$route.path + '/' + page" ) {{ page }}
-      // set to 5 columns for each row.
-      v-responsive(
-        v-if="((index + 1) % 5) === 0"
-        :key="`width-${index}`"
-        width="100%"
-      )
+  page-index( :pages='pages' )
 </template>
 
 <script>
+
+import PageIndex from '@/components/PageIndex';
 
 export default {
 
@@ -26,11 +13,12 @@ export default {
     name: 'MathIndex',
     auth: false,
 
+    components: {
+        'page-index': PageIndex
+    },
+
     methods: {
 
-        pagesList: function() {
-
-        }
     },
 
     /**
