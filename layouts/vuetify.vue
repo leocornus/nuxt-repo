@@ -26,6 +26,13 @@ v-app
     )
       v-icon mdi-math-integral-box
       | Math 
+    v-btn(
+      to="/games" nuxt
+      color='indigo'
+      depressed
+    )
+      v-icon mdi-gamepad-variant
+      | Games
     // sign in button for not logged in user.
     v-btn(
       v-if="!$auth.loggedIn" 
