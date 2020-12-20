@@ -6,8 +6,6 @@ v-container(grid-list-md text-center)
     v-list-item
       n-link(to="/covid19") COVID-19 Cases (DEV Site)
     v-list-item
-      n-link(to="/vuetify/prime-number") Prime Number Checker
-    v-list-item
       n-link(to="/d3") D3 demo
     v-list-item
       n-link(to="/revasearch") Reva Search
