@@ -23,6 +23,8 @@ import { Piece } from '@/libs/tetris.js';
 
 export default {
 
+    layout: "vuetify",
+    name: 'Tetris',
     auth: false,
 
     data() {
