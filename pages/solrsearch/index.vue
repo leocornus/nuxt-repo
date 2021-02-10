@@ -218,13 +218,41 @@ v-container( grid-list-xs )
             v-slot:item.actions="{item}"
           )
             v-icon(
-              small
               color="success"
+              @click="showItem(item)"
             ) mdi-text-box-search
+
         v-pagination( v-model="currentPage" :length="totalPages" total-visible="10"
           v-if="results"
           v-on:input="simpleSearch"
         )
+
+        // the doc view dialog.
+        v-dialog(
+           v-model="docViewDialog"
+           fullscreen
+        )
+          v-card
+            v-toolbar(
+              flat
+              color="primary"
+              dark
+            )
+              v-btn(
+                icon
+                dark
+              )
+                v-icon mdi-cog
+              v-toolbar-title( v-if="viewItem" ) {{ viewItem.id }}
+              v-spacer
+              v-btn(
+                icon
+                dark
+                @click="docViewDialog = false"
+              )
+                v-icon mdi-close
+
+            v-card-text( v-if="viewItem" ) {{ viewItem.file_content }}
 </template>
 
 <script>
@@ -319,7 +347,11 @@ export default {
             // profile description
             profileDesc: '',
             // array of objects with profile {id, name}
-            allProfiles: []
+            allProfiles: [],
+
+            // document view dialog.
+            docViewDialog: false,
+            viewItem: null
         };
     },
 
@@ -840,6 +872,14 @@ export default {
         facetSelectionChange: function() {
 
             //console.log(this.facetFields);
+        },
+
+        /**
+         */
+        showItem: function( item ) {
+
+            this.viewItem = item;
+            this.docViewDialog = true;
         }
     }
 }
