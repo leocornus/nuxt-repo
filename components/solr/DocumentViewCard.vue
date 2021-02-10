@@ -9,18 +9,40 @@ v-card
       icon
       dark
     )
-      v-icon mdi-cog
-    v-toolbar-title {{ docId }}
+      v-icon mdi-file-document
+    v-toolbar-title Document Details
     v-spacer
     v-btn(
-      icon
-      dark
+      text
       @click="$emit('dialog-cancel')"
     )
-      v-icon mdi-close
+      v-icon( left ) mdi-close
+      | Close 
 
-  v-card-text
-      pre( v-if="doc" ) {{ doc.file_content }}
+  v-card-title {{ docId }}
+
+  //v-card-text( v-if="doc" )
+  v-row( v-if="doc" )
+    v-col( cols="4" )
+
+    v-col( cols="8" )
+      // using textarea is easier to control.
+      v-textarea(
+        rows="30"
+        label="File Content"
+        filled
+        outlined
+        :value="doc.file_content"
+      )
+    //pre {{ doc.file_content }}
+
+  //v-card-actions
+    v-spacer
+    v-btn(
+      color="green darken-1"
+      @click="$emit('dialog-cancel')"
+    ) Ok
+    v-spacer
 </template>
 
 <script>
@@ -60,6 +82,9 @@ export default {
     watch: {
 
         docId: function( newId, oldId) {
+
+            // set the doc to null will we loading....
+            this.doc = null
 
             this.loadDocument();
         }
