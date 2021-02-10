@@ -17,24 +17,25 @@ v-card
       @click="$emit('dialog-cancel')"
     )
       v-icon( left ) mdi-close
-      | Close 
+      | Close
 
   v-card-title {{ docId }}
 
   //v-card-text( v-if="doc" )
-  v-row( v-if="doc" )
-    v-col( cols="4" )
+  v-container
+    v-row( v-if="doc" )
+      v-col( cols="4" )
 
-    v-col( cols="8" )
-      // using textarea is easier to control.
-      v-textarea(
-        rows="30"
-        label="File Content"
-        filled
-        outlined
-        :value="doc.file_content"
-      )
-    //pre {{ doc.file_content }}
+      v-col( cols="8" )
+        // using textarea is easier to control.
+        v-textarea(
+          rows="30"
+          label="File Content"
+          filled
+          outlined
+          :value="doc.file_content"
+        )
+  //pre {{ doc.file_content }}
 
   //v-card-actions
     v-spacer
