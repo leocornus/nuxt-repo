@@ -213,6 +213,14 @@ v-container( grid-list-xs )
           :itemsPerPage="perPage"
           hide-default-footer
         )
+          // add the actions column.
+          template(
+            v-slot:item.actions="{item}"
+          )
+            v-icon(
+              small
+              color="success"
+            ) mdi-text-box-search
         v-pagination( v-model="currentPage" :length="totalPages" total-visible="10"
           v-if="results"
           v-on:input="simpleSearch"
@@ -334,22 +342,27 @@ export default {
          */
         headers: function() {
 
-            if( this.fieldList.length < 1 ) {
 
-                return [
-                    // TODO: update to use the configged id field.
-                    { text: "ID", value: "id" }
-                ];
-            } else {
+            let theList = [
+                // TODO: update to use the configged id field.
+                { text: "ID", value: "id" }
+            ];
+
+            if( this.fieldList.length >= 1 ) {
                 // prepare headers from the field list.
                 //return this.fieldList;
-                return this.fieldList.map(field => {
+                theList = this.fieldList.map(field => {
                     return {
                         text: field,
                         value: field
                     }
                 });
             }
+
+            // add the actions column
+            theList.push( { text: 'Actions', value: 'actions' } )
+
+            return theList;
         },
 
         /**
