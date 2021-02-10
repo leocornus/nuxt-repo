@@ -232,27 +232,11 @@ v-container( grid-list-xs )
            v-model="docViewDialog"
            fullscreen
         )
-          v-card
-            v-toolbar(
-              flat
-              color="primary"
-              dark
-            )
-              v-btn(
-                icon
-                dark
-              )
-                v-icon mdi-cog
-              v-toolbar-title( v-if="viewItem" ) {{ viewItem.id }}
-              v-spacer
-              v-btn(
-                icon
-                dark
-                @click="docViewDialog = false"
-              )
-                v-icon mdi-close
-
-            v-card-text( v-if="viewItem" ) {{ viewItem.file_content }}
+          document-view-card(
+            :docId="viewItem.id"
+            :collUrl="collectionUrl"
+            v-on:dialog-cancel="docViewDialog = false"
+          )
 </template>
 
 <script>
@@ -265,6 +249,7 @@ import solr from '@/libs/solrsearch';
 import ListingPreviewCard from '@/pages/solr/card-listing-preview.vue';
 import FacetBucketsCard from '@/pages/solr/card-facet-buckets.vue';
 import QueryFiltersCard from '@/pages/solr/card-query-filters.vue';
+import DocumentViewCard from '@/components/solr/DocumentViewCard.vue';
 
 export default {
 
@@ -275,7 +260,8 @@ export default {
     //    'card-settings': SettingsCard
         'listing-preview': ListingPreviewCard,
         'facet-buckets': FacetBucketsCard,
-        'query-filters': QueryFiltersCard
+        'query-filters': QueryFiltersCard,
+        'document-view-card': DocumentViewCard
     },
 
     // set the layout.
@@ -351,7 +337,7 @@ export default {
 
             // document view dialog.
             docViewDialog: false,
-            viewItem: null
+            viewItem: { id: "loading" }
         };
     },
 
