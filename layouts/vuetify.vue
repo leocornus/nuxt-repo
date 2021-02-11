@@ -66,7 +66,7 @@ v-app
               v-list-item-subtitle {{$auth.user.email}}
           v-list-item( to="/solrsearch" )
             v-list-item-icon
-              v-icon mdi-node-search
+              v-icon mdi-note-search
             v-list-item-content
               v-list-item-title Solr Search 
           v-list-item( @click="logout" )

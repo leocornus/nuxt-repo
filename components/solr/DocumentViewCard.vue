@@ -31,10 +31,11 @@ v-card
             v-spacer
             v-text-field(
               v-model="search"
-              append-icon="mdi-mangify"
+              append-icon="mdi-magnify"
               label="Search Metadata"
               single-line
               hide-details
+              clearable
             )
           // the data table view.
           v-data-table(
