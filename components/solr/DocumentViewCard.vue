@@ -25,12 +25,18 @@ v-card
   // set fluid to use all spaces.
   v-container( fluid )
     v-row( v-if="doc" )
-      v-col( cols="5" )
-        // using two lines v list.
-        v-list(
-          subheader
-          two-line
+      v-col( cols="4" )
+        // the data table view.
+        v-data-table(
+          :headers="headers"
+          :items="tableItems"
+          items-per-page="15"
         )
+        // using two lines v list.
+        //v-list(
+        //  subheader
+        //  two-line
+        //)
           v-subheader( inset ) Metadata
           v-list-item(
             v-for="meta in fields.metadata"
@@ -51,7 +57,7 @@ v-card
               v-list-item-title {{ doc[meta] }}
               v-list-item-subtitle {{ meta }}
 
-      v-col( cols="7" )
+      v-col( cols="8" )
         // using textarea is easier to control.
         v-textarea(
           rows="30"
@@ -97,7 +103,13 @@ export default {
         return {
 
             // the document.
-            doc: null
+            doc: null,
+
+            // define the headers for the table.
+            headers: [
+                { text: "Key", value: "key" },
+                { text: "Value", value: "value" }
+            ]
         };
     },
     
@@ -124,7 +136,8 @@ export default {
                 Object.keys( this.doc ).forEach( key => {
 
                     if( key == 'file_content' ) {
-                        // do nothing her.
+                        // skip the file_content field.
+                        // do nothing here.
                     } else if( key.startsWith('file') ) {
                         keys.fileMetadata.push(key);
                     } else {
@@ -134,6 +147,30 @@ export default {
             }
 
             return keys;
+        },
+
+        /**
+         * preparing the items for data table.
+         */
+        tableItems: function() {
+
+            // set the empty array.
+            let items = [];
+            if( this.doc ) {
+
+                items = Object.entries( this.doc )
+                .filter( entry => {
+                        return entry[0] != 'file_content' ;
+                } )
+                .map( entry => {
+                    return {
+                        "key": entry[0],
+                        "value": entry[1] 
+                    };
+                } );
+            }
+
+            return items;
         }
     },
 
