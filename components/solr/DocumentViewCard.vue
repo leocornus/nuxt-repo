@@ -54,7 +54,12 @@ v-card
                 a(
                   :href="item.value"
                 ) {{ item.value }}
-              span( v-else ) {{ item.value }}
+              span(
+                v-else-if=" item.key.includes('size') "
+              ) 
+                strong {{ new Intl.NumberFormat().format(item.value) }}
+              span( v-else )
+                strong {{ item.value }}
         // using two lines v list.
         //v-list(
         //  subheader
