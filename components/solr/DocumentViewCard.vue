@@ -22,11 +22,36 @@ v-card
   v-card-title {{ docId }}
 
   //v-card-text( v-if="doc" )
-  v-container
+  // set fluid to use all spaces.
+  v-container( fluid )
     v-row( v-if="doc" )
-      v-col( cols="4" )
+      v-col( cols="5" )
+        // using two lines v list.
+        v-list(
+          subheader
+          two-line
+        )
+          v-subheader( inset ) Metadata
+          v-list-item(
+            v-for="meta in fields.metadata"
+            :key="meta"
+          )
+            v-list-item-content
+              v-list-item-title {{ doc[meta] }}
+              v-list-item-subtitle {{ meta }}
 
-      v-col( cols="8" )
+          v-divider( inset )
+
+          v-subheader( inset ) File Metadata
+          v-list-item(
+            v-for="meta in fields.fileMetadata"
+            :key="meta"
+          )
+            v-list-item-content
+              v-list-item-title {{ doc[meta] }}
+              v-list-item-subtitle {{ meta }}
+
+      v-col( cols="7" )
         // using textarea is easier to control.
         v-textarea(
           rows="30"
@@ -74,6 +99,42 @@ export default {
             // the document.
             doc: null
         };
+    },
+    
+    computed: {
+
+        /**
+         * Calculate the fields from the document
+         * It is basically the keys of the document object.
+         * {
+         *     metadata: [id],
+         *     fileMetadata: [file_name, file_size]
+         * }
+         */
+        fields: function() {
+
+            // set the empty fields.
+            let keys = {
+                metadata: [],
+                fileMetadata: []
+            };
+
+            if( this.doc ) {
+
+                Object.keys( this.doc ).forEach( key => {
+
+                    if( key == 'file_content' ) {
+                        // do nothing her.
+                    } else if( key.startsWith('file') ) {
+                        keys.fileMetadata.push(key);
+                    } else {
+                        keys.metadata.push(key);
+                    }
+                } );
+            }
+
+            return keys;
+        }
     },
 
     /**
