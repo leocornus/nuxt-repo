@@ -210,7 +210,7 @@ v-container( grid-list-xs )
           v-if="results"
           :headers="headers"
           :items="results"
-          :itemsPerPage="perPage"
+          :items-per-page="perPage"
           hide-default-footer
         )
           // add the actions column.
