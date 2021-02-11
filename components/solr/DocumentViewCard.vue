@@ -41,8 +41,19 @@ v-card
             :headers="headers"
             :items="tableItems"
             :search="search"
+            item-key="key"
             items-per-page="15"
           )
+            // customize the value column to have a href link for
+            // download url.
+            template(
+              v-slot:item.value="{ item }"
+            ) 
+              span( v-if=" item.key == 'file_download_url' ")
+                a(
+                  :href="item.value"
+                ) {{ item.value }}
+              span( v-else ) {{ item.value }}
         // using two lines v list.
         //v-list(
         //  subheader
@@ -179,7 +190,7 @@ export default {
                 .map( entry => {
                     return {
                         "key": entry[0],
-                        "value": entry[1] 
+                        "value": entry[1]
                     };
                 } );
             }
