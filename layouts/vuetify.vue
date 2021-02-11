@@ -64,8 +64,16 @@ v-app
             v-list-item-content
               v-list-item-title {{$auth.user.name}}
               v-list-item-subtitle {{$auth.user.email}}
+          v-list-item( to="/solrsearch" )
+            v-list-item-icon
+              v-icon mdi-node-search
+            v-list-item-content
+              v-list-item-title Solr Search 
           v-list-item( @click="logout" )
-            v-list-item-title Logout
+            v-list-item-icon
+              v-icon mdi-logout
+            v-list-item-content
+              v-list-item-title Logout
 
         v-divider
 
