@@ -53,6 +53,7 @@ v-card
               span( v-if=" item.key == 'file_download_url' ")
                 a(
                   :href="item.value"
+                  target="_blank_"
                 ) {{ item.value }}
               span(
                 v-else-if=" item.key.includes('size') "
@@ -220,9 +221,17 @@ export default {
         }
     },
 
+    /**
+     * we need this method to load the document at the very first time.
+     */
+    mounted: function() {
+
+        this.loadDocument();
+    },
+
     methods: {
 
-        /**
+        /*mounted*
          * load the full document from server.
          */
         loadDocument: function() {
@@ -235,6 +244,7 @@ export default {
             } )
             .catch( error => {
                 // show error message.
+                console.log( error );
             } );
         },
     }
