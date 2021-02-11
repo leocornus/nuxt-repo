@@ -26,12 +26,23 @@ v-card
   v-container( fluid )
     v-row( v-if="doc" )
       v-col( cols="4" )
-        // the data table view.
-        v-data-table(
-          :headers="headers"
-          :items="tableItems"
-          items-per-page="15"
-        )
+        v-card
+          v-card-title
+            v-spacer
+            v-text-field(
+              v-model="search"
+              append-icon="mdi-mangify"
+              label="Search Metadata"
+              single-line
+              hide-details
+            )
+          // the data table view.
+          v-data-table(
+            :headers="headers"
+            :items="tableItems"
+            :search="search"
+            items-per-page="15"
+          )
         // using two lines v list.
         //v-list(
         //  subheader
@@ -60,7 +71,7 @@ v-card
       v-col( cols="8" )
         // using textarea is easier to control.
         v-textarea(
-          rows="30"
+          rows="32"
           label="File Content"
           filled
           outlined
@@ -109,7 +120,10 @@ export default {
             headers: [
                 { text: "Key", value: "key" },
                 { text: "Value", value: "value" }
-            ]
+            ],
+
+            // search filter for data table.
+            search: ''
         };
     },
     
