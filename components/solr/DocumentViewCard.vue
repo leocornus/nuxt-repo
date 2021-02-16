@@ -23,7 +23,9 @@ v-card
 
   // using the document id as the title.
   v-card-title {{ docId }}
+    // vertical divider
     v-divider( vertical ).mx-4
+    // download button
     v-btn(
       v-if="doc"
       :href="doc.file_download_url"
@@ -34,34 +36,43 @@ v-card
       ) mdi-file-pdf
       | Download
 
-  //v-card-text( v-if="doc" )
-  // set fluid to use all spaces.
-  v-container( fluid )
-    v-row( v-if="doc" )
-      v-col( cols="4" )
-        doc-data-table(
-          :doc="doc"
-          :excludeFields="['file_content', 'article_titles', 'article_paragraphs']"
-        )
+  // using tabs for different view.
+  v-tabs(
+    v-model="tab"
+    align-with-title
+  )
+    v-tab-slide( color="primiary" )
+    v-tab(
+      key="metadata"
+    ) Metadata
+    v-tab(
+      key="articles"
+    ) Articles
 
-      v-col( cols="8" )
-        // using textarea is easier to control.
-        v-textarea(
-          rows="32"
-          label="File Content"
-          filled
-          outlined
-          :value="doc.file_content"
-        )
-  //pre {{ doc.file_content }}
+  v-tabs-items( v-model="tab" )
+    // the metadata tab
+    v-tab-item( key="metadata" )
+      // set fluid to use all spaces.
+      v-container( fluid )
+        v-row( v-if="doc" )
+          v-col( cols="4" )
+            doc-data-table(
+              :doc="doc"
+              :excludeFields="['file_content', 'article_titles', 'article_paragraphs']"
+            )
 
-  //v-card-actions
-    v-spacer
-    v-btn(
-      color="green darken-1"
-      @click="$emit('dialog-cancel')"
-    ) Ok
-    v-spacer
+          v-col( cols="8" )
+            // using textarea is easier to control.
+            v-textarea(
+              rows="32"
+              label="File Content"
+              filled
+              outlined
+              :value="doc.file_content"
+            )
+
+    // the ARTICLES tab.
+    v-tab-item( key="articles" )
 </template>
 
 <script>
@@ -96,6 +107,8 @@ export default {
         return {
             // the document.
             doc: null,
+            // the model for tracking tabs
+            tab: null
         };
     },
 
