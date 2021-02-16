@@ -73,6 +73,10 @@ v-card
 
     // the ARTICLES tab.
     v-tab-item( key="articles" )
+      doc-list-card(
+        v-if="doc"
+        :doc="doc"
+      )
 </template>
 
 <script>
@@ -80,13 +84,15 @@ v-card
 import axios from 'axios';
 
 import DocDataTableCard from '@/components/solr/DocDataTableCard.vue';
+import DocListCard from '@/components/solr/DocListCard.vue';
 
 export default {
 
     name: "DocumentViewCard",
 
     components: {
-        'doc-data-table': DocDataTableCard
+        'doc-data-table': DocDataTableCard,
+        'doc-list-card': DocListCard,
     },
 
     props: {
