@@ -21,7 +21,18 @@ v-card
       v-icon( left ) mdi-close
       | Close
 
+  // using the document id as the title.
   v-card-title {{ docId }}
+    v-divider( vertical ).mx-4
+    v-btn(
+      v-if="doc"
+      :href="doc.file_download_url"
+      target="_blank_"
+    ) 
+      v-icon(
+        color="error"
+      ) mdi-file-pdf
+      | Download
 
   //v-card-text( v-if="doc" )
   // set fluid to use all spaces.
@@ -32,30 +43,6 @@ v-card
           :doc="doc"
           :excludeFields="['file_content', 'article_titles', 'article_paragraphs']"
         )
-        // using two lines v list.
-        //v-list(
-        //  subheader
-        //  two-line
-        //)
-          v-subheader( inset ) Metadata
-          v-list-item(
-            v-for="meta in fields.metadata"
-            :key="meta"
-          )
-            v-list-item-content
-              v-list-item-title {{ doc[meta] }}
-              v-list-item-subtitle {{ meta }}
-
-          v-divider( inset )
-
-          v-subheader( inset ) File Metadata
-          v-list-item(
-            v-for="meta in fields.fileMetadata"
-            :key="meta"
-          )
-            v-list-item-content
-              v-list-item-title {{ doc[meta] }}
-              v-list-item-subtitle {{ meta }}
 
       v-col( cols="8" )
         // using textarea is easier to control.
@@ -110,43 +97,6 @@ export default {
             // the document.
             doc: null,
         };
-    },
-
-    computed: {
-
-        /**
-         * Calculate the fields from the document
-         * It is basically the keys of the document object.
-         * {
-         *     metadata: [id],
-         *     fileMetadata: [file_name, file_size]
-         * }
-         */
-        fields: function() {
-
-            // set the empty fields.
-            let keys = {
-                metadata: [],
-                fileMetadata: []
-            };
-
-            if( this.doc ) {
-
-                Object.keys( this.doc ).forEach( key => {
-
-                    if( key == 'file_content' ) {
-                        // skip the file_content field.
-                        // do nothing here.
-                    } else if( key.startsWith('file') ) {
-                        keys.fileMetadata.push(key);
-                    } else {
-                        keys.metadata.push(key);
-                    }
-                } );
-            }
-
-            return keys;
-        },
     },
 
     /**
