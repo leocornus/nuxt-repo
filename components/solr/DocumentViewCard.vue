@@ -1,4 +1,6 @@
 <template lang="pug">
+// The Document View Card will show the document details.
+// It can be used in a full screen dialog.
 v-card
   v-toolbar(
     flat
@@ -26,41 +28,10 @@ v-card
   v-container( fluid )
     v-row( v-if="doc" )
       v-col( cols="4" )
-        v-card
-          v-card-title
-            v-spacer
-            v-text-field(
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search Metadata"
-              single-line
-              hide-details
-              clearable
-            )
-          // the data table view.
-          v-data-table(
-            :headers="headers"
-            :items="tableItems"
-            :search="search"
-            item-key="key"
-            items-per-page="15"
-          )
-            // customize the value column to have a href link for
-            // download url.
-            template(
-              v-slot:item.value="{ item }"
-            ) 
-              span( v-if=" item.key == 'file_download_url' ")
-                a(
-                  :href="item.value"
-                  target="_blank_"
-                ) {{ item.value }}
-              span(
-                v-else-if=" item.key.includes('size') "
-              ) 
-                strong {{ new Intl.NumberFormat().format(item.value) }}
-              span( v-else )
-                strong {{ item.value }}
+        doc-data-table(
+          :headers="headers"
+          :tableItems="tableItems"
+        )
         // using two lines v list.
         //v-list(
         //  subheader
@@ -110,9 +81,15 @@ v-card
 
 import axios from 'axios';
 
+import DocDataTableCard from '@/components/solr/DocDataTableCard.vue';
+
 export default {
 
     name: "DocumentViewCard",
+
+    components: {
+        'doc-data-table': DocDataTableCard
+    },
 
     props: {
 
