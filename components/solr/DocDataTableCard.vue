@@ -55,6 +55,11 @@ export default {
         itemsPerPage: {
             type: String,
             default: "15"
+        },
+
+        excludeFields: {
+            type: Array,
+            default: []
         }
     },
 
@@ -78,18 +83,16 @@ export default {
          */
         tableItems: function() {
 
+            let self = this;
+
             // set the empty array.
             let items = [];
-            if( this.doc ) {
+            if( self.doc ) {
 
-                items = Object.entries( this.doc )
+                items = Object.entries( self.doc)
                 .filter( entry => {
                     // exclude the following fields.
-                    return ![
-                        'file_content', 
-                        'article_titles', 
-                        'article_paragraphs'
-                    ].includes(entry[0]);
+                    return !self.excludeFields.includes(entry[0]);
                 } )
                 .map( entry => {
                     return {

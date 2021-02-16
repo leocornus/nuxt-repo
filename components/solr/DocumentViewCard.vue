@@ -30,6 +30,7 @@ v-card
       v-col( cols="4" )
         doc-data-table(
           :doc="doc"
+          :excludeFields="['file_content', 'article_titles', 'article_paragraphs']"
         )
         // using two lines v list.
         //v-list(
