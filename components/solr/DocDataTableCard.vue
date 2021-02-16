@@ -44,19 +44,12 @@ export default {
     name: "DocDataTableCard",
 
     props: {
-        headers: {
-            type: Array,
-            default: [
-                { text: "Key", value: "key" },
-                { text: "Value", value: "value" }
-            ],
-        },
-
-        tableItems: {
-            type: Array,
-            default: [
-                { key: 'fieldName', value: 'fieldValue' }
-            ],
+        doc: {
+            type: Object,
+            default: {
+                id: 'abcd',
+                name: 'doc name'
+            }
         },
 
         itemsPerPage: {
@@ -68,9 +61,46 @@ export default {
     data: function() {
 
         return {
+            // define headers for the data table.
+            headers: [
+                { text: "Key", value: "key" },
+                { text: "Value", value: "value" }
+            ],
+
             // the model for search filter of the data-table.
             search: ''
         };
+    },
+
+    computed: {
+        /**
+         * preparing the items for data table.
+         */
+        tableItems: function() {
+
+            // set the empty array.
+            let items = [];
+            if( this.doc ) {
+
+                items = Object.entries( this.doc )
+                .filter( entry => {
+                    // exclude the following fields.
+                    return ![
+                        'file_content', 
+                        'article_titles', 
+                        'article_paragraphs'
+                    ].includes(entry[0]);
+                } )
+                .map( entry => {
+                    return {
+                        "key": entry[0],
+                        "value": entry[1]
+                    };
+                } );
+            }
+
+            return items;
+        }
     },
 }
 </script>

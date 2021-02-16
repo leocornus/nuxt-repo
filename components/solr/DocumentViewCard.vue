@@ -29,8 +29,7 @@ v-card
     v-row( v-if="doc" )
       v-col( cols="4" )
         doc-data-table(
-          :headers="headers"
-          :tableItems="tableItems"
+          :doc="doc"
         )
         // using two lines v list.
         //v-list(
@@ -107,21 +106,11 @@ export default {
     data: function() {
 
         return {
-
             // the document.
             doc: null,
-
-            // define the headers for the table.
-            headers: [
-                { text: "Key", value: "key" },
-                { text: "Value", value: "value" }
-            ],
-
-            // search filter for data table.
-            search: ''
         };
     },
-    
+
     computed: {
 
         /**
@@ -157,30 +146,6 @@ export default {
 
             return keys;
         },
-
-        /**
-         * preparing the items for data table.
-         */
-        tableItems: function() {
-
-            // set the empty array.
-            let items = [];
-            if( this.doc ) {
-
-                items = Object.entries( this.doc )
-                .filter( entry => {
-                        return entry[0] != 'file_content' ;
-                } )
-                .map( entry => {
-                    return {
-                        "key": entry[0],
-                        "value": entry[1]
-                    };
-                } );
-            }
-
-            return items;
-        }
     },
 
     /**
