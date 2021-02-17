@@ -41,7 +41,7 @@ v-card
     v-model="tab"
     align-with-title
   )
-    v-tabs-slide( color="primiary" )
+    v-tabs-slider( color="primiary" )
     v-tab(
       key="metadata"
     ) Metadata

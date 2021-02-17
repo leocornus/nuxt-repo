@@ -117,7 +117,7 @@ export default {
 
             if( self.doc.hasOwnProperty( 'article_titles' ) ) {
 
-                let titles = self.doc["article_titles"].map( title => {
+                titles = self.doc["article_titles"].map( title => {
 
                     return {
                         "title": title
