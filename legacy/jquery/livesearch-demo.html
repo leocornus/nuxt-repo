@@ -1,0 +1,70 @@
+<html ng-app="uiDemo">
+  <head>
+    <title>Demo jQuery UI</title>
+
+    <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+    <link rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css'/>
+
+    <link rel='stylesheet' href='/bower_components/jquery-ui/themes/base/jquery-ui.css'/>
+    <link rel='stylesheet' href='/bower_components/jquery-ui-bootstrap/jquery.ui.theme.css'/>
+
+    <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+    <script src='/bower_components/jquery-ui/jquery-ui.min.js'></script>
+    <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+    <script src='/bower_components/angular/angular.min.js'></script>
+
+    <script src='/src/jquery/livesearch-advanced.js'></script>
+    <script>
+// this will replace the code in controller.js
+var simpleTest = angular.module('uiDemo', []);
+
+jQuery(document).ready(function($) {
+    $('#query-right').liveSearch({
+        searchApi: 'http://gsddtovsdvap014.cihs.gov.on.ca/wp-admin/admin-ajax.php?callback=?&action=opspedia_search_action',
+        searchResult: {
+            url: '/demo/jquery/search-result-demo.html',
+            queryName: 'searchterm'
+        },
+        maxItems : 6,
+        filterOptions: [
+            {label: 'All Blogs', value: ''},
+            {label: 'Current Blog', value: 'site: current'},
+            {label: 'All Wiki', value: 'site: wiki'},
+            {label: 'Tickets', value: 'site: "OPSpedia Tickets"'},
+            {label: 'Topical', value: 'site: topical'}
+        ]
+    });
+});
+    </script>
+
+    <style>
+.ui-autocomplete-loading {
+  background-image: url(https://raw.githubusercontent.com/salmanarshad2000/demos/v1.0.0/jquery-ui-autocomplete/loading.gif);
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="row">
+        <div class="col-md-6">
+          <div class="page-header">
+            <h1>Try button on right side</h1>
+          </div>
+        </div>
+
+        <div class="col-md-6" style="margin-top:35px;">
+
+          <div class="input-group"
+               role="group" aria-label="...">
+            <input class="form-control"
+                   placeholder="Search All"
+                   id="query-right"/>
+          </div>
+
+        </div>
+      </header>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Simple Templates demo</title>
+  <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+  <link rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css'/>
+
+  <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+  <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+
+  <div class="page-header"><h1>Handle Simple Templates</h1></div>
+
+  <div class="row" id="search-bar">
+    <div class="col-md-5">
+    Template:<br/>
+    <textarea style="width:100%" id="source" rows="20">* Dir | Rename-Item -NewName {$_.name -replace "[IMPORT_DATE]","[DATE_S] [EVENT_NAME]"}
+* /usr/leocorn/vault/php/parts/php-build/bin/php importImages.php --skip-dups --user=seanchen <nowiki>--comment="[MESSAGE] [EVENT_NAME] on [DATE_FULL] [[Category:[DATE] [EVENT_NAME]]]" --Summary="[MESSAGE] [EVENT_NAME] on [DATE_FULL] [[Category:[DATE] [EVENT_NAME]]]"</nowiki> /home/ubuntu/2017-02</textarea>
+    Parameters:<br/>
+    <textarea style="width:100%" id="parameters" rows="10">IMPORT_DATE=20170205
+DATE_S=20170204
+DATE=2017-02-04
+EVENT_NAME=Hillcrest Summit Black vs West Hill Gold
+DATE_FULL=February 04, 2017
+MESSAGE=Samuel play hockey on game</textarea>
+    </div>
+
+    <div class="col-md-2">
+      <button id="convert">Convert</button><br/>
+    </div>
+
+    <div class="col-md-5">
+    result:<br/>
+    <textarea style="width:100%" id="result" rows="30"></textarea>
+    </div>
+  </div>
+</div>
+ 
+<script>
+
+jQuery(document).ready(function($) {
+
+    // convert the CSV string to zoomable circle json format.
+    $('#convert').on('click', function() {
+
+        // read the source.
+        var source = $('#source').val();
+
+        // read and extract the parameters
+        var params = $('#parameters').val().split('\n');
+
+        console.log(params);
+        params.forEach(function(param) {
+
+            fromTo = param.split('=');
+            console.log(fromTo);
+            pattern = new RegExp('\\[' + fromTo[0] + '\\]', 'g');
+            console.log(pattern);
+            source = source.replace(pattern, fromTo[1]);
+        });
+
+
+        var org = $('#result').html();
+        $('#result').html(org + '\n' + source);
+    });
+});
+
+</script>
+ 
+</body>
+</html>

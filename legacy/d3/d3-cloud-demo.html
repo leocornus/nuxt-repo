@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>D3 wordcloud demo page</title>
+  <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>
+  <link rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css'/>
+
+  <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+  <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+
+  <script src='/bower_components/d3/d3.js'></script>
+  <script src='/bower_components/d3-cloud/build/d3.layout.cloud.js'></script>
+
+  <script src='/bower_components/angular/angular.min.js'></script>
+
+  <script>
+jQuery(document).ready(function($) {
+// fill color?
+var fill = d3.scale.category20();
+// orientation, direction
+var orientations = 1;
+// list of words.
+var theWords = ["Hello", "world", "normally", "you", "want", "more", "words",
+      "than", "this", "apple", 'peach', "pear", "cat", "ant", "mouse",
+      "does", "that", "enough", "how", "many"]
+    // what does the map function do?
+    .map(function(d) {
+        return {
+            text: d, 
+            // the range of Math.random is between 0 (inclusive)
+            // and 1 (exclusive).
+            size: 5 + Math.random() * 45, 
+            test: "haha"
+        };
+    });
+
+console.log(theWords);
+
+var layout = d3.layout.cloud()
+    .size([358, 215])
+    .words(theWords)
+    // numerical padding for each word.
+    // What's the unit for padding?
+    // less padding will fit in more words.
+    .padding(1)
+    .rotate(function() { return ~~(Math.random() * orientations) * 90; })
+    .font("Impact")
+    .fontSize(function(d) { return d.size; })
+    .on("end", draw);
+
+layout.start();
+
+function draw(words) {
+  d3.select("#cloud-one").append("svg")
+      .attr("width", layout.size()[0])
+      .attr("height", layout.size()[1])
+    .append("g")
+      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+    .selectAll("text")
+      .data(words)
+    .enter().append("text")
+      .style("font-size", function(d) { return d.size + "px"; })
+      .style("font-family", "Impact")
+      .style("fill", function(d, i) { return fill(i); })
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) {
+        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+      })
+      .text(function(d) { return d.text; });
+}
+});
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- page header -->
+    <div class="page-header">
+      <div class="row">
+        <div class="col-md-7">
+          <h1 class="">D3 Word-cloud Demo Page</h1> 
+        </div>
+
+        <div class="col-md-5" style="border: 0px red solid">
+          <h1>
+            <div class="input-group"
+                 role="group" aria-label="...">
+              <input class="form-control"
+                     placeholder="Search All"
+                     id="query-right"/>
+            </div>
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search bar -->
+    <div class="container container-fluid bar-search bg-muted">
+    <div class="row" id="search-bar">
+      <div class="col-md-8">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            Memos and Questions
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-warning">
+              <strong>Dependences</strong>: d3, d3-cloud, jQuery
+              <br/>
+              Bootstrap is optional.
+            </li>
+            <li class="list-group-item">
+              Math.random will return range between 0 and 1.
+              It will include 0 but NOT include 1.
+            </li>
+            <li class="list-group-item list-group-item-danger">
+              Q: what is the effecient way to control the size of 
+              the word cloud?
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            Search Filters
+          </div>
+          <div class="panel-body" id="cloud-one"
+               style="padding: 10px 0px 0px 0px;">
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</body>
+</html>

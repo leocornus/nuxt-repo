@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Text on Horizontal Bar</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style> 
+
+.bar { fill: steelblue; }
+
+</style>
+</head>
+<body>    	
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      
+<div class="card border-primary mb-2">
+  <div class="card-header bg-primary text-white">
+    Horizontal Bar 
+  </div>
+  <div id="theSvg">
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+      {{item.key}} : {{item.value}}
+    </li>
+  </ul>
+</div>
+
+    </div>
+    <div class="col-md-8">
+    </div>
+  </div>
+</div>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script>
+var data = [{"salesperson":"Bob","sales":33},{"salesperson":"Robin","sales":12},{"salesperson":"Anne","sales":41},{"salesperson":"Mark","sales":16},{"salesperson":"Joe","sales":59},{"salesperson":"Eve","sales":38},{"salesperson":"Karen","sales":21},{"salesperson":"Kirsty","sales":25},{"salesperson":"Chris","sales":30},{"salesperson":"Lisa","sales":47},{"salesperson":"Tom","sales":5},{"salesperson":"Stacy","sales":20},{"salesperson":"Charles","sales":13},{"salesperson":"Mary","sales":29}];
+
+// get the width of he container.
+var divWidth = parseInt(d3.select("#theSvg").style("width"));
+// set the dimensions and margins of the graph
+var margin = {top: 2, right: 3, bottom: 20, left: 3},
+    width = divWidth - margin.left - margin.right,
+    height = 250 - margin.top - margin.bottom;
+
+// set up the ranges
+// TODO: what is band? how to understand it?
+var y = d3.scaleBand()
+          .range([height, 0])
+          .padding(0.1);
+
+var x = d3.scaleLinear()
+          .range([0, width]);
+          
+// append the svg object to the body of the page
+// append a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("#theSvg").append("svg")
+    //.attr("style", "border:red 1px solid;")
+    .attr("class", "card-img-top")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .call(responsivefy)
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// format the data,
+// try to make sure the the number value.
+data.forEach(function(d) {
+  // the + operator will cast the value of sales to a number.
+  d.sales = +d.sales;
+});
+
+// Scale the range of the data in the domains
+x.domain([0, d3.max(data, function(d){ return d.sales; })])
+// map will create a new array with 
+// the results of the provided function.
+y.domain(data.map(function(d) { return d.salesperson; }));
+
+var bar = svg.selectAll(".bar")
+    .data(data)
+    .enter().append("g")
+    .attr("class", "bar");
+
+// append the rectangles for the bar chart
+//var barRect = bar.selectAll(".bar-rect")
+//    .data(function(d) {return d;})
+//  .enter().append("rect")
+bar.append("rect")
+    .attr("class", "bar-rect")
+    //.attr("x", function(d) { return x(d.sales); })
+    //.attr("width", function(d) {return x(d.sales); } )
+    .transition("height")
+    .duration(1000)
+    .delay(function(d, i) { return i * 50; })
+    .attr("y", function(d) { return y(d.salesperson); })
+    .attr("height", y.bandwidth())
+    .attr("width", function(d) {return x(d.sales); } );
+// try to append text.
+//var barText = bar.selectAll(".bar-text")
+//    .data(function(d) {return d;})
+//  .enter().append("text")
+bar.append("text")
+    .attr("fill", "white")
+    .transition("height")
+    .duration(1000)
+    .delay(function(d, i) { return i * 100; })
+    .attr("x", "3")
+    .attr("y", function(d) {return y(d.salesperson) + y.bandwidth() - 5;})
+    .attr("font-size", y.bandwidth() * 3 / 5)
+    //.attr("font-size", "1.1em")
+    //.attr("dy", "1.2em")
+    .text(function(d) {return d.salesperson + ": " + d.sales;});
+
+// add the x Axis
+svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+// add the y Axis
+//svg.append("g")
+//    .call(d3.axisLeft(y));
+
+function responsivefy(svg) {
+
+    // get container + svg aspect ratio
+    var container = d3.select(svg.node().parentNode),
+        width = parseInt(svg.style("width")),
+        height = parseInt(svg.style("height")),
+        aspect = width / height;
+
+    // add viewBox and preserveAspectRatio properties,
+    // and call resize so that svg resizes on inital page load
+    svg.attr("viewBox", "0 0 " + width + " " + height)
+        .attr("perserveAspectRatio", "xMinYMid")
+        .call(resize);
+
+    // to register multiple listeners for same event type, 
+    // you need to add namespace, i.e., 'click.foo'
+    // necessary if you call invoke this function for multiple svgs
+    // api docs: https://github.com/mbostock/d3/wiki/Selections#on
+    d3.select(window).on("resize." + container.attr("id"), resize);
+
+    // get width of container and resize svg to fit it
+    function resize() {
+        var targetWidth = parseInt(container.style("width"));
+        svg.attr("width", targetWidth);
+        svg.attr("height", Math.round(targetWidth / aspect));
+    }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<html>
+<head>
+    <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+  <style>
+.tooltips {
+  position: relative;
+  display: inline;
+}
+.tooltips span {
+  position: absolute;
+  width:140px;
+  color: #FFFFFF;
+  background: #000000;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  /*visibility: hidden;*/
+  opacity: 0;
+  border-radius: 6px;
+  top: 500px;
+}
+.tooltips span:after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  /*left: 50%;*/
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-bottom: 8px solid #000000;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+div:hover.tooltips span {
+  visibility: visible;
+  opacity: 0.8;
+  top: 30px;
+  left: 50%;
+  margin-left: -76px;
+  z-index: 999;
+}
+
+/** new tooltip */
+.ab-item{
+  position: relative;
+  display: inline;
+}
+span.tip {
+  position: absolute;
+  width:280px;
+  height: 50px;
+  line-height: 50px;
+  /*visibility: hidden;*/
+  opacity: 0;
+  border-radius: 8px;
+  top: 500px;
+	font-family: 'Alegreya SC', Georgia, serif;
+	font-weight: 400;	
+	font-style: bold;
+	font-size: 22px;
+	color: #31708f;
+	/*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);*/
+	text-align: center;
+	border: 4px solid #bce8f1;
+	background: #d9edf7;
+	text-indent: 0px;
+}
+span.tip:after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 80%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-bottom: 10px solid #bce8f1;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+}
+span.tip.success {
+  position: absolute;
+  width:240px;
+  height: 30px;
+  line-height: 30px;
+  /*visibility: hidden;*/
+  opacity: 0;
+  border-radius: 6px;
+  top: 500px;
+	font-family: 'Alegreya SC', Georgia, serif;
+	font-weight: 400;	
+	font-style: bold;
+	font-size: 14px;
+	color: #3c763d;
+	/*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);*/
+	text-align: center;
+	border: 4px solid #d6e9c6;
+	background: #dff0d8;
+	text-indent: 0px;
+}
+span.tip:after.success {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-bottom: 12px solid #d6e9c6;
+  border-right: 12px solid transparent;
+  border-left: 12px solid transparent;
+}
+  </style>
+
+  <script>
+function getCookie(name) {
+
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+jQuery(document).ready(function($) {
+
+    // define the cookie name: tooltip-tracker
+    var cookieName = 'notooltip-tracker';
+    // get cookie value in the tooltip icon,
+    var tracker = $('div.ab-item').attr(cookieName);
+    // get the cookie value from browser
+    //var trackerCookie = getCookie('tooltip-tracker');
+    var allCookies = "; " + document.cookie;
+    var parts = allCookies.split("; " + cookieName + "=");
+    var trackerCookie = parts.pop().split(";").shift();
+    console.log(trackerCookie);
+    if((typeof trackerCookie != 'undefined') && 
+       (tracker === trackerCookie)) {
+        // compare the two, if same do nothing...
+    } else {
+        // if different, reset the cookie and show tooltip
+        document.cookie = cookieName + "=" + tracker;
+
+        var showProperty = {
+          visibility: "visible",
+          opacity: 0.8,
+          top: "30px",
+          left: "50%",
+          "margin-left": "-200px",
+          "z-index": 999
+        };
+        //var selector = "div.tooltips > span";
+        var selector = "span.tip";
+        $(selector).animate(showProperty, 'slow', 
+                                         function() {
+            setTimeout(function() {
+                // set the tooltips to disappear
+                $(selector).animate({opacity: 0}, 'slow');
+            }, 2000);
+        });
+    }
+});
+  </script>
+</head>
+<body>
+some other content placed here and there 
+some other content placed here and there 
+some other content placed here and there 
+<div class="tooltips">CSS Tooltips<span>Tooltip</span></div>
+some other content placed here and there 
+some other content placed here and there 
+some other content placed here and there 
+some other content placed here and there 
+
+<p>
+  the css styles are generated from 
+  <a href="http://www.cssportal.com/css-tooltip-generator/">CSS Tooltip generator page</a>
+</p>
+
+some other content placed here and there 
+some other content placed here and there 
+some other content placed here and there <div class="ab-item" tooltip-tracker="aibcdeslsjh">Tooltip news<span class="tip">OPSpedia has new updates</span></div>
+</body>
+</html>

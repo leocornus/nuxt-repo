@@ -1,0 +1,19 @@
+[ 
+  ["^(mnr|natural)", "MNRF"], 
+  ["^(fin|rev|stevecheng)", "MOF"], 
+  ["^(mgcs|serviceontario|diversity)", "MGCS"], 
+  ["^(omafra|OMAFRA|digitalomafra|debstark)", "OMAFRA"], 
+  ["^mag", "MAG"], 
+  ["^(moh|majamilosevic)", "MOHLTC"], 
+  ["^(mcscs|MCSCS)", "MCSCS"], 
+  ["^mcys", "MCYS"], 
+  ["^mcss", "MCSS"], 
+  ["^(labour|sophiedennis)", "MOL"],
+  ["^mci", "MCI"],
+  ["^mah", "MAH"],
+  ["^mirr", "MIRR"],
+  ["^(lrc|gis)", "LRC"],
+  ["^(tbs|openon|greenoffice)", "TBS"], 
+  ["^(cac|its|cyssc|iit|gsic)", "Clusters"], 
+  ["^(\/|topical|tops|webcomm)", "Groups"]
+]
