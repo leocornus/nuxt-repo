@@ -53,8 +53,8 @@ export default {
         },
 
         itemsPerPage: {
-            type: String,
-            default: "15"
+            type: Number,
+            default: 15
         },
 
         excludeFields: {
