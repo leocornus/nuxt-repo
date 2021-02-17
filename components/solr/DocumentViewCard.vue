@@ -41,7 +41,7 @@ v-card
     v-model="tab"
     align-with-title
   )
-    v-tab-slide( color="primiary" )
+    v-tabs-slide( color="primiary" )
     v-tab(
       key="metadata"
     ) Metadata
@@ -73,7 +73,7 @@ v-card
 
     // the ARTICLES tab.
     v-tab-item( key="articles" )
-      doc-list-card(
+      doc-articles-card(
         v-if="doc"
         :doc="doc"
       )
@@ -84,7 +84,7 @@ v-card
 import axios from 'axios';
 
 import DocDataTableCard from '@/components/solr/DocDataTableCard.vue';
-import DocListCard from '@/components/solr/DocListCard.vue';
+import DocArticlesCard from '@/components/solr/DocArticlesCard.vue';
 
 export default {
 
@@ -92,7 +92,7 @@ export default {
 
     components: {
         'doc-data-table': DocDataTableCard,
-        'doc-list-card': DocListCard,
+        'doc-articles-card': DocArticlesCard
     },
 
     props: {
