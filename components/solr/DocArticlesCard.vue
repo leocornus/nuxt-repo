@@ -3,21 +3,25 @@
 // the given document in tab view.
 v-card
   v-tabs(
-    v-model="tab"
+    vertical
   )
     v-tab(
       v-for="(article, index) in doc.article_titles"
       :key="index"
+      text-align="left"
     ) {{ article }}
 
-  v-tabs-items( v-model="tab" )
     v-tab-item(
       v-for="(para, index) in doc.article_paragraphs"
       :key="index"
     )
       v-card( flat )
-        v-card-text(
-          v-text="para"
+        v-textarea(
+          rows="32"
+          label="Article Paragraph"
+          filled
+          outlined
+          :value="para"
         )
 </template>
 <script>
