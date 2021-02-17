@@ -4,27 +4,43 @@
 v-container( fluid )
   v-row
     v-col(
-      cols="5"
-      max-height="800px"
+      cols="8"
     )
-      v-data-table(
-        dense
-        hide-default-footer
-        :headers="headers"
-        :items="articleTitles"
-        :item-key="title"
-        :items-per-page="100"
-      )
-
-    v-col( cols="7" )
-      // using textarea is easier to control.
-      v-textarea(
-        rows="32"
-        label="Article Paragraph"
-        filled
-        outlined
-        :value="doc.file_content"
-      )
+      v-card
+        v-card-title
+          v-text-field(
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search Article"
+            single-line
+            hide-details
+            clearable
+          )
+        //  show-expand
+        //  single-expand
+        v-data-table(
+          hide-default-header
+          hide-default-footer
+          :single-expand="false"
+          :expanded.sync="expanded"
+          :headers="headers"
+          :items="articleTitles"
+          :search="search"
+          item-key="title"
+          :items-per-page="100"
+          show-expand
+        )
+          // customize the title column
+          template(
+            v-slot:expanded-item="{ headers, item }"
+          ) 
+            td( :colspan="headers.length" )
+              v-textarea(
+                rows="12"
+                filled
+                outlined
+                :value="articlePara(item.title)"
+              ).pt-4
 
 // The tabs implementation not working well.
 // leave here for reference.
@@ -59,7 +75,8 @@ export default {
             type: Object,
             default: {
                 id: 'abcd',
-                name: 'doc name'
+                article_titles: ['title one'],
+                article_paragraphs: ['para one']
             }
         }
     },
@@ -73,8 +90,14 @@ export default {
 
             // headers, just one column.
             headers: [
-                { text: "Article", value:"title" }
-            ]
+                { text: "Article", value:"title" },
+                { text: "", value: "data-table-expand" },
+            ],
+
+            // the model for search filter of the data-table.
+            search: '',
+
+            expanded: [],
         }
     },
 
@@ -95,5 +118,15 @@ export default {
             return titles;
         }
     },
+
+    methods: {
+        /**
+         */
+        articlePara: function( item ) {
+
+            let index = this.doc["article_titles"].indexOf( item );
+            return this.doc['article_paragraphs'][index];
+        }
+    }
 }
 </script>
