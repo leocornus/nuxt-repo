@@ -2,7 +2,7 @@
 // The Doc(ument) Article Tab Card is simple component to show
 // the given document in tab view.
 v-container( fluid )
-  v-row
+  v-row( v-if="articleTitles.length > 1" )
     v-col(
       cols="8"
     )
@@ -113,13 +113,17 @@ export default {
         articleTitles: function() {
 
             let self = this;
+            let titles = [];
 
-            let titles = self.doc["article_titles"].map( title => {
+            if( self.doc.hasOwnProperty( 'article_titles' ) ) {
 
-                return {
-                    "title": title
-                }
-            });
+                let titles = self.doc["article_titles"].map( title => {
+
+                    return {
+                        "title": title
+                    }
+                });
+            }
 
             return titles;
         }
