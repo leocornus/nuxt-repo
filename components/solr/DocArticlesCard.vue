@@ -30,7 +30,7 @@ v-container( fluid )
           :items-per-page="100"
           show-expand
         )
-          // customize the title column
+          // customize the expanded item row.
           template(
             v-slot:expanded-item="{ headers, item }"
           ) 
@@ -41,6 +41,12 @@ v-container( fluid )
                 outlined
                 :value="articlePara(item.title)"
               ).pt-4
+          // customize each table row to make it clickable.
+          //template(
+            v-slot:item="{ item, expand, isExpanded }"
+          //)
+            tr
+              td( @click="expand(!isExpanded)" ) {{ item.title }}
 
 // The tabs implementation not working well.
 // leave here for reference.
